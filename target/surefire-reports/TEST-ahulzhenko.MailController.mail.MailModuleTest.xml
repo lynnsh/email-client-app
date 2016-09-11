@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ahulzhenko.MailController.mail.MailModuleTest" time="250.264" tests="20" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/opt/java/jdk1.8.0_91/jre/lib/amd64"/>
+    <property name="java.vm.version" value="25.91-b14"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="CA"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/home/aline/Documents/NetBeansProjects/MailController"/>
+    <property name="java.runtime.version" value="1.8.0_91-b14"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="/opt/java/jdk1.8.0_91/jre/lib/endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Linux"/>
+    <property name="maven.ext.class.path" value="/opt/netbeans-8.1/java/maven-nblib/netbeans-eventspy.jar"/>
+    <property name="classworlds.conf" value="/opt/netbeans-8.1/java/maven/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/opt/java/current-java/jre/lib/amd64:/opt/java/current-java/jre/lib/i386::/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="3.19.0-49-generic"/>
+    <property name="user.home" value="/home/aline"/>
+    <property name="user.timezone" value="America/Toronto"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="user.name" value="aline"/>
+    <property name="java.class.path" value="/opt/netbeans-8.1/java/maven/boot/plexus-classworlds-2.4.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/opt/java/jdk1.8.0_91/jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=/opt/netbeans-8.1/java/maven-nblib/netbeans-eventspy.jar clean install"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_91"/>
+    <property name="java.ext.dirs" value="/opt/java/jdk1.8.0_91/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="securerandom.source" value="file:/dev/./urandom"/>
+    <property name="sun.boot.class.path" value="/opt/java/jdk1.8.0_91/jre/lib/resources.jar:/opt/java/jdk1.8.0_91/jre/lib/rt.jar:/opt/java/jdk1.8.0_91/jre/lib/sunrsasign.jar:/opt/java/jdk1.8.0_91/jre/lib/jsse.jar:/opt/java/jdk1.8.0_91/jre/lib/jce.jar:/opt/java/jdk1.8.0_91/jre/lib/charsets.jar:/opt/java/jdk1.8.0_91/jre/lib/jfr.jar:/opt/java/jdk1.8.0_91/jre/classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="/opt/netbeans-8.1/java/maven"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="gnome"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase name="TestSentAndReceivedMessages[0 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@7a7b0070]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="11.704"/>
+  <testcase name="TestBcc[0 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@7a7b0070]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="10.889"/>
+  <testcase name="TestSentAndReceivedMessages[1 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@6ed3ef1]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="10.453"/>
+  <testcase name="TestBcc[1 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@6ed3ef1]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="10.295"/>
+  <testcase name="TestSentAndReceivedMessages[2 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@2437c6dc]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="10.164"/>
+  <testcase name="TestBcc[2 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@2437c6dc]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="9.322"/>
+  <testcase name="TestSentAndReceivedMessages[3 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@1f89ab83]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="12.102"/>
+  <testcase name="TestBcc[3 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@1f89ab83]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="10.553"/>
+  <testcase name="TestSentAndReceivedMessages[4 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@e73f9ac]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="11.439"/>
+  <testcase name="TestBcc[4 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@e73f9ac]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="10.272"/>
+  <testcase name="TestSentAndReceivedMessages[5 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@61064425]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="9.881"/>
+  <testcase name="TestBcc[5 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@61064425]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="9.943"/>
+  <testcase name="TestSentAndReceivedMessages[6 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@7b1d7fff]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="12.008"/>
+  <testcase name="TestBcc[6 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@7b1d7fff]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="11.484"/>
+  <testcase name="TestSentAndReceivedMessages[7 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@299a06ac]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="12.498"/>
+  <testcase name="TestBcc[7 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@299a06ac]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="11.499"/>
+  <testcase name="TestSentAndReceivedMessages[8 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@383534aa]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="21.473"/>
+  <testcase name="TestBcc[8 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@383534aa]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="18.63"/>
+  <testcase name="TestSentAndReceivedMessages[9 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@6bc168e5]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="17.33"/>
+  <testcase name="TestBcc[9 plan[UserConfigBean{fromEmail=cs.517.send@gmail.com, passwordEmail=v3ryl0ngp@2s, imapPort=993, imapUrl=imap.gmail.com, smtpPort=465, smtpUrl=smtp.gmail.com}]=[Ljava.lang.String;@6bc168e5]]" classname="ahulzhenko.MailController.mail.MailModuleTest" time="17.921"/>
+</testsuite>

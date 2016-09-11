@@ -1,0 +1,4 @@
+ashulzhenko/MailController/mail/EmailCustom.class
+ashulzhenko/MailController/mail/SMTPModule.class
+ashulzhenko/MailController/bean/UserConfigBean.class
+ashulzhenko/MailController/mail/IMAPModule.class

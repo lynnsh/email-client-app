@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-MailController</actionName>
+            <displayName>MailController</displayName>
+        </action>
+    </actions>
