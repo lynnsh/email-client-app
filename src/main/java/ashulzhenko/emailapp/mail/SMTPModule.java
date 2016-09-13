@@ -1,6 +1,6 @@
-package ashulzhenko.MailController.mail;
+package ashulzhenko.emailapp.mail;
 
-import ashulzhenko.MailController.bean.UserConfigBean;
+import ashulzhenko.emailapp.bean.UserConfigBean;
 import java.io.File;
 import java.util.Arrays;
 import jodd.mail.Email;

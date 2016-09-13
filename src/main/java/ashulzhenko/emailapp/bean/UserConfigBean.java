@@ -1,4 +1,4 @@
-package ashulzhenko.MailController.bean;
+package ashulzhenko.emailapp.bean;
 
 import java.io.Serializable;
 

@@ -1,9 +1,9 @@
-package ahulzhenko.MailController.mail;
+package ahulzhenko.emailapp.mail;
 
-import ashulzhenko.MailController.bean.UserConfigBean;
-import ashulzhenko.MailController.mail.EmailCustom;
-import ashulzhenko.MailController.mail.IMAPModule;
-import ashulzhenko.MailController.mail.SMTPModule;
+import ashulzhenko.emailapp.bean.UserConfigBean;
+import ashulzhenko.emailapp.mail.EmailCustom;
+import ashulzhenko.emailapp.mail.IMAPModule;
+import ashulzhenko.emailapp.mail.SMTPModule;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,7 +28,6 @@ import org.junit.runners.Parameterized.Parameters;
 public class MailModuleTest {
     
     private final Logger log = LogManager.getLogger(MailModuleTest.class.getName());
-    private UserConfigBean userInfo;
     private EmailCustom email;
     private ReceivedEmail emailReceived;
     private String[] to;
@@ -44,87 +43,60 @@ public class MailModuleTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
             //1: plain email 1 receiver
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[0], 
+            {new String[]{"cs.517.receive@gmail.com"}, new String[0], 
                 new String[0], "plain email 1 receiver", 
                 "a very important plain message", new String[0], new String[0]},
             //2: plain email 2 receivers
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com", "cs.517.send@gmail.com"}, new String[0], 
+            {new String[]{"cs.517.receive@gmail.com", "cs.517.send@gmail.com"}, new String[0], 
                 new String[0], "plain email 2 receivers", 
                 "a very important plain message", new String[0], new String[0]},
             //3: plain email 1 receiver 1 cc
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[]{"cs.517.send@gmail.com"}, 
+            {new String[]{"cs.517.receive@gmail.com"}, new String[]{"cs.517.send@gmail.com"}, 
                 new String[0], "plain email 1 receiver 1 cc", 
                 "a very important plain message", new String[0], new String[0]},
             //4: plain email 1 receiver 2 cc
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[]{"cs.517.send@gmail.com", 
+            {new String[]{"cs.517.receive@gmail.com"}, new String[]{"cs.517.send@gmail.com", 
                 "cs.517.send@outlook.com"}, new String[0], "plain email 1 receiver 2 cc", 
                 "a very important plain message", new String[0], new String[0]},
             //5: plain email 1 receiver 1 bcc
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[0], 
+            {new String[]{"cs.517.receive@gmail.com"}, new String[0], 
                 new String[]{"cs.517.send@gmail.com"}, "plain email 1 receiver 1 bcc", 
                 "a very important plain message", new String[0], new String[0]},
             //6: plain email 1 receiver 2 bcc
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[0], 
+            {new String[]{"cs.517.receive@gmail.com"}, new String[0], 
                 new String[]{"cs.517.send@gmail.com", "cs.517.send@outlook.com"}, 
                 "plain email 1 receiver 2 bcc", "a very important plain message", 
                 new String[0], new String[0]},
             //7: plain email 1 attach
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[0], 
+            {new String[]{"cs.517.receive@gmail.com"}, new String[0], 
                 new String[0], "plain email 1 attach", "a very important plain message", 
                 new String[]{"src/test/res/c.jpg"}, new String[0]},
             //8: html email 1 embed attach
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[0], 
+            {new String[]{"cs.517.receive@gmail.com"}, new String[0], 
                 new String[0], "html email 1 embed attach", 
                 "a very important message<html><body><img src='cid:c.jpg'/><body></html>", 
                 new String[0], new String[]{"src/test/res/c.jpg"}},
             //9: html email 1 embed attach and 1 usual attach
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[0], 
+            {new String[]{"cs.517.receive@gmail.com"}, new String[0], 
                 new String[0], "html email 1 embed attach and 1 usual attach", 
                 "a very important message<html><META http-equiv=Content-Type "
                     + "content=\"text/html; charset=utf-8\"><body><h2>this is a header</h2>"
                     + "<img src='cid:c.jpg'/></body></html>now with html and plain", 
                 new String[]{"src/test/res/w.jpg"}, new String[]{"src/test/res/c.jpg"}},
             //10: all included (html email 2 to, 1 cc, 1 bcc, 1 embed and 1 attach)
-            {new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
-                    993, "imap.gmail.com", 465, "smtp.gmail.com"),
-                new String[]{"cs.517.receive@gmail.com", "cs.517.send@outlook.com"}, 
+            {new String[]{"cs.517.receive@gmail.com", "cs.517.send@outlook.com"}, 
                 new String[]{"cs.517.send@gmail.com"}, new String[]{"cs.517.send@outlook.com"}, 
                 "html email 2 to, 1 cc, 1 bcc, 1 embed and 1 attach", 
                 "a very important message<html><META http-equiv=Content-Type "
                     + "content=\"text/html; charset=utf-8\"><body><h2>this is a header</h2>"
                     + "<img src='cid:c.jpg'/></body></html>now with html and plain", 
-                new String[]{"src/test/res/w.jpg"}, new String[]{"src/test/res/c.jpg"}},
-            //11: outlook as sending account, plain email
-            /*{new UserConfigBean("cs.517.send@outlook.com", "v3ryl0ngp@2s", 
-                    993, "imap-mail.outlook.com", 587, "smtp-mail.outlook.com"),
-                new String[]{"cs.517.receive@gmail.com"}, new String[0], 
-                new String[0], "plain email outlook send 1 receiver", 
-                "a very important plain message", new String[0], new String[0]}*/
+                new String[]{"src/test/res/w.jpg"}, new String[]{"src/test/res/c.jpg"}}
     });
     }
-    //"imap-mail.outlook.com" 993
-    //smtp- 587
-    public MailModuleTest (UserConfigBean userInfo, String[] to, String[] cc, String[] bcc, String subject, 
-            String message, String[] attach, String[] embed) {
-        this.userInfo = userInfo;
+    
+    
+    public MailModuleTest (String[] to, String[] cc, String[] bcc, String subject, 
+                           String message, String[] attach, String[] embed) {
         this.to = to;
         this.cc = cc;
         this.bcc = bcc;
@@ -136,6 +108,8 @@ public class MailModuleTest {
     
     @Before
     public void init() {
+        UserConfigBean userInfo = new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
+                    993, "imap.gmail.com", 465, "smtp.gmail.com");
         UserConfigBean receiverInfo = new UserConfigBean("cs.517.receive@gmail.com", "3t12ll0ngl3arn", 
                                       993, "imap.gmail.com", 465, "smtp.gmail.com");
         IMAPModule receive = new IMAPModule(receiverInfo);
@@ -150,7 +124,7 @@ public class MailModuleTest {
         
         //wait for gmail to receive the message
         try {
-            Thread.sleep(5000);
+            Thread.sleep(50000);
         } catch (InterruptedException e) {
             log.error("Threaded sleep failed", e);
             System.exit(1);

@@ -1,6 +1,6 @@
-package ashulzhenko.MailController.mail;
+package ashulzhenko.emailapp.mail;
 
-import ashulzhenko.MailController.bean.UserConfigBean;
+import ashulzhenko.emailapp.bean.UserConfigBean;
 import javax.mail.Flags;
 import jodd.mail.EmailFilter;
 import jodd.mail.ImapSslServer;

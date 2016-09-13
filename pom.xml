@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ashulzhenko</groupId>
-    <artifactId>MailController</artifactId>
+    <artifactId>emailapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <!-- Global settings for the project. Settings can be accessed in the pom
@@ -162,7 +162,7 @@
 
         </plugins>
     </build>
-    <name>MailController</name>
+    <name>emailapp</name>
 </project>
 
 
