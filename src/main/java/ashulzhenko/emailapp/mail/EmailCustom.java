@@ -2,6 +2,7 @@ package ashulzhenko.emailapp.mail;
 
 import java.util.List;
 import java.util.Objects;
+import javax.mail.Flags;
 import jodd.mail.CommonEmail;
 import jodd.mail.Email;
 import jodd.mail.EmailAttachment;
@@ -19,7 +20,43 @@ import jodd.mail.ReceivedEmail;
 public class EmailCustom extends Email {
 
     private String directory;
+    private int id;
+    private Flags flags;
 
+    /**
+     * Sets the id of the message.
+     * @param id The id of the message.
+     */
+    public void setId(int id) { //?
+        this.id = id;
+    }
+
+    /**
+     * Returns the unique id of the message.
+     * 
+     * @return the unique id of the message.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Returns flags for the received message.
+     * 
+     * @return flags for the received message.
+     */
+    public Flags getFlags() {
+        return flags;
+    }
+    
+    /**
+     * Sets flags for the received message.
+     * @param flags Flags for the received message to set.
+     */
+    public void setFlags(Flags flags) {
+        this.flags = flags;
+    }
+    
     /**
      * Returns a hash code value for the this object.
      *
