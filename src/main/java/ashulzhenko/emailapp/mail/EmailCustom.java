@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.mail.Flags;
-import jodd.mail.CommonEmail;
 import jodd.mail.Email;
 import jodd.mail.EmailAttachment;
 import jodd.mail.EmailMessage;
@@ -115,10 +114,8 @@ public class EmailCustom extends Email {
     }
 
     /**
-     * Compares this object to the CommonEmail object (EmailCustom or
-     * ReceivedEmail objects are expected to be compared, with other objects the
-     * expression is evaluated to false). Two objects are equal if they are a
-     * CommonEmail type (or its child) and from, to, cc addresses as well as
+     * Compares this EmailCustom to the specified object. The result is true
+	 * if the two objects are of the same class and from, to, cc addresses as well as
      * subject, messages contents and attachments names are equal. BCC is not
      * checked since for ReceivedEmail, the receiver does not have the access to
      * other recipients.
@@ -128,7 +125,7 @@ public class EmailCustom extends Email {
      */
     @Override
     public boolean equals(Object obj) {
-        CommonEmail email;
+        EmailCustom email;
 
         if (this == obj) {
             return true;
@@ -137,41 +134,29 @@ public class EmailCustom extends Email {
             return false;
         }
 
-        if (obj instanceof CommonEmail) {
-            email = (CommonEmail) obj;
-        } else {
+        if (obj instanceof EmailCustom)
+            email = (EmailCustom) obj;
+        else 
             return false;
-        }
 
-        if (!Objects.equals(this.from.toString(), email.getFrom().toString())) {
+        if (!Objects.equals(this.from.toString(), email.from.toString())) 
             return false;
-        }
 
         //since Jodd.MailAddress and EmailAttachment do not implement equals
-        if (!compareArrays(this.to, email.getTo())) {
+        if (!compareArrays(this.to, email.to)) 
             return false;
-        }
-        if (!compareArrays(this.cc, email.getCc())) {
+        if (!compareArrays(this.cc, email.cc)) 
             return false;
-        }
 
-        if (email instanceof Email) {
-            if (!checkAttachmentsName(this.attachments, ((Email) email).getAttachments())) {
+
+        if (!checkAttachmentsName(this.attachments, email.attachments)) 
                 return false;
-            }
-        } else if (email instanceof ReceivedEmail) {
-            if (!checkAttachmentsName(this.attachments, ((ReceivedEmail) email).getAttachments())) {
-                return false;
-            }
-        } else {
+        
+        if (!checkMessagesContent(this.messages, email.messages)) {
             return false;
         }
 
-        if (!checkMessagesContent(this.messages, email.getAllMessages())) {
-            return false;
-        }
-
-        return Objects.equals(this.subject, email.getSubject());
+        return Objects.equals(this.subject, email.subject);
     }
 
     /**
