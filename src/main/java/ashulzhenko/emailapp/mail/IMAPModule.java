@@ -11,7 +11,7 @@ import jodd.mail.ReceivedEmail;
  * IMAPModule class is used to receive emails.
  *
  * @author Alena Shulzhenko
- * @version 09/09/2016
+ * @version 11/09/2016
  * @since 1.8
  */
 public class IMAPModule {

@@ -7,7 +7,7 @@ import java.io.Serializable;
  * password, IMAP and SMTP information for this account.
  *
  * @author Alena Shulzhenko
- * @version 06/09/2016
+ * @version 11/09/2016
  * @since 1.8
  */
 public class UserConfigBean implements Serializable {

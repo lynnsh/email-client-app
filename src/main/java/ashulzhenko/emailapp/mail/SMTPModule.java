@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * SMTPModule class is used to send an email.
  *
  * @author Alena Shulzhenko
- * @version 10/09/2016
+ * @version 11/09/2016
  * @since 1.8
  */
 public class SMTPModule {

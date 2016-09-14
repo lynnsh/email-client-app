@@ -124,7 +124,7 @@ public class MailModuleTest {
         
         //wait for gmail to receive the message
         try {
-            Thread.sleep(50000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             log.error("Threaded sleep failed", e);
             System.exit(1);
@@ -135,7 +135,7 @@ public class MailModuleTest {
 
     @Test
     public void TestSentAndReceivedMessages() {
-        log.info("in TestSentAndReceivedMessages with " + email.getSubject());
+        log.debug("in TestSentAndReceivedMessages with " + email.getSubject());
         assertTrue(email.equals(emailReceived));
     }
     
