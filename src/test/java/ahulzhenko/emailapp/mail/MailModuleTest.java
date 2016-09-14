@@ -7,6 +7,7 @@ import ashulzhenko.emailapp.mail.SMTPModule;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import jodd.mail.Email;
 import jodd.mail.EmailAddress;
 import jodd.mail.EmailAttachment;
@@ -29,7 +30,7 @@ public class MailModuleTest {
     
     private final Logger log = LogManager.getLogger(MailModuleTest.class.getName());
     private EmailCustom email;
-    private ReceivedEmail emailReceived;
+    private EmailCustom emailReceived;
     private String[] to;
     private String[] cc;
     private String[] bcc;
@@ -130,7 +131,7 @@ public class MailModuleTest {
             System.exit(1);
         }
         
-        emailReceived = receive.receiveEmail()[0];
+        emailReceived = receive.receiveEmail().get(0);
     }
 
     @Test

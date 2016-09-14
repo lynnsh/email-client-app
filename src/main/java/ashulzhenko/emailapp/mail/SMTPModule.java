@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * SMTPModule class is used to send an email.
  *
  * @author Alena Shulzhenko
- * @version 11/09/2016
+ * @version 14/09/2016
  * @since 1.8
  */
 public class SMTPModule {
@@ -130,8 +130,10 @@ public class SMTPModule {
     
     /**
      * Using all the provided information, sends the email.
+     * 
+     * @return the created and sent email.
      */
-    public void sendEmail() {
+    public EmailCustom sendEmail() {
         //create am SMTP server object
         SmtpServer<SmtpSslServer> smtpServer = SmtpSslServer
                 .create(userInfo.getSmtpUrl(), userInfo.getSmtpPort())
@@ -142,7 +144,6 @@ public class SMTPModule {
 
         //create text message
         EmailCustom email = new EmailCustom();
-        email.setDirectory("sent");
         email.from(userInfo.getFromEmail()).to(toEmails).addHtml(message);
         
         if(!subject.isEmpty())
@@ -165,6 +166,7 @@ public class SMTPModule {
         session.open();
         session.sendMail(email);
         session.close();
+        return email;
     }
     
     /**

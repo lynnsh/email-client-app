@@ -1,5 +1,8 @@
 package ashulzhenko.emailapp.mail;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.mail.Flags;
@@ -14,26 +17,62 @@ import jodd.mail.ReceivedEmail;
  * field for the email directory.
  *
  * @author Alena Shulzhenko
- * @version 11/09/2016
+ * @version 14/09/2016
  * @since 1.8
  */
 public class EmailCustom extends Email {
 
     private String directory;
-    private int id;
+    private int id = -1;
     private Flags flags;
+    private LocalDateTime rcvDate;
+
+    /**
+     * Instantiates EmailCustom object.
+     */
+    public EmailCustom() {
+        super();
+        this.directory = "sent";
+    }
+    
+    /**
+     * Instantiates EmailCustom object from Received email object.
+     * 
+     * @param rcvEmail ReceivedEmail to convert to EmailCustom.
+     */
+    public EmailCustom(ReceivedEmail rcvEmail) {
+        if(rcvEmail == null)
+            throw new IllegalArgumentException("Received email value is null.");
+        
+        this.flags = rcvEmail.getFlags();
+        this.directory = "inbox";
+        this.attachments = new ArrayList(rcvEmail.getAttachments());
+        this.bcc = rcvEmail.getBcc();
+        this.cc = rcvEmail.getCc();
+        this.from = rcvEmail.getFrom();
+        this.messages = rcvEmail.getAllMessages();
+        this.replyTo = rcvEmail.getReplyTo();
+        this.sentDate = rcvEmail.getSentDate();
+        this.subject = rcvEmail.getSubject();
+        this.subjectEncoding = rcvEmail.getSubjectEncoding();
+        this.to = rcvEmail.getTo();
+        this.setPriority(rcvEmail.getPriority());
+        this.rcvDate = rcvEmail.getReceiveDate()
+                .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
 
     /**
      * Sets the id of the message.
+     *
      * @param id The id of the message.
      */
-    public void setId(int id) { //?
+    public void setId(int id) {
         this.id = id;
     }
 
     /**
      * Returns the unique id of the message.
-     * 
+     *
      * @return the unique id of the message.
      */
     public int getId() {
@@ -42,21 +81,22 @@ public class EmailCustom extends Email {
 
     /**
      * Returns flags for the received message.
-     * 
+     *
      * @return flags for the received message.
      */
     public Flags getFlags() {
         return flags;
     }
-    
+
     /**
      * Sets flags for the received message.
+     *
      * @param flags Flags for the received message to set.
      */
     public void setFlags(Flags flags) {
         this.flags = flags;
     }
-    
+
     /**
      * Returns a hash code value for the this object.
      *
