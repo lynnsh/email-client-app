@@ -45,7 +45,11 @@ public class EmailCustom extends Email {
         
         this.flags = rcvEmail.getFlags();
         this.directory = "inbox";
-        this.attachments = new ArrayList(rcvEmail.getAttachments());
+        
+        List<EmailAttachment> list = rcvEmail.getAttachments();
+        if(list != null)
+            this.attachments = new ArrayList<>(list);
+        
         this.bcc = rcvEmail.getBcc();
         this.cc = rcvEmail.getCc();
         this.from = rcvEmail.getFrom();
@@ -145,9 +149,9 @@ public class EmailCustom extends Email {
         //since Jodd.MailAddress and EmailAttachment do not implement equals
         if (!compareArrays(this.to, email.to)) 
             return false;
+
         if (!compareArrays(this.cc, email.cc)) 
             return false;
-
 
         if (!checkAttachmentsName(this.attachments, email.attachments)) 
                 return false;

@@ -57,6 +57,10 @@ public class SMTPModule {
         this.subject = subject;
         this.message = message;
         
+        String address = userInfo.getFromEmail();
+        if (!new EmailAddress(address).isValid())
+            throw new IllegalArgumentException ("Provided email address is invalid: " + address);
+        
         toEmails = setEmailArray(to, toEmails);
         ccEmails = setEmailArray(cc, ccEmails);
         bccEmails = setEmailArray(bcc, bccEmails);
@@ -163,9 +167,16 @@ public class SMTPModule {
 
         SendMailSession session = smtpServer.createSession();
 
-        session.open();
-        session.sendMail(email);
-        session.close();
+        //null pointer exception if file name is invalid
+        try {
+            session.open();
+            session.sendMail(email);
+            session.close();
+        }
+        catch(NullPointerException npe) {
+            throw new IllegalArgumentException
+                    ("Attachment error, such file does not exist. " + npe.getMessage());
+        }
         return email;
     }
     

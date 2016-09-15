@@ -7,11 +7,9 @@ import ashulzhenko.emailapp.mail.SMTPModule;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import jodd.mail.Email;
 import jodd.mail.EmailAddress;
 import jodd.mail.EmailAttachment;
-import jodd.mail.ReceivedEmail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static org.junit.Assert.*;
@@ -22,22 +20,17 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * Tests both SMTPModule and IMAPModule
+ * Tests both SMTPModule and IMAPModule.
  * @author Alena Shulzhenko
  */
 @RunWith(Parameterized.class)
 public class MailModuleTest {
     
     private final Logger log = LogManager.getLogger(MailModuleTest.class.getName());
-    private EmailCustom email;
-    private EmailCustom emailReceived;
-    private String[] to;
-    private String[] cc;
-    private String[] bcc;
-    private String subject;
-    private String message;
-    private String[] attach;
-    private String[] embed;
+    private EmailCustom email, emailReceived;
+    private String[] to, cc, bcc;
+    private String subject, message;
+    private String[] attach, embed;
     
     //parameters: userConfig, to, cc, bcc, subject, message, attachments, embedAttachments
     @Parameters(name = "{index} plan[{0}]={1}]")
@@ -130,13 +123,14 @@ public class MailModuleTest {
             log.error("Threaded sleep failed", e);
             System.exit(1);
         }
-        
+
         emailReceived = receive.receiveEmail().get(0);
     }
 
     @Test
     public void TestSentAndReceivedMessages() {
         log.debug("in TestSentAndReceivedMessages with " + email.getSubject());
+
         assertTrue(email.equals(emailReceived));
     }
     

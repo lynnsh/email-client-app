@@ -4,6 +4,7 @@ import ashulzhenko.emailapp.bean.UserConfigBean;
 import java.util.ArrayList;
 import java.util.List;
 import javax.mail.Flags;
+import jodd.mail.EmailAddress;
 import jodd.mail.EmailFilter;
 import jodd.mail.ImapSslServer;
 import jodd.mail.ReceiveMailSession;
@@ -27,6 +28,11 @@ public class IMAPModule {
     public IMAPModule(UserConfigBean userInfo) {
         if(userInfo == null)
             throw new IllegalArgumentException("UserConfigBean value is null.");
+        
+        String address = userInfo.getFromEmail();
+        if (!new EmailAddress(address).isValid())
+            throw new IllegalArgumentException ("Provided email address is invalid: " + address);
+        
         this.userInfo = userInfo;
     }
     
@@ -51,12 +57,13 @@ public class IMAPModule {
         
         session.close();
         
-        List<EmailCustom> emails = new ArrayList<>();
+        List<EmailCustom> emails = new ArrayList<>(0);
         
-        for(int i = 0; i < rcvEmails.length; i++) {
-            emails.set(i, new EmailCustom(rcvEmails[i]));
-        }
-            
+        if(rcvEmails != null) {
+            for(int i = 0; i < rcvEmails.length; i++) {
+                emails.add(new EmailCustom(rcvEmails[i]));
+            }
+        }   
         return emails;
     }
 }
