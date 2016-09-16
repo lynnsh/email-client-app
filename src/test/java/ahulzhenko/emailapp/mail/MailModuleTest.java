@@ -1,7 +1,7 @@
 package ahulzhenko.emailapp.mail;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
-import ashulzhenko.emailapp.mail.EmailCustom;
+import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.mail.IMAPModule;
 import ashulzhenko.emailapp.mail.SMTPModule;
 import java.io.File;
@@ -12,13 +12,14 @@ import jodd.mail.EmailAddress;
 import jodd.mail.EmailAttachment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import static org.junit.Assert.*;
 import org.junit.Before;
+import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-
+@Ignore
 /**
  * Tests both SMTPModule and IMAPModule.
  * @author Alena Shulzhenko

@@ -1,5 +1,6 @@
 package ashulzhenko.emailapp.mail;
 
+import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import java.util.ArrayList;
 import java.util.List;

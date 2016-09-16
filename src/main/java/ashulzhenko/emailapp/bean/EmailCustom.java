@@ -1,5 +1,6 @@
-package ashulzhenko.emailapp.mail;
+package ashulzhenko.emailapp.bean;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -16,15 +17,46 @@ import jodd.mail.ReceivedEmail;
  * field for the email directory.
  *
  * @author Alena Shulzhenko
- * @version 14/09/2016
+ * @version 16/09/2016
  * @since 1.8
  */
-public class EmailCustom extends Email {
-
-    private String directory;
+public class EmailCustom extends Email implements Serializable {
+    
+    //used to differentiate send and received emails (sent and inbox directories)
+    private String directory; 
     private int id = -1;
     private Flags flags;
     private LocalDateTime rcvDate;
+    private List<ReceivedEmail> attachedMessages;
+    private int messageNumber;
+    private static final long serialVersionUID = 42051768871L;
+
+    /**
+     * Returns the received date of this email.
+     * 
+     * @return the received date of this email.
+     */
+    public LocalDateTime getReceivedDate() {
+        return rcvDate;
+    }
+    
+    /**
+     * Returns the attached messages.
+     * 
+     * @return the attached messages.
+     */
+    public List<ReceivedEmail> getAttachedMessages() {
+        return attachedMessages;
+    }
+
+    /**
+     * Returns the message number.
+     * 
+     * @return the message number.
+     */
+    public int getMessageNumber() {
+        return messageNumber;
+    }
 
     /**
      * Instantiates EmailCustom object.
@@ -33,27 +65,31 @@ public class EmailCustom extends Email {
         super();
         this.directory = "sent";
     }
-    
+
     /**
      * Instantiates EmailCustom object from Received email object.
-     * 
+     *
      * @param rcvEmail ReceivedEmail to convert to EmailCustom.
      */
     public EmailCustom(ReceivedEmail rcvEmail) {
-        if(rcvEmail == null)
+        if (rcvEmail == null) {
             throw new IllegalArgumentException("Received email value is null.");
-        
+        }
+
         this.flags = rcvEmail.getFlags();
         this.directory = "inbox";
-        
+
         List<EmailAttachment> list = rcvEmail.getAttachments();
-        if(list != null)
+        if (list != null) {
             this.attachments = new ArrayList<>(list);
-        
+        }
+
         this.bcc = rcvEmail.getBcc();
         this.cc = rcvEmail.getCc();
         this.from = rcvEmail.getFrom();
         this.messages = rcvEmail.getAllMessages();
+        this.messageNumber = rcvEmail.getMessageNumber();
+        this.attachedMessages = rcvEmail.getAttachedMessages();
         this.replyTo = rcvEmail.getReplyTo();
         this.sentDate = rcvEmail.getSentDate();
         this.subject = rcvEmail.getSubject();
@@ -71,6 +107,33 @@ public class EmailCustom extends Email {
      */
     public void setId(int id) {
         this.id = id;
+    }
+    
+    /**
+     * Sets the received date of the email.
+     * 
+     * @param rcvDate The received date of the email.
+     */
+    public void setReceivedDate(LocalDateTime rcvDate) {
+        this.rcvDate = rcvDate;
+    }
+    
+    /**
+     * Sets the attached messages for this email.
+     * 
+     * @param attachedMessages The attached messages for this email.
+     */
+    public void setAttachedMessages(List<ReceivedEmail> attachedMessages) {
+        this.attachedMessages = attachedMessages;
+    }
+
+    /**
+     * Sets message number.
+     * 
+     * @param messageNumber The message number.
+     */
+    public void setMessageNumber(int messageNumber) {
+        this.messageNumber = messageNumber;
     }
 
     /**
@@ -118,9 +181,9 @@ public class EmailCustom extends Email {
     }
 
     /**
-     * Compares this EmailCustom to the specified object. The result is true
-	 * if the two objects are of the same class and from, to, cc addresses as well as
-     * subject, messages contents and attachments names are equal. BCC is not
+     * Compares this EmailCustom to the specified object. The result is true if
+     * the two objects are of the same class and from, to, cc addresses as well
+     * as subject, messages contents and attachments names are equal. BCC is not
      * checked since for ReceivedEmail, the receiver does not have the access to
      * other recipients.
      *
@@ -138,24 +201,29 @@ public class EmailCustom extends Email {
             return false;
         }
 
-        if (obj instanceof EmailCustom)
+        if (obj instanceof EmailCustom) {
             email = (EmailCustom) obj;
-        else 
+        } else {
             return false;
+        }
 
-        if (!Objects.equals(this.from.toString(), email.from.toString())) 
+        if (!Objects.equals(this.from.toString(), email.from.toString())) {
             return false;
+        }
 
         //since Jodd.MailAddress and EmailAttachment do not implement equals
-        if (!compareArrays(this.to, email.to)) 
+        if (!compareArrays(this.to, email.to)) {
             return false;
+        }
 
-        if (!compareArrays(this.cc, email.cc)) 
+        if (!compareArrays(this.cc, email.cc)) {
             return false;
+        }
 
-        if (!checkAttachmentsName(this.attachments, email.attachments)) 
-                return false;
-        
+        if (!checkAttachments(this.attachments, email.attachments)) {
+            return false;
+        }
+
         if (!checkMessagesContent(this.messages, email.messages)) {
             return false;
         }
@@ -186,14 +254,14 @@ public class EmailCustom extends Email {
     }
 
     /**
-     * Compares EmailAttachments. If the name of both attachments is the same,
-     * those attachments are considered equal.
+     * Compares EmailAttachments. If the name and size of both attachments 
+     * are the same, those attachments are considered equal.
      *
      * @param first the first EmailAttachment to be compared.
      * @param second the second EmailAttachment to be compared.
-     * @return true if names of both attachments is the same; false otherwise.
+     * @return true if names and size of both attachments are the same; false otherwise.
      */
-    private boolean checkAttachmentsName(List<EmailAttachment> first, List<EmailAttachment> second) {
+    private boolean checkAttachments(List<EmailAttachment> first, List<EmailAttachment> second) {
         EmailAttachment ea1, ea2;
         if (first == second) {
             return true;
@@ -214,6 +282,9 @@ public class EmailCustom extends Email {
                     return false;
                 }
                 if (!ea1.getName().trim().equals(ea2.getName().trim())) {
+                    return false;
+                }
+                if (ea1.getSize() != ea2.getSize()) {
                     return false;
                 }
             }
