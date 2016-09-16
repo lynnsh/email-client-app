@@ -2,8 +2,7 @@ package ahulzhenko.emailapp.mail;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.bean.EmailCustom;
-import ashulzhenko.emailapp.mail.IMAPModule;
-import ashulzhenko.emailapp.mail.SMTPModule;
+import ashulzhenko.emailapp.mail.MailModule;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
@@ -107,15 +106,10 @@ public class MailModuleTest {
                     993, "imap.gmail.com", 465, "smtp.gmail.com");
         UserConfigBean receiverInfo = new UserConfigBean("cs.517.receive@gmail.com", "3t12ll0ngl3arn", 
                                       993, "imap.gmail.com", 465, "smtp.gmail.com");
-        IMAPModule receive = new IMAPModule(receiverInfo);
-        SMTPModule send = new SMTPModule (userInfo, to, cc, bcc, subject, message, attach, embed);
+        MailModule send = new MailModule (userInfo);
+        MailModule receive = new MailModule(receiverInfo);
         
-        email = new EmailCustom();
-        email.from(userInfo.getFromEmail()).to(to).cc(cc).bcc(bcc)
-             .addHtml(message).subject(subject);
-        addAttachments(email);
-        
-        send.sendEmail();
+        email = send.sendEmail(to, cc, bcc, subject, message, attach, embed);
         
         //wait for gmail to receive the message
         try {
@@ -140,22 +134,5 @@ public class MailModuleTest {
         //since bcc is invisible for recipients, it is always absent in the received email
         assertArrayEquals(emailReceived.getBcc(), new EmailAddress[0]);
     }
-    
-
-    /**
-     * A helper method to add attachments to Email object
-     * @param email the Email object to add attachments to.
-     */
-    private void addAttachments(Email email) {
-        if(embed.length != 0) {
-            for(String file : embed)
-                email.embed(EmailAttachment.attachment().bytes(new File(file)));
-        }
-        if(attach.length != 0) {
-            for(String file : attach) 
-                email.attach(EmailAttachment.attachment().file(new File(file)));
-        }
-    }
-    
     
 }

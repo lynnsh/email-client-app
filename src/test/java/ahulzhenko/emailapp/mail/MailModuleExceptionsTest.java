@@ -1,7 +1,7 @@
 package ahulzhenko.emailapp.mail;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
-import ashulzhenko.emailapp.mail.SMTPModule;
+import ashulzhenko.emailapp.mail.MailModule;
 import java.util.Arrays;
 import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-@Ignore
+
 /**
  * Tests SMTPModule with invalid data.
  * @author Alena Shulzhenko
@@ -82,9 +82,9 @@ public class MailModuleExceptionsTest {
     public void TestExceptions() {
         log.debug("in TestExceptions with " + subject);
 
-        SMTPModule send = new SMTPModule (userInfo, to, cc, bcc, subject, message, attach, embed);
+        MailModule send = new MailModule (userInfo);
         //should not be able send the email because of the invalid data
-        send.sendEmail();
+        send.sendEmail(to, cc, bcc, subject, message, attach, embed);
         fail();
     }
     
