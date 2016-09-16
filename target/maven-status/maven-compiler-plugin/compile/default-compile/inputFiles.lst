@@ -1,4 +1,6 @@
-E:\NetBeansProjects\java-email-application\src\main\java\ashulzhenko\emailapp\mail\IMAPModule.java
-E:\NetBeansProjects\java-email-application\src\main\java\ashulzhenko\emailapp\bean\EmailCustom.java
-E:\NetBeansProjects\java-email-application\src\main\java\ashulzhenko\emailapp\mail\SMTPModule.java
-E:\NetBeansProjects\java-email-application\src\main\java\ashulzhenko\emailapp\bean\UserConfigBean.java
+/home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/mail/Mailer.java
+/home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/mail/MailModule.java
+/home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/bean/EmailCustom.java
+/home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/bean/UserConfigBean.java
+/home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/compare/MailAddressSorter.java
+/home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/compare/EmailAttachmentSorter.java

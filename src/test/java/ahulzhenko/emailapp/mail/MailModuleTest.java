@@ -2,25 +2,22 @@ package ahulzhenko.emailapp.mail;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.bean.EmailCustom;
+import ashulzhenko.emailapp.mail.Mailer;
 import ashulzhenko.emailapp.mail.MailModule;
-import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
-import jodd.mail.Email;
 import jodd.mail.EmailAddress;
-import jodd.mail.EmailAttachment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-@Ignore
+
 /**
- * Tests both SMTPModule and IMAPModule.
+ * Tests MailModule.
  * @author Alena Shulzhenko
  */
 @RunWith(Parameterized.class)
@@ -106,14 +103,14 @@ public class MailModuleTest {
                     993, "imap.gmail.com", 465, "smtp.gmail.com");
         UserConfigBean receiverInfo = new UserConfigBean("cs.517.receive@gmail.com", "3t12ll0ngl3arn", 
                                       993, "imap.gmail.com", 465, "smtp.gmail.com");
-        MailModule send = new MailModule (userInfo);
-        MailModule receive = new MailModule(receiverInfo);
+        Mailer send = new MailModule (userInfo);
+        Mailer receive = new MailModule(receiverInfo);
         
         email = send.sendEmail(to, cc, bcc, subject, message, attach, embed);
         
         //wait for gmail to receive the message
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             log.error("Threaded sleep failed", e);
             System.exit(1);

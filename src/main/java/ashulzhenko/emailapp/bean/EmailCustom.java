@@ -1,15 +1,20 @@
 package ashulzhenko.emailapp.bean;
 
+import ashulzhenko.emailapp.compare.EmailAttachmentSorter;
+import ashulzhenko.emailapp.compare.MailAddressSorter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javax.mail.Flags;
 import jodd.mail.Email;
 import jodd.mail.EmailAttachment;
 import jodd.mail.EmailMessage;
+import jodd.mail.MailAddress;
 import jodd.mail.ReceivedEmail;
 
 /**
@@ -22,41 +27,14 @@ import jodd.mail.ReceivedEmail;
  */
 public class EmailCustom extends Email implements Serializable {
     
-    //used to differentiate send and received emails (sent and inbox directories)
-    private String directory; 
-    private int id = -1;
-    private Flags flags;
-    private LocalDateTime rcvDate;
-    private List<ReceivedEmail> attachedMessages;
-    private int messageNumber;
     private static final long serialVersionUID = 42051768871L;
-
-    /**
-     * Returns the received date of this email.
-     * 
-     * @return the received date of this email.
-     */
-    public LocalDateTime getReceivedDate() {
-        return rcvDate;
-    }
-    
-    /**
-     * Returns the attached messages.
-     * 
-     * @return the attached messages.
-     */
-    public List<ReceivedEmail> getAttachedMessages() {
-        return attachedMessages;
-    }
-
-    /**
-     * Returns the message number.
-     * 
-     * @return the message number.
-     */
-    public int getMessageNumber() {
-        return messageNumber;
-    }
+    private List<ReceivedEmail> attachedMessages;
+    //used to differentiate send and received emails ("sent" and "inbox" directories)
+    private String directory;
+    private Flags flags;
+    private int id = -1;
+    private int messageNumber;
+    private LocalDateTime rcvDate;
 
     /**
      * Instantiates EmailCustom object.
@@ -99,43 +77,80 @@ public class EmailCustom extends Email implements Serializable {
         this.rcvDate = rcvEmail.getReceiveDate()
                 .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
-
     /**
-     * Sets the id of the message.
+     * Compares this EmailCustom to the specified object. The result is true if
+     * the two objects are of the same class and from, to, cc addresses as well
+     * as subject, messages contents and attachments are equal. BCC is not
+     * checked since for ReceivedEmail, the receiver does not have the access to
+     * other recipients.
      *
-     * @param id The id of the message.
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    /**
-     * Sets the received date of the email.
+     * @param obj The object to compare this against.
      * 
-     * @param rcvDate The received date of the email.
+     * @return true if objects are equal, false otherwise.
      */
-    public void setReceivedDate(LocalDateTime rcvDate) {
-        this.rcvDate = rcvDate;
-    }
-    
-    /**
-     * Sets the attached messages for this email.
-     * 
-     * @param attachedMessages The attached messages for this email.
-     */
-    public void setAttachedMessages(List<ReceivedEmail> attachedMessages) {
-        this.attachedMessages = attachedMessages;
+    @Override
+    public boolean equals(Object obj) {
+        EmailCustom email;
+        
+        if (this == obj) 
+            return true;
+        
+        if (obj == null) 
+            return false;
+        
+        
+        if (obj instanceof EmailCustom) 
+            email = (EmailCustom) obj;
+        else 
+            return false;
+        
+        if (!Objects.equals(this.from.toString(), email.from.toString())) 
+            return false;
+        
+        
+        //since Jodd.MailAddress and EmailAttachment do not implement equals
+        if (!compareArrays(this.to, email.to)) 
+            return false;
+        
+        
+        if (!compareArrays(this.cc, email.cc)) 
+            return false;
+        
+        
+        if (!checkAttachments(this.attachments, email.attachments)) 
+            return false;
+        
+        
+        if (!checkMessagesContent(this.messages, email.messages)) 
+            return false;
+        
+        return Objects.equals(this.subject, email.subject);
     }
 
     /**
-     * Sets message number.
-     * 
-     * @param messageNumber The message number.
+     * Returns the attached messages.
+     *
+     * @return the attached messages.
      */
-    public void setMessageNumber(int messageNumber) {
-        this.messageNumber = messageNumber;
+    public List<ReceivedEmail> getAttachedMessages() {
+        return attachedMessages;
     }
-
+    /**
+     * Returns the directory name where the email is located.
+     *
+     * @return the directory name where the email is located.
+     */
+    public String getDirectory() {
+        return directory;
+    }
+    /**
+     * Returns flags for the received message.
+     *
+     * @return flags for the received message.
+     */
+    public Flags getFlags() {
+        return flags;
+    }
     /**
      * Returns the unique id of the message.
      *
@@ -146,23 +161,21 @@ public class EmailCustom extends Email implements Serializable {
     }
 
     /**
-     * Returns flags for the received message.
+     * Returns the message number.
      *
-     * @return flags for the received message.
+     * @return the message number.
      */
-    public Flags getFlags() {
-        return flags;
+    public int getMessageNumber() {
+        return messageNumber;
     }
-
     /**
-     * Sets flags for the received message.
+     * Returns the received date of this email.
      *
-     * @param flags Flags for the received message to set.
+     * @return the received date of this email.
      */
-    public void setFlags(Flags flags) {
-        this.flags = flags;
+    public LocalDateTime getReceivedDate() {
+        return rcvDate;
     }
-
     /**
      * Returns a hash code value for the this object.
      *
@@ -181,85 +194,79 @@ public class EmailCustom extends Email implements Serializable {
     }
 
     /**
-     * Compares this EmailCustom to the specified object. The result is true if
-     * the two objects are of the same class and from, to, cc addresses as well
-     * as subject, messages contents and attachments names are equal. BCC is not
-     * checked since for ReceivedEmail, the receiver does not have the access to
-     * other recipients.
+     * Sets the attached messages for this email.
      *
-     * @param obj The object to compare this against.
-     * @return true if objects are equal, false otherwise.
+     * @param attachedMessages The attached messages for this email.
      */
-    @Override
-    public boolean equals(Object obj) {
-        EmailCustom email;
-
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-
-        if (obj instanceof EmailCustom) {
-            email = (EmailCustom) obj;
-        } else {
-            return false;
-        }
-
-        if (!Objects.equals(this.from.toString(), email.from.toString())) {
-            return false;
-        }
-
-        //since Jodd.MailAddress and EmailAttachment do not implement equals
-        if (!compareArrays(this.to, email.to)) {
-            return false;
-        }
-
-        if (!compareArrays(this.cc, email.cc)) {
-            return false;
-        }
-
-        if (!checkAttachments(this.attachments, email.attachments)) {
-            return false;
-        }
-
-        if (!checkMessagesContent(this.messages, email.messages)) {
-            return false;
-        }
-
-        return Objects.equals(this.subject, email.subject);
+    public void setAttachedMessages(List<ReceivedEmail> attachedMessages) {
+        if(attachedMessages != null)
+            this.attachedMessages = attachedMessages;
+        else
+            throw new IllegalArgumentException("Attached messages value is null.");
     }
-
-    /**
-     * Returns the directory name where the email is located.
-     *
-     * @return the directory name where the email is located.
-     */
-    public String getDirectory() {
-        return directory;
-    }
-
     /**
      * Sets the directory where the email is located.
      *
      * @param directory the directory name where the email is located.
      */
     public void setDirectory(String directory) {
-        if (directory != null && !directory.isEmpty()) {
+        if (directory != null && !directory.isEmpty()) 
             this.directory = directory;
-        } else {
+        else 
             throw new IllegalArgumentException("No directory name provided.");
-        }
     }
 
     /**
-     * Compares EmailAttachments. If the name and size of both attachments 
-     * are the same, those attachments are considered equal.
+     * Sets flags for the received message.
+     *
+     * @param flags Flags for the received message to set.
+     */
+    public void setFlags(Flags flags) {
+        if(flags != null)
+            this.flags = flags;
+        else
+            throw new IllegalArgumentException("Flags value is null.");
+    }
+    
+    /**
+     * Sets the id of the message.
+     *
+     * @param id The id of the message.
+     */
+    public void setId(int id) {
+        if(id > 0)
+            this.id = id;
+        else
+            throw new IllegalArgumentException("Id value is invalid: " + id);
+    }
+    /**
+     * Sets message number.
+     *
+     * @param messageNumber The message number.
+     */
+    public void setMessageNumber(int messageNumber) {
+        this.messageNumber = messageNumber;
+    }
+    /**
+     * Sets the received date of the email.
+     *
+     * @param rcvDate The received date of the email.
+     */
+    public void setReceivedDate(LocalDateTime rcvDate) {
+        if(rcvDate != null)
+            this.rcvDate = rcvDate;
+        else
+            throw new IllegalArgumentException("Received date value is null.");
+    }
+
+
+    /**
+     * Compares EmailAttachments.
      *
      * @param first the first EmailAttachment to be compared.
      * @param second the second EmailAttachment to be compared.
-     * @return true if names and size of both attachments are the same; false otherwise.
+     * 
+     * @return true if attachments are the same; false otherwise.
      */
     private boolean checkAttachments(List<EmailAttachment> first, List<EmailAttachment> second) {
         EmailAttachment ea1, ea2;
@@ -274,18 +281,20 @@ public class EmailCustom extends Email implements Serializable {
             return false;
         }
 
+        Collections.sort(first, new EmailAttachmentSorter());
+        Collections.sort(second, new EmailAttachmentSorter());
+
         for (int i = 0; i < length; i++) {
             ea1 = first.get(i);
             ea2 = second.get(i);
             if (ea1 != ea2) {
-                if (ea1 == null || ea2 == null) {
+                if (ea1 == null || ea2 == null)
                     return false;
-                }
-                if (!ea1.getName().trim().equals(ea2.getName().trim())) {
-                    return false;
-                }
-                if (ea1.getSize() != ea2.getSize()) {
-                    return false;
+                byte[] b1 = ea1.toByteArray();
+                byte[] b2 = ea2.toByteArray();
+                for (int j = 0; j < b1.length; j++) {
+                    if (b1[j] != b2[j])
+                        return false;
                 }
             }
         }
@@ -298,7 +307,8 @@ public class EmailCustom extends Email implements Serializable {
      *
      * @param first the first EmailMessage to be compared.
      * @param second the second EmailMessage to be compared.
-     * @return true if contents of both messages is the same; false otherwise.
+     * 
+     * @return true if contents of both messages are the same; false otherwise.
      */
     private boolean checkMessagesContent(List<EmailMessage> first, List<EmailMessage> second) {
         EmailMessage em1, em2;
@@ -317,26 +327,24 @@ public class EmailCustom extends Email implements Serializable {
             em1 = first.get(i);
             em2 = second.get(i);
             if (em1 != em2) {
-                if (em1 == null || em2 == null) {
+                if (em1 == null || em2 == null)
                     return false;
-                }
-                if (!em1.getContent().trim().equals(em2.getContent().trim())) {
+                if (!em1.getContent().trim().equals(em2.getContent().trim()))
                     return false;
-                }
             }
         }
         return true;
     }
 
     /**
-     * Compares two arrays, setting their elements to strings.
+     * Compares two MailAddress arrays.
      *
      * @param first the first array to be compared.
      * @param second the second array to be compared.
-     * @return true if elements of arrays as strings are the same; false
-     * otherwise.
+     * 
+     * @return true if elements of arrays are the same; false otherwise.
      */
-    private <T> boolean compareArrays(T[] first, T[] second) {
+    private boolean compareArrays(MailAddress[] first, MailAddress[] second) {
         if (first == second) {
             return true;
         }
@@ -346,6 +354,10 @@ public class EmailCustom extends Email implements Serializable {
         if (first.length != second.length) {
             return false;
         }
+
+        Arrays.sort(first, new MailAddressSorter());
+        Arrays.sort(second, new MailAddressSorter());
+
         for (int i = 0; i < first.length; i++) {
             if (first[i] != second[i]) {
                 if (first[i] == null || second[i] == null) {

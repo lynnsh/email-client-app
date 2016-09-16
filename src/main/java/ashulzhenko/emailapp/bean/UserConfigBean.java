@@ -7,18 +7,18 @@ import java.io.Serializable;
  * password, IMAP and SMTP information for this account.
  *
  * @author Alena Shulzhenko
- * @version 11/09/2016
+ * @version 16/09/2016
  * @since 1.8
  */
 public class UserConfigBean implements Serializable {
-
+    
+    private static final long serialVersionUID = 42051768871L;
     private String fromEmail;
-    private String passwordEmail;
     private int imapPort;
     private String imapUrl;
+    private String passwordEmail;
     private int smtpPort;
     private String smtpUrl;
-    private static final long serialVersionUID = 42051768871L;
     
     /**
      * Instantiates the object with default information.
@@ -36,6 +36,7 @@ public class UserConfigBean implements Serializable {
     /**
      * Instantiates the object when obtaining email, password, SMTP and IMAP
      * URLs and ports information.
+     * Default ports for Gmail are: imap-993, smtp-465.
      *
      * @param fromEmail User's email from where the messages will be send and
      * retrieved.

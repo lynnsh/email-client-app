@@ -1,4 +1,6 @@
-ashulzhenko\emailapp\mail\SMTPModule.class
-ashulzhenko\emailapp\mail\IMAPModule.class
-ashulzhenko\emailapp\bean\UserConfigBean.class
-ashulzhenko\emailapp\bean\EmailCustom.class
+ashulzhenko/emailapp/compare/EmailAttachmentSorter.class
+ashulzhenko/emailapp/bean/EmailCustom.class
+ashulzhenko/emailapp/compare/MailAddressSorter.class
+ashulzhenko/emailapp/bean/UserConfigBean.class
+ashulzhenko/emailapp/mail/Mailer.class
+ashulzhenko/emailapp/mail/MailModule.class
