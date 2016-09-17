@@ -38,11 +38,9 @@ public class MailModule implements Mailer {
      * receive emails.
      *
      * @param userInfo user's information needed to send the email.
-     *
      */
     public MailModule(UserConfigBean userInfo) {
         validateUserInfo(userInfo);
-
         this.userInfo = userInfo;
     }
 
@@ -58,7 +56,7 @@ public class MailModule implements Mailer {
     
     
     /**
-     * Using the provided information, checks whether there are new email on the
+     * Using the provided information, checks whether there are new emails on the
      * server.
      *
      * @return Returns the list of new emails received from the server.
@@ -66,7 +64,7 @@ public class MailModule implements Mailer {
     @Override
     public List<EmailCustom> receiveEmail() {
         validateUserInfo(userInfo);
-        //create am IMAP server object
+        //create an IMAP server object
         ImapSslServer imapSslServer = new ImapSslServer(userInfo.getImapUrl(),
                 userInfo.getImapPort(), userInfo.getFromEmail(), userInfo.getPasswordEmail());
         
@@ -92,10 +90,13 @@ public class MailModule implements Mailer {
 
     /**
      * Sends the email provided.
+     * Jodd's session object removes embedded attachments from the email object.
+     * Since file paths are no longer stored, the received EmailCustom object will only
+     * contain usual attachments.
      *
      * @param email The email to send.
      * 
-     * @return the email sent.
+     * @return sent email.
      */
     @Override
     public EmailCustom sendEmail(EmailCustom email) {
@@ -105,13 +106,14 @@ public class MailModule implements Mailer {
 
         validateUserInfo(userInfo);
 
-        //create am SMTP server object
+        //create an SMTP server object
         SmtpServer<SmtpSslServer> smtpServer = SmtpSslServer
                 .create(userInfo.getSmtpUrl(), userInfo.getSmtpPort())
                 .authenticateWith(userInfo.getFromEmail(), userInfo.getPasswordEmail());
 
         //display Java Mail debug conversation with the server
         //smtpServer.debug(true);
+        
         SendMailSession session = smtpServer.createSession();
 
         //null pointer exception if file name is invalid
@@ -121,7 +123,7 @@ public class MailModule implements Mailer {
             session.close();
         } catch (NullPointerException npe) {
             throw new IllegalArgumentException
-                    ("Attachment error, such file does not exist. " + npe.getMessage());
+                    ("Attachment error, such file does not exist: " + npe.getMessage());
         }
         
         return addEmbed(email);
@@ -129,6 +131,7 @@ public class MailModule implements Mailer {
 
     /**
      * Using all the provided information, sends the email.
+     * Both embedded and usual attachments are preserved with the returned email.
      *
      * @param to the array of addresses to receive the email.
      * @param cc the carbon copy array of addresses to receive the email.
@@ -144,9 +147,9 @@ public class MailModule implements Mailer {
     public EmailCustom sendEmail(String[] to, String[] cc, String[] bcc,
             String subject, String message, String[] attach, String[] embedAttach) {
 
-        if (to == null || cc == null || bcc == null
-                || subject == null || message == null || attach == null || embedAttach == null) {
-            throw new IllegalArgumentException("Null value passed.");
+        if (to == null || cc == null || bcc == null || subject == null || 
+            message == null || attach == null || embedAttach == null) {
+              throw new IllegalArgumentException("Null value passed to the sendEmail method.");
         }
         if (to.length == 0) {
             throw new IllegalArgumentException("No recipient email address provided.");
@@ -206,9 +209,10 @@ public class MailModule implements Mailer {
             for (String file : embed) {
                 email.embed(EmailAttachment.attachment().bytes(new File(file)));
             }
+            //copy of the embedded attachments array to add to the sent email
+            //since session object removes it
             embedCopy = Arrays.copyOf(embed, embed.length);
         }
-
         if (attach.length != 0) {
             for (String file : attach) {
                 email.attach(EmailAttachment.attachment().file(new File(file)));
@@ -227,6 +231,7 @@ public class MailModule implements Mailer {
         if(embedCopy != null) {
             for(String file : embedCopy)
                 email.embed(EmailAttachment.attachment().bytes(new File(file)));
+            //default to null for the next email
             embedCopy = null;
         }
         return email;
@@ -252,7 +257,8 @@ public class MailModule implements Mailer {
                 }
                 toFill[i] = ea;
             }
-        } else {
+        } 
+        else {
             toFill = new EmailAddress[0];
         }
 

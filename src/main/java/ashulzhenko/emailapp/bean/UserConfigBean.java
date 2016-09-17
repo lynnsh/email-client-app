@@ -36,19 +36,17 @@ public class UserConfigBean implements Serializable {
     /**
      * Instantiates the object when obtaining email, password, SMTP and IMAP
      * URLs and ports information.
-     * Default ports for Gmail are: imap-993, smtp-465.
+     * Default ports for Gmail are imap-993, smtp-465.
      *
-     * @param fromEmail User's email from where the messages will be send and
-     * retrieved.
+     * @param fromEmail User's email from where the messages will be send and retrieved.
      * @param passwordEmail The password of the provided email.
      * @param imapPort The port number for the IMAP server.
      * @param imapUrl The URL of the IMAP server.
      * @param smtpPort The port number for the SMTP server.
      * @param smtpUrl The URL of the SMTP server.
-     * @throws IllegalArgumentException If provided email address is invalid.
      */
     public UserConfigBean(String fromEmail, String passwordEmail, int imapPort,
-            String imapUrl, int smtpPort, String smtpUrl) {
+                          String imapUrl, int smtpPort, String smtpUrl) {
         super();
         this.fromEmail = fromEmail;
         this.passwordEmail = passwordEmail;
@@ -168,10 +166,10 @@ public class UserConfigBean implements Serializable {
     }
 
     /**
-     * The object itself is returned represented as a string.
+     * The object itself is returned while represented as a string.
      *
      * @return user's email, password, IMAP port number, IMAP server URL, 
-     * SMTP port number, SMTP server URL in a String.
+     *         SMTP port number, SMTP server URL in a String.
      */
     @Override
     public String toString() {

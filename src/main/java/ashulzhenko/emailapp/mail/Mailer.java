@@ -12,6 +12,7 @@ import java.util.List;
  * @since 1.8
  */
 public interface Mailer {
+    
     /**
      * Returns user information in UserConfigBean.
      * @return user information in UserConfigBean.

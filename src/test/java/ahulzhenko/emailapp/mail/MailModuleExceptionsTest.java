@@ -40,7 +40,7 @@ public class MailModuleExceptionsTest {
             //2: null for cc
             {new String[]{"cs.517.receive@gmail.com", "cs.517.send@gmail.com"}, null, 
                 new String[0], "null for cc", "a very important message", new String[0], new String[0]},
-            //3: to invalid email
+            //3: to with invalid email
             {new String[]{"cs.517.receivegmail.com"}, new String[]{"cs.517.send@gmail.com"}, 
                 new String[0], "to with invalid email", 
                 "a very important message", new String[0], new String[0]},

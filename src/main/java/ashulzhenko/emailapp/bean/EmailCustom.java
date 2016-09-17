@@ -1,6 +1,7 @@
 package ashulzhenko.emailapp.bean;
 
 import ashulzhenko.emailapp.compare.EmailAttachmentSorter;
+import ashulzhenko.emailapp.compare.EmailMessageSorter;
 import ashulzhenko.emailapp.compare.MailAddressSorter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -37,7 +38,7 @@ public class EmailCustom extends Email implements Serializable {
     private LocalDateTime rcvDate;
 
     /**
-     * Instantiates EmailCustom object.
+     * Instantiates EmailCustom object. Sets directory default to sent.
      */
     public EmailCustom() {
         super();
@@ -46,6 +47,7 @@ public class EmailCustom extends Email implements Serializable {
 
     /**
      * Instantiates EmailCustom object from Received email object.
+     * Sets directory to inbox.
      *
      * @param rcvEmail ReceivedEmail to convert to EmailCustom.
      */
@@ -77,11 +79,13 @@ public class EmailCustom extends Email implements Serializable {
         this.rcvDate = rcvEmail.getReceiveDate()
                 .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
+    
+    
     /**
      * Compares this EmailCustom to the specified object. The result is true if
      * the two objects are of the same class and from, to, cc addresses as well
      * as subject, messages contents and attachments are equal. BCC is not
-     * checked since for ReceivedEmail, the receiver does not have the access to
+     * checked since for ReceivedEmail the receiver does not have the access to
      * other recipients.
      *
      * @param obj The object to compare this against.
@@ -107,19 +111,14 @@ public class EmailCustom extends Email implements Serializable {
         if (!Objects.equals(this.from.toString(), email.from.toString())) 
             return false;
         
-        
         //since Jodd.MailAddress and EmailAttachment do not implement equals
         if (!compareArrays(this.to, email.to)) 
             return false;
-        
-        
         if (!compareArrays(this.cc, email.cc)) 
             return false;
-        
-        
+      
         if (!checkAttachments(this.attachments, email.attachments)) 
             return false;
-        
         
         if (!checkMessagesContent(this.messages, email.messages)) 
             return false;
@@ -154,7 +153,7 @@ public class EmailCustom extends Email implements Serializable {
     /**
      * Returns the unique id of the message.
      *
-     * @return the unique id of the message.
+     * @return id of the message.
      */
     public int getId() {
         return id;
@@ -177,7 +176,7 @@ public class EmailCustom extends Email implements Serializable {
         return rcvDate;
     }
     /**
-     * Returns a hash code value for the this object.
+     * Returns a hash code value for this object.
      *
      * @return a hash code value for this object.
      */
@@ -204,6 +203,7 @@ public class EmailCustom extends Email implements Serializable {
         else
             throw new IllegalArgumentException("Attached messages value is null.");
     }
+    
     /**
      * Sets the directory where the email is located.
      *
@@ -217,9 +217,9 @@ public class EmailCustom extends Email implements Serializable {
     }
 
     /**
-     * Sets flags for the received message.
+     * Sets flags for received message.
      *
-     * @param flags Flags for the received message to set.
+     * @param flags Flags for received message to set.
      */
     public void setFlags(Flags flags) {
         if(flags != null)
@@ -239,14 +239,16 @@ public class EmailCustom extends Email implements Serializable {
         else
             throw new IllegalArgumentException("Id value is invalid: " + id);
     }
+    
     /**
-     * Sets message number.
+     * Sets the message number.
      *
      * @param messageNumber The message number.
      */
     public void setMessageNumber(int messageNumber) {
         this.messageNumber = messageNumber;
     }
+    
     /**
      * Sets the received date of the email.
      *
@@ -322,6 +324,9 @@ public class EmailCustom extends Email implements Serializable {
         if (length != second.size()) {
             return false;
         }
+        
+        Collections.sort(first, new EmailMessageSorter());
+        Collections.sort(second, new EmailMessageSorter());
 
         for (int i = 0; i < length; i++) {
             em1 = first.get(i);
