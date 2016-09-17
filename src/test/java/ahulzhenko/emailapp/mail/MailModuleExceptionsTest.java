@@ -8,20 +8,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import static org.junit.Assert.fail;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * Tests SMTPModule with invalid data.
+ * Tests MailModule with invalid data.
  * @author Alena Shulzhenko
  */
 @RunWith(Parameterized.class)
 public class MailModuleExceptionsTest {
     
-    private final Logger log = LogManager.getLogger(MailModuleTest.class.getName());
+    private final Logger log = LogManager.getLogger(MailModuleExceptionsTest.class.getName());
     private UserConfigBean userInfo;
     private String[] to;
     private String[] cc;
@@ -31,7 +30,7 @@ public class MailModuleExceptionsTest {
     private String[] attach;
     private String[] embed;
     
-    //parameters: userConfig, to, cc, bcc, subject, message, attachments, embedAttachments
+    //parameters: to, cc, bcc, subject, message, attachments, embedAttachments
     @Parameters(name = "{index} plan[{0}]={1}]")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{

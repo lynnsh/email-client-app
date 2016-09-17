@@ -29,7 +29,7 @@ public class MailModuleTest {
     private String subject, message;
     private String[] attach, embed;
     
-    //parameters: userConfig, to, cc, bcc, subject, message, attachments, embedAttachments
+    //parameters: to, cc, bcc, subject, message, attachments, embedAttachments
     @Parameters(name = "{index} plan[{0}]={1}]")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
@@ -81,7 +81,12 @@ public class MailModuleTest {
                 "a very important message<html><META http-equiv=Content-Type "
                     + "content=\"text/html; charset=utf-8\"><body><h2>this is a header</h2>"
                     + "<img src='cid:c.jpg'/></body></html>now with html and plain", 
-                new String[]{"src/test/res/w.jpg"}, new String[]{"src/test/res/c.jpg"}}
+                new String[]{"src/test/res/w.jpg"}, new String[]{"src/test/res/c.jpg"}},
+            //11: html email 1 embed attach with invalid cid (becomes usual attach)
+            {new String[]{"cs.517.receive@gmail.com"}, new String[0], 
+                new String[0], "html email 1 invalid cid embed attach (becomes usual attach)", 
+                "a very important message<html><body><img src='cid:a.jpg'/><body></html>", 
+                new String[0], new String[]{"src/test/res/c.jpg"}},
     });
     }
     
@@ -110,7 +115,7 @@ public class MailModuleTest {
         
         //wait for gmail to receive the message
         try {
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             log.error("Threaded sleep failed", e);
             System.exit(1);

@@ -13,6 +13,20 @@ import java.util.List;
  */
 public interface Mailer {
     /**
+     * Returns user information in UserConfigBean.
+     * @return user information in UserConfigBean.
+     */
+    UserConfigBean getUserInfo();
+    
+    
+    /**
+     * Using the provided information, checks whether there are new email on the server.
+     * @return Returns the list of new emails received from the server.
+     */
+    List<EmailCustom> receiveEmail();
+    
+    
+    /**
      * Using all the provided information, sends the email.
      * @param to the array of addresses to receive the email.
      * @param cc the carbon copy array of addresses to receive the email.
@@ -23,15 +37,8 @@ public interface Mailer {
      * @param embedAttachments the array of attachments to embed (file paths).
      * @return the created and sent email.
      */
-    EmailCustom sendEmail(String[] to, String[] cc, String[] bcc, String subject, 
-                          String message, String[] attachments, String[] embedAttachments);
-    
-    
-    /**
-     * Using the provided information, checks whether there are new email on the server.
-     * @return Returns the list of new emails received from the server.
-     */
-    List<EmailCustom> receiveEmail();
+    EmailCustom sendEmail(String[] to, String[] cc, String[] bcc, String subject,
+            String message, String[] attachments, String[] embedAttachments);
     
     
     /**
@@ -48,10 +55,4 @@ public interface Mailer {
      */
     void setUserInfo(UserConfigBean userInfo);
     
-    
-    /**
-     * Returns user information in UserConfigBean.
-     * @return user information in UserConfigBean.
-     */
-    UserConfigBean getUserInfo();
 }

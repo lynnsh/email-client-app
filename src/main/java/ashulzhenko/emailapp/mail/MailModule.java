@@ -29,9 +29,9 @@ import org.slf4j.LoggerFactory;
  */
 public class MailModule implements Mailer {
 
-    private UserConfigBean userInfo;
     private String[] embedCopy;
     private final Logger log = LoggerFactory.getLogger(getClass().getName());
+    private UserConfigBean userInfo;
 
     /**
      * Instantiates the object with all necessary information to send and
@@ -55,18 +55,39 @@ public class MailModule implements Mailer {
     public UserConfigBean getUserInfo() {
         return userInfo;
     }
-
+    
+    
     /**
-     * Sets user information using UserConfigBean.
+     * Using the provided information, checks whether there are new email on the
+     * server.
      *
-     * @param userInfo user's information needed to send the email.
+     * @return Returns the list of new emails received from the server.
      */
     @Override
-    public void setUserInfo(UserConfigBean userInfo) {
-        if (userInfo == null) {
-            throw new IllegalArgumentException("No user information provided");
+    public List<EmailCustom> receiveEmail() {
+        validateUserInfo(userInfo);
+        //create am IMAP server object
+        ImapSslServer imapSslServer = new ImapSslServer(userInfo.getImapUrl(),
+                userInfo.getImapPort(), userInfo.getFromEmail(), userInfo.getPasswordEmail());
+        
+        //imapSslServer.setProperty("mail.debug", "true");
+        ReceiveMailSession session = imapSslServer.createSession();
+        session.open();
+        
+        //messages that are delivered are then marked as read on the server
+        ReceivedEmail[] rcvEmails = session.receiveEmailAndMarkSeen
+                            (EmailFilter.filter().flag(Flags.Flag.SEEN, false));
+        
+        session.close();
+        
+        List<EmailCustom> emails = new ArrayList<>(0);
+        
+        if (rcvEmails != null) {
+            for (int i = 0; i < rcvEmails.length; i++) {
+                emails.add(new EmailCustom(rcvEmails[i]));
+            }
         }
-        this.userInfo = userInfo;
+        return emails;
     }
 
     /**
@@ -103,7 +124,6 @@ public class MailModule implements Mailer {
                     ("Attachment error, such file does not exist. " + npe.getMessage());
         }
         
-        
         return addEmbed(email);
     }
 
@@ -126,7 +146,7 @@ public class MailModule implements Mailer {
 
         if (to == null || cc == null || bcc == null
                 || subject == null || message == null || attach == null || embedAttach == null) {
-            throw new IllegalArgumentException("Invalid value passed to the constructor.");
+            throw new IllegalArgumentException("Null value passed.");
         }
         if (to.length == 0) {
             throw new IllegalArgumentException("No recipient email address provided.");
@@ -160,38 +180,19 @@ public class MailModule implements Mailer {
 
         return sendEmail(email);
     }
-
+    
+    
     /**
-     * Using the provided information, checks whether there are new email on the
-     * server.
+     * Sets user information using UserConfigBean.
      *
-     * @return Returns the list of new emails received from the server.
+     * @param userInfo user's information needed to send the email.
      */
     @Override
-    public List<EmailCustom> receiveEmail() {
-        validateUserInfo(userInfo);
-        //create am IMAP server object
-        ImapSslServer imapSslServer = new ImapSslServer(userInfo.getImapUrl(),
-                userInfo.getImapPort(), userInfo.getFromEmail(), userInfo.getPasswordEmail());
-
-        //imapSslServer.setProperty("mail.debug", "true");
-        ReceiveMailSession session = imapSslServer.createSession();
-        session.open();
-
-        //messages that are delivered are then marked as read on the server
-        ReceivedEmail[] rcvEmails = session.receiveEmailAndMarkSeen(EmailFilter
-                .filter().flag(Flags.Flag.SEEN, false));
-
-        session.close();
-
-        List<EmailCustom> emails = new ArrayList<>(0);
-
-        if (rcvEmails != null) {
-            for (int i = 0; i < rcvEmails.length; i++) {
-                emails.add(new EmailCustom(rcvEmails[i]));
-            }
+    public void setUserInfo(UserConfigBean userInfo) {
+        if (userInfo == null) {
+            throw new IllegalArgumentException("No user information provided");
         }
-        return emails;
+        this.userInfo = userInfo;
     }
 
     /**
@@ -216,7 +217,7 @@ public class MailModule implements Mailer {
     }
     
     /**
-     * Adds embedded attachments if the ones were removed when sending the message.
+     * Adds embedded attachments if they were removed when sending the message.
      * 
      * @param email Email to add attachments.
      * 
@@ -236,6 +237,7 @@ public class MailModule implements Mailer {
      * email.
      *
      * @param original the provided string array of email addresses.
+     * 
      * @return the EmailAddress array to use when sending the email.
      */
     private EmailAddress[] setEmailArray(String[] original) {
