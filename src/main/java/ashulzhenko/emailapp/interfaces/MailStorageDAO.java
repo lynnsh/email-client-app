@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- *
+ * Under construction..
  * @author aline
  */
 public interface MailStorageDAO {

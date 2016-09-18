@@ -1,18 +1,16 @@
 package ashulzhenko.emailapp.data;
 
 import ashulzhenko.emailapp.interfaces.FolderStorageDAO;
-import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Under construction..
  * @author aline
  */
 public class FolderStorageModule extends DatabaseModule implements FolderStorageDAO {

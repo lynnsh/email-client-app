@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Under construction..
  * @author aline
  */
 public class MailStorageModule extends DatabaseModule implements MailStorageDAO {

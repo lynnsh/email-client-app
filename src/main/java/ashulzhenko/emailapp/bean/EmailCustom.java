@@ -22,7 +22,7 @@ import jodd.mail.ReceivedEmail;
  * field for the email directory.
  *
  * @author Alena Shulzhenko
- * @version 16/09/2016
+ * @version 18/09/2016
  * @since 1.8
  */
 public class EmailCustom extends Email implements Serializable {
@@ -99,7 +99,6 @@ public class EmailCustom extends Email implements Serializable {
         
         if (obj == null) 
             return false;
-        
         
         if (obj instanceof EmailCustom) 
             email = (EmailCustom) obj;

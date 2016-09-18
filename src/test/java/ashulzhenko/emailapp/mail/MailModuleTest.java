@@ -3,7 +3,6 @@ package ashulzhenko.emailapp.mail;
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.interfaces.Mailer;
-import ashulzhenko.emailapp.mail.MailModule;
 import java.util.Arrays;
 import java.util.Collection;
 import jodd.mail.EmailAddress;
@@ -11,12 +10,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-@Ignore
+
 /**
  * Tests MailModule.
  * @author Alena Shulzhenko
@@ -116,7 +114,7 @@ public class MailModuleTest {
         
         //wait for gmail to receive the message
         try {
-            Thread.sleep(10000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             log.error("Threaded sleep failed", e);
             System.exit(1);

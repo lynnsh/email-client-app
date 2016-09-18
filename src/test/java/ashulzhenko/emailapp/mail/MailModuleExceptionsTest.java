@@ -1,7 +1,6 @@
 package ashulzhenko.emailapp.mail;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
-import ashulzhenko.emailapp.mail.MailModule;
 import java.util.Arrays;
 import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
