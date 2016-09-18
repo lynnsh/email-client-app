@@ -4,11 +4,10 @@ import ashulzhenko.emailapp.compare.EmailAttachmentSorter;
 import ashulzhenko.emailapp.compare.EmailMessageSorter;
 import ashulzhenko.emailapp.compare.MailAddressSorter;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.mail.Flags;
@@ -35,7 +34,7 @@ public class EmailCustom extends Email implements Serializable {
     private Flags flags;
     private int id = -1;
     private int messageNumber;
-    private LocalDateTime rcvDate;
+    private Date rcvDate;
 
     /**
      * Instantiates EmailCustom object. Sets directory default to sent.
@@ -76,8 +75,7 @@ public class EmailCustom extends Email implements Serializable {
         this.subjectEncoding = rcvEmail.getSubjectEncoding();
         this.to = rcvEmail.getTo();
         this.setPriority(rcvEmail.getPriority());
-        this.rcvDate = rcvEmail.getReceiveDate()
-                .toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        this.rcvDate = rcvEmail.getReceiveDate();
     }
     
     
@@ -110,19 +108,20 @@ public class EmailCustom extends Email implements Serializable {
         
         if (!Objects.equals(this.from.toString(), email.from.toString())) 
             return false;
-        
+
         //since Jodd.MailAddress and EmailAttachment do not implement equals
         if (!compareArrays(this.to, email.to)) 
             return false;
+
         if (!compareArrays(this.cc, email.cc)) 
             return false;
-      
+
         if (!checkAttachments(this.attachments, email.attachments)) 
             return false;
-        
+
         if (!checkMessagesContent(this.messages, email.messages)) 
             return false;
-        
+
         return Objects.equals(this.subject, email.subject);
     }
 
@@ -172,7 +171,7 @@ public class EmailCustom extends Email implements Serializable {
      *
      * @return the received date of this email.
      */
-    public LocalDateTime getReceivedDate() {
+    public Date getReceivedDate() {
         return rcvDate;
     }
     /**
@@ -254,7 +253,7 @@ public class EmailCustom extends Email implements Serializable {
      *
      * @param rcvDate The received date of the email.
      */
-    public void setReceivedDate(LocalDateTime rcvDate) {
+    public void setReceivedDate(Date rcvDate) {
         if(rcvDate != null)
             this.rcvDate = rcvDate;
         else

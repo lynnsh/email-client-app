@@ -13,30 +13,39 @@ import java.io.Serializable;
 public class UserConfigBean implements Serializable {
     
     private static final long serialVersionUID = 42051768871L;
+    private String emailPassword;
     private String fromEmail;
     private int imapPort;
     private String imapUrl;
-    private String passwordEmail;
+    private String mysqlPassword;
+    private int mysqlPort;
+    private String mysqlUrl;
+    private String mysqlUser;
     private int smtpPort;
     private String smtpUrl;
     
+    
     /**
      * Instantiates the object with default information.
+     * Gmail information is used as default.
      */
     public UserConfigBean() {
         super();
         this.fromEmail = "";
-        this.passwordEmail = "";
-        this.imapPort = 0;
-        this.smtpPort = 0;
-        this.imapUrl = "";
-        this.smtpUrl = "";
+        this.emailPassword = "";
+        this.imapPort = 993;
+        this.smtpPort = 465;
+        this.imapUrl = "imap.gmail.com";
+        this.smtpUrl = "smtp.gmail.com";
+        this.mysqlUrl = "";
+        this.mysqlPort = 3306;
+        this.mysqlUser = "";
+        this.mysqlPassword = "";
     }
 
     /**
      * Instantiates the object when obtaining email, password, SMTP and IMAP
      * URLs and ports information.
-     * Default ports for Gmail are imap-993, smtp-465.
      *
      * @param fromEmail User's email from where the messages will be send and retrieved.
      * @param passwordEmail The password of the provided email.
@@ -49,11 +58,19 @@ public class UserConfigBean implements Serializable {
                           String imapUrl, int smtpPort, String smtpUrl) {
         super();
         this.fromEmail = fromEmail;
-        this.passwordEmail = passwordEmail;
+        this.emailPassword = passwordEmail;
         this.imapPort = imapPort;
         this.imapUrl = imapUrl;
         this.smtpPort = smtpPort;
         this.smtpUrl = smtpUrl;
+    }
+    /**
+     * Returns the password for the user's email account.
+     *
+     * @return the password for the user's email account.
+     */
+    public String getEmailPassword() {
+        return emailPassword;
     }
     
     /**
@@ -82,14 +99,37 @@ public class UserConfigBean implements Serializable {
     public String getImapUrl() {
         return imapUrl;
     }
-
     /**
-     * Returns the password for the user's email account.
+     * Returns the password of MySQL user.
      *
-     * @return the password for the user's email account.
+     * @return the password of MySQL user.
      */
-    public String getPasswordEmail() {
-        return passwordEmail;
+    public String getMysqlPassword() {
+        return mysqlPassword;
+    }
+    /**
+     * Returns the port number of the MySQL server.
+     *
+     * @return the port number of the MySQL server.
+     */
+    public int getMysqlPort() {
+        return mysqlPort;
+    }
+    /**
+     * Returns the URL of the MySQL server.
+     *
+     * @return the URL of the MySQL server.
+     */
+    public String getMysqlUrl() {
+        return mysqlUrl;
+    }
+    /**
+     * Returns the username of MySQL user.
+     *
+     * @return the username of MySQL user.
+     */
+    public String getMysqlUserName() {
+        return mysqlUser;
     }
 
     /**
@@ -108,6 +148,14 @@ public class UserConfigBean implements Serializable {
      */
     public String getSmtpUrl() {
         return smtpUrl;
+    }
+    /**
+     * Sets the password of the user's email account.
+     *
+     * @param emailPassword the password of the user's email account.
+     */
+    public void setEmailPassword(String emailPassword) {
+        this.emailPassword = emailPassword;
     }
     
 
@@ -137,14 +185,37 @@ public class UserConfigBean implements Serializable {
     public void setImapUrl(String imapUrl) {
         this.imapUrl = imapUrl;
     }
-
     /**
-     * Sets the password of the user's email account.
+     * Sets the password of MySQL user.
      *
-     * @param passwordEmail the password of the user's email account.
+     * @param mysqlPassword the password of MySQL user.
      */
-    public void setPasswordEmail(String passwordEmail) {
-        this.passwordEmail = passwordEmail;
+    public void setMysqlPassword(String mysqlPassword) {
+        this.mysqlPassword = mysqlPassword;
+    }
+    /**
+     * Sets the port number of the MySQL server.
+     *
+     * @param mysqlPort the port number of the MySQL server.
+     */
+    public void setMysqlPort(int mysqlPort) {
+        this.mysqlPort = mysqlPort;
+    }
+    /**
+     * Sets the URL of the MySQL server.
+     *
+     * @param mysqlUrl the URL of the MySQL server.
+     */
+    public void setMysqlUrl(String mysqlUrl) {
+        this.mysqlUrl = mysqlUrl;
+    }
+    /**
+     * Sets the username of MySQL user.
+     *
+     * @param mysqlUser the username of MySQL user.
+     */
+    public void setMysqlUserName(String mysqlUser) {
+        this.mysqlUser = mysqlUser;
     }
 
     /**
@@ -169,14 +240,20 @@ public class UserConfigBean implements Serializable {
      * The object itself is returned while represented as a string.
      *
      * @return user's email, password, IMAP port number, IMAP server URL, 
-     *         SMTP port number, SMTP server URL in a String.
+     *         SMTP port number, SMTP server URL, MySQL URL, MySQL port number,
+     *         MySQL user name, MySQL password in a String.
      */
     @Override
     public String toString() {
-        return "UserConfigBean{" + "fromEmail=" + fromEmail
-                + ", passwordEmail=" + passwordEmail + ", imapPort=" + imapPort
-                + ", imapUrl=" + imapUrl + ", smtpPort=" + smtpPort
-                + ", smtpUrl=" + smtpUrl + '}';
+        return "UserConfigBean{" + "fromEmail=" + fromEmail + 
+                ", imapPort=" + imapPort + ", imapUrl=" + imapUrl + 
+                ", emailPassword=" + emailPassword + ", smtpPort=" + smtpPort + 
+                ", smtpUrl=" + smtpUrl + ", mysqlUrl=" + mysqlUrl + 
+                ", mysqlPort=" + mysqlPort + ", mysqlUser=" + mysqlUser + 
+                ", mysqlPassword=" + mysqlPassword + '}';
     }
+
+    
+    
 
 }

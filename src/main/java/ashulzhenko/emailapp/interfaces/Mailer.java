@@ -1,4 +1,4 @@
-package ashulzhenko.emailapp.mail;
+package ashulzhenko.emailapp.interfaces;
 
 import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.bean.UserConfigBean;

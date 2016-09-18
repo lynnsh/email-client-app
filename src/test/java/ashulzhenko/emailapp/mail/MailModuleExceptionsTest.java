@@ -1,4 +1,4 @@
-package ahulzhenko.emailapp.mail;
+package ashulzhenko.emailapp.mail;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.mail.MailModule;

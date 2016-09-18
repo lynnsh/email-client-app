@@ -1,8 +1,8 @@
-package ahulzhenko.emailapp.mail;
+package ashulzhenko.emailapp.mail;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.bean.EmailCustom;
-import ashulzhenko.emailapp.mail.Mailer;
+import ashulzhenko.emailapp.interfaces.Mailer;
 import ashulzhenko.emailapp.mail.MailModule;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,11 +11,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Before;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-
+@Ignore
 /**
  * Tests MailModule.
  * @author Alena Shulzhenko
@@ -86,7 +87,7 @@ public class MailModuleTest {
             {new String[]{"cs.517.receive@gmail.com"}, new String[0], 
                 new String[0], "html email 1 invalid cid embed attach (becomes usual attach)", 
                 "a very important message<html><body><img src='cid:a.jpg'/><body></html>", 
-                new String[0], new String[]{"src/test/res/c.jpg"}},
+                new String[0], new String[]{"src/test/res/c.jpg"}}
     });
     }
     
@@ -115,7 +116,7 @@ public class MailModuleTest {
         
         //wait for gmail to receive the message
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             log.error("Threaded sleep failed", e);
             System.exit(1);

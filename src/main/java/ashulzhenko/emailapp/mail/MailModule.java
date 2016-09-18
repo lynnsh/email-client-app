@@ -1,5 +1,6 @@
 package ashulzhenko.emailapp.mail;
 
+import ashulzhenko.emailapp.interfaces.Mailer;
 import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import java.io.File;
@@ -66,7 +67,7 @@ public class MailModule implements Mailer {
         validateUserInfo(userInfo);
         //create an IMAP server object
         ImapSslServer imapSslServer = new ImapSslServer(userInfo.getImapUrl(),
-                userInfo.getImapPort(), userInfo.getFromEmail(), userInfo.getPasswordEmail());
+                userInfo.getImapPort(), userInfo.getFromEmail(), userInfo.getEmailPassword());
         
         //imapSslServer.setProperty("mail.debug", "true");
         ReceiveMailSession session = imapSslServer.createSession();
@@ -109,7 +110,7 @@ public class MailModule implements Mailer {
         //create an SMTP server object
         SmtpServer<SmtpSslServer> smtpServer = SmtpSslServer
                 .create(userInfo.getSmtpUrl(), userInfo.getSmtpPort())
-                .authenticateWith(userInfo.getFromEmail(), userInfo.getPasswordEmail());
+                .authenticateWith(userInfo.getFromEmail(), userInfo.getEmailPassword());
 
         //display Java Mail debug conversation with the server
         //smtpServer.debug(true);

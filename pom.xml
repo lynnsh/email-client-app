@@ -51,11 +51,11 @@
         </dependency>
 
         <!-- MySQL dependency -->
-        <!--        <dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.39</version>
-        </dependency>-->
+        </dependency>
 
         <!-- Jodd Mail Dependency -->
         <dependency>
