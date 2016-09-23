@@ -26,14 +26,30 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-@Ignore
+import static java.nio.file.Paths.get;
+
 /**
- * Under construction..
- * @author aline
+ * Tests MailStorageModule.
+ * @author Alena Shulzhenko
  */
 public class MailStorageModuleTest {
     private final Logger log = LogManager.getLogger(MailStorageModuleTest.class.getName());
     private UserConfigBean userInfo;
+    
+    @Test
+    public void saveEmailTest() throws SQLException {
+        MailStorageDAO data = new MailStorageModule(userInfo);
+        EmailCustom email = createEmail();
+        int id = data.saveEmail(email);
+        assertEquals(email, data.findEmailById(id));
+    }
+    
+    @Test
+    public void deleteEmailTest() throws SQLException {
+        MailStorageDAO data = new MailStorageModule(userInfo);
+        data.deleteEmail(3);
+        assertEquals(null, data.findEmailById(3));
+    }
     
     @Test
     public void findAllTest() throws SQLException {
@@ -43,25 +59,34 @@ public class MailStorageModuleTest {
     }
     
     @Test
-    public void findAllInDirectory() throws SQLException {
+    public void findAllInDirectoryTest() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
         List <EmailCustom> list = data.findAllInDirectory("inbox");
         assertEquals(list.size(), 3);
     }
     
     @Test
-    public void findEmailById() throws SQLException {
+    public void findEmailByIdTest() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
         EmailCustom emailDb = data.findEmailById(3);
-        EmailCustom email = new EmailCustom();
-        email.setDirectory("inbox");
-        email.cc(new EmailAddress[]{new EmailAddress("cs.517.send@outlook.com"),
-                                     new EmailAddress("cs.517.send@gmail.com")});
-        email.from("cs.517.send@gmail.com");
-        email.addText("plain text3");
-        email.to("cs.517.receive@gmail.com");
-        email.subject("important3");
+        EmailCustom email = createEmail();
         assertEquals(email, emailDb);
+    }
+    
+    @Test
+    public void findEmailByIdTest_NotInDb() throws SQLException {
+        MailStorageDAO data = new MailStorageModule(userInfo);
+        EmailCustom emailDb = data.findEmailById(100);
+        assertEquals(null, emailDb);
+    }
+    
+    @Test
+    public void updateEmailDirectoryTest() throws SQLException {
+        MailStorageDAO data = new MailStorageModule(userInfo);
+        EmailCustom email = data.findEmailById(4);
+        email.setDirectory("trash");
+        data.updateEmailDirectory(email);
+        assertEquals("trash", data.findEmailById(4).getDirectory());
     }
     
     @Before
@@ -86,16 +111,23 @@ public class MailStorageModuleTest {
         }
     }
     
+    private EmailCustom createEmail() {
+        EmailCustom email = new EmailCustom();
+        email.setDirectory("inbox");
+        email.cc(new EmailAddress[]{new EmailAddress("cs.517.send@outlook.com"),
+                                     new EmailAddress("cs.517.send@gmail.com")});
+        email.from("cs.517.send@gmail.com");
+        email.addText("plain text");
+        email.to("cs.517.receive@gmail.com");
+        email.subject("important");
+        return email;
+    }
+    
     /**
      * The following methods support the seedDatabse method
      */
     private String loadAsString(final String path) {
         try {
-            /*try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path)) {
-            return new Scanner(inputStream).useDelimiter("\\A").next();
-            } catch (IOException e) {
-            throw new RuntimeException("Unable to close input stream.", e);
-            }*/
             return new String(readAllBytes(get(path)));
         } catch (IOException io) {
             throw new RuntimeException("Unable to close input stream.", io);

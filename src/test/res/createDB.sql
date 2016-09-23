@@ -8,7 +8,7 @@ drop table if exists directories;
 
 create table directories (
 	id integer primary key AUTO_INCREMENT,
-	name varchar(32) default ''
+	name varchar(50) default ''
 );
 
 create table emails (
@@ -16,15 +16,15 @@ create table emails (
 	msgNumber integer default 0 not null,
 	rcvDate timestamp not null,
 	directory integer,
-	bcc varchar(1000) default '',
-	cc varchar(1000) default '',
-	fromEmail varchar(32) default '' not null,
-	message varchar(1000) default '',
-	toEmails varchar(1000) default '',
-	replyTo varchar(1000) default '',
+	bcc varchar(255) default '',
+	cc varchar(255) default '',
+	fromEmail varchar(50) default '' not null,
+	message text default '',
+	toEmails varchar(255) default '',
+	replyTo varchar(255) default '',
 	sentDate timestamp not null,
-	subject varchar(32) default '',
-	attachments varchar(1000) default '',
+	subject varchar(50) default '',
+	attachments mediumtext,
 	foreign key (directory) references directories(id) ON DELETE CASCADE ON UPDATE CASCADE	
 );
 

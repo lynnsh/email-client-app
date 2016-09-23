@@ -14,47 +14,65 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Under construction..
- * @author aline
+ * MailStorageModule class is used to save, find, update, and delete messages.
+ *
+ * @author Alena Shulzhenko
+ * @version 23/09/2016
+ * @since 1.8
  */
 public class MailStorageModule extends DatabaseModule implements MailStorageDAO {
     private final Logger log = LoggerFactory.getLogger(getClass().getName());
     
+    /**
+     * Instantiates the object with all necessary information to work with the database.
+     *
+     * @param userInfo user's information needed to connect to the database.
+     */
     public MailStorageModule(UserConfigBean userInfo) {
         super(userInfo);
     }
 
+    /**
+     * Saves provided email in the database.
+     * 
+     * @param email The email to save in the database.
+     * 
+     * @return the id of the saved email
+     * 
+     * @throws SQLException If there was a problem when writing to the database.
+     */
     @Override
-    public int createEmail(EmailCustom email) throws SQLException {
+    public int saveEmail(EmailCustom email) throws SQLException {
         if(email == null)
             throw new IllegalArgumentException("Email value is null.");
         
-        int result;
+        int id = -1;
         String query = "insert into emails (msgNumber, rcvDate, directory, "
                 + "bcc, cc, fromEmail, message, toEmails, replyTo, sentDate, "
                 + "subject, attachments) values (?,?,?,?,?,?,?,?,?,?,?,?)";
         Connection connection = getConnection();
         try(PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, email.getMessageNumber());
-            pstmt.setTimestamp(2, new Timestamp(email.getReceivedDate().getTime()));
-            pstmt.setInt(3, findDirectoryId(connection, email.getDirectory()));
-            pstmt.setString(4, convertArrayToStr(email.getBcc()));
-            pstmt.setString(5, convertArrayToStr(email.getCc()));
-            pstmt.setString(6, email.getFrom().getEmail());
-            pstmt.setString(7, convertMessagesToStr(email.getAllMessages()));
-            pstmt.setString(8, convertArrayToStr(email.getTo()));
-            pstmt.setString(9, convertArrayToStr(email.getReplyTo()));
-            pstmt.setTimestamp(10, new Timestamp(email.getSentDate().getTime()));
-            pstmt.setString(11, email.getSubject());
-            pstmt.setString(12, convertAttachToStr(email.getAttachments()));
-            
-            result = pstmt.executeUpdate();
+            prepareEmail(pstmt, email, connection);
+            pstmt.executeUpdate();
+            //get id of newly created email
+            try(ResultSet rs = pstmt.getGeneratedKeys()) {
+                rs.next();
+                id = rs.getInt(1);
+            }
         }
-        
         closeConnection(connection);
-        return result;
+        return id;
     }
 
+    /**
+     * Deletes email that has the provided id.
+     * 
+     * @param id The id of the email to delete.
+     * 
+     * @return 1 if delete was successful; 0 otherwise.
+     * 
+     * @throws SQLException If there was a problem when writing to the database.
+     */
     @Override
     public int deleteEmail(int id) throws SQLException {
         if(id < 1)
@@ -65,13 +83,20 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         Connection connection = getConnection();
         try(PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
-            result = pstmt.executeUpdate();
+            pstmt.executeUpdate();
+            result = 1;
         }
-        
         closeConnection(connection);
         return result;
     }
 
+    /**
+     * Returns all email saved in the database.
+     * 
+     * @return all email saved in the database.
+     * 
+     * @throws SQLException If there was a problem when reading from the database.
+     */
     @Override
     public List<EmailCustom> findAll() throws SQLException {
         Connection connection = getConnection();
@@ -91,6 +116,12 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         return emails;
     }
 
+    /**
+     * Returns all emails in the given directory.
+     * @param directory The directory where requested email are stored.
+     * @return all emails in the given directory.
+     * @throws SQLException If there was a problem when reading from the database.
+     */
     @Override
     public List<EmailCustom> findAllInDirectory(String directory) throws SQLException {
         if(directory == null || directory.isEmpty())
@@ -116,13 +147,22 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         return emails;
     }
 
+    /**
+     * Find an email in database with given Id.
+     * 
+     * @param id The id of the email to find.
+     * 
+     * @return the found email corresponding to the given id.
+     * 
+     * @throws SQLException If there was a problem when reading from the database.
+     */
     @Override
     public EmailCustom findEmailById(int id) throws SQLException {
         if(id < 1)
             throw new IllegalArgumentException("Id value is invalid: " + id);
         
         Connection connection = getConnection();
-        EmailCustom email;
+        EmailCustom email  = null;
         
         String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
                 + "message, toEmails, replyTo, sentDate, subject, attachments "
@@ -130,15 +170,23 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
             pstmt.setInt(1, id);
             try(ResultSet rs = pstmt.executeQuery()){
-                rs.next();
-                email = createEmail(rs);
+                if(rs.next())
+                    email = createEmail(rs);
             }
         }
         closeConnection(connection);
         return email;
     }
     
-    
+    /**
+     * Updates the directory in the database for the provided email.
+     * 
+     * @param email The email containing new directory name.
+     * 
+     * @return 1 if update was successful; 0 otherwise.
+     * 
+     * @throws SQLException If there was a problem when writing to the database.
+     */
     @Override
     public int updateEmailDirectory(EmailCustom email) throws SQLException {
         if(email == null)
@@ -151,25 +199,47 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         try(PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, dirId);
             pstmt.setInt(2, email.getId());
-            result = pstmt.executeUpdate();
+            pstmt.executeUpdate();
+            result = 1;
         }
-        
         closeConnection(connection);
         return result;
     }
     
     /**
-     * Adds embedded and ordinary attachments.
-     *
+     * Adds embedded attachments.
      * @param email the email to which the attachments are added
-     * @throws Exception If there is a problem when adding the attachment.
+     * @param attachments The attachments to add to email.
      */
-    private void addAttachments(Email email, String[] array) throws Exception {
-        for(String str : array) {
-            email.embed(EmailAttachment.attachment().bytes(str.getBytes()));
+    private void addAttachments(Email email, String attachments) {
+        try {
+            if(!attachments.isEmpty())
+                for(String str : attachments.split(","))
+                    email.embed(EmailAttachment.attachment().bytes(str.getBytes()));
+        } 
+        catch (Exception ex) {
+            log.error("Error with the attachments", ex);
+            throw new IllegalArgumentException("Attachment error: " + ex.getMessage());
+        }
+        
+    }
+    
+    /**
+     * Adds messages to email.
+     * @param email The email to which the messages are added
+     * @param messages The messages to add to email.
+     */
+    private void addMessages(Email email, String messages) {
+        for(String str : messages.split(",")) {
+            email.addHtml(str);
         }
     }
     
+    /**
+     * Returns string with mail addresses separated by comma.
+     * @param array MailAddress array to convert.
+     * @return string with mail addresses separated by comma.
+     */
     private String convertArrayToStr(MailAddress[] array) {
         String str = "";
         if(array != null && array.length != 0) {
@@ -179,6 +249,11 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         return str;
     }
     
+    /**
+     * Returns string with attachments as byte string separated by comma.
+     * @param list EmailAttachment list to convert.
+     * @return string with attachments as byte string separated by comma.
+     */
     private String convertAttachToStr(List<EmailAttachment> list) {
         String str = "";
         if(list != null && !list.isEmpty()) {
@@ -191,6 +266,11 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         return str;
     }
     
+    /**
+     * Returns string with messages separated by comma.
+     * @param list EmailMessage list to convert.
+     * @return string with messages separated by comma.
+     */
     private String convertMessagesToStr(List<EmailMessage> list) {
         String str = "";
         if(list != null && !list.isEmpty()) {
@@ -200,6 +280,12 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         return str;
     }
     
+    /**
+     * Creates email from database data.
+     * @param rs ResultSet containing database data.
+     * @return created email.
+     * @throws SQLException If there was a problem when reading from the database.
+     */
     private EmailCustom createEmail(ResultSet rs) throws SQLException {
         EmailCustom email = new EmailCustom();
         email.setId(rs.getInt(1));
@@ -213,7 +299,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         if(!str.isEmpty())
             email.cc(str.split(","));
         email.from(rs.getString(7));
-        email.addHtml(rs.getString(8));
+        addMessages(email, rs.getString(8));
         str = rs.getString(9);
         if(!str.isEmpty())
             email.to(str.split(","));
@@ -222,17 +308,17 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             email.replyTo(str.split(","));
         email.setSentDate(rs.getTimestamp(11));
         email.subject(rs.getString(12));
-        try {
-            str = rs.getString(13);
-            if(!str.isEmpty())
-                addAttachments(email, str.split(","));
-        } catch (Exception ex) {
-            log.error("Error with the attachments", ex);
-            throw new IllegalArgumentException("Attachment error: " + ex.getMessage());
-        }
+        addAttachments(email, rs.getString(13));
+        
         return email;
     }
     
+    /**
+     * Returns directory name corresponding to the provided id.
+     * @param dirId The id of the directory to find.
+     * @return directory name corresponding to the provided id.
+     * @throws SQLException If there was a problem when reading from the database.
+     */
     private String findDirectoryName(int dirId) throws SQLException {
         Connection conn = getConnection();
         String name;
@@ -248,20 +334,31 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         return name;
     }
     
+    /**
+     * Returns the id of the provided directory. Creates new directory if one
+     * is not found in the database.
+     * @param conn Database Connection object.
+     * @param directory Directory name for which id is required.
+     * @return the id of the provided directory.
+     * @throws SQLException If there was a problem when reading from the database.
+     */
     private int findDirectoryId(Connection conn, String directory) throws SQLException {
         int id;
         String query = "select id from directories where name = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, directory);
             try(ResultSet rs = pstmt.executeQuery()) {
+                //directory exists
                 if(rs.next())
                     id = rs.getInt(1);
+                //directory does not exist, so it is created
                 else {
                     query = "insert into directories (name) values (?)";
                     try(PreparedStatement pstmt2 = conn.prepareStatement
                                     (query, Statement.RETURN_GENERATED_KEYS)){
                         pstmt2.setString(1, directory);
                         pstmt2.executeUpdate();
+                        //get id of newly created directory
                         try(ResultSet rs2 = pstmt2.getGeneratedKeys()) {
                             rs2.next();
                             id = rs2.getInt(1);
@@ -271,6 +368,30 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             }
         }
         return id;
+    }
+    
+    /**
+     * Sets all necessary data to PreparedStatement.
+     * @param pstmt The PreparedStatement.
+     * @param email The email that provided data for the PreparedStatement.
+     * @param connection Database Connection object.
+     * @return PreparedStatement with all necessary data to execute it.
+     * @throws SQLException If there is a problem when connecting to the database.
+     */
+    private PreparedStatement prepareEmail(PreparedStatement pstmt, EmailCustom email, Connection connection) throws SQLException {
+        pstmt.setInt(1, email.getMessageNumber());
+        pstmt.setTimestamp(2, new Timestamp(email.getReceivedDate().getTime()));
+        pstmt.setInt(3, findDirectoryId(connection, email.getDirectory()));
+        pstmt.setString(4, convertArrayToStr(email.getBcc()));
+        pstmt.setString(5, convertArrayToStr(email.getCc()));
+        pstmt.setString(6, email.getFrom().getEmail());
+        pstmt.setString(7, convertMessagesToStr(email.getAllMessages()));
+        pstmt.setString(8, convertArrayToStr(email.getTo()));
+        pstmt.setString(9, convertArrayToStr(email.getReplyTo()));
+        pstmt.setTimestamp(10, new Timestamp(email.getSentDate().getTime()));
+        pstmt.setString(11, email.getSubject());
+        pstmt.setString(12, convertAttachToStr(email.getAttachments()));
+        return pstmt;
     }
     
 }

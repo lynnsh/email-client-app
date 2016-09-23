@@ -3,8 +3,19 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ashulzhenko</groupId>
   <artifactId>emailapp</artifactId>
-  <name>emailapp</name>
-  <version>0.0.1-SNAPSHOT</version>
+  <name>Java Email Application</name>
+  <version>1.0.0-SNAPSHOT</version>
+  <description>Email Application that is used to send and receive emails.</description>
+  <developers>
+    <developer>
+      <id>1242395</id>
+      <name>Alena Shulzhenko</name>
+      <email>chlgnko.aline@gmail.com</email>
+    </developer>
+  </developers>
+  <organization>
+    <name>Dawson College</name>
+  </organization>
   <build>
     <defaultGoal>clean compile package exec:java</defaultGoal>
     <plugins>
