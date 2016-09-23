@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Maven version of the xml document currently only 4.0.0 is valid -->
     <modelVersion>4.0.0</modelVersion>
+    <!-- The GAV consists of an arbitrary descriptor that is usually in the
+    form of a reverse domain name. -->
     <groupId>ashulzhenko</groupId>
+    <!-- This is the name given to the packaged build -->
     <artifactId>emailapp</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    
+    <!-- The version of the build. Any value is valid though a number and a
+    string are common. SNAPSHOT means a project under development. FINAL is commonly
+    used to refer to stable production version -->
+    <version>1.0.0-SNAPSHOT</version>
+    <!-- Default value is jar but may be war or ear -->
     <packaging>jar</packaging>
+    
+    <!-- The name given to the project. Unlike groupId and artifactId a name may have spaces -->
+    <name>Java Email Application</name>
+    
+    <!-- A description of the program -->
+    <description>Email Application that is used to send and receive emails.</description>
+
+    <!-- Identifies the programmer or programmers who worked on the project -->
+    <developers>
+        <developer>
+            <id>1242395</id>
+            <name>Alena Shulzhenko</name>
+            <email>chlgnko.aline@gmail.com</email>
+        </developer>
+    </developers>
+
+    <!-- The company or organization that the programmer(s) work for -->
+    <organization>
+        <name>Dawson College</name>
+    </organization>
+    
     <!-- Global settings for the project. Settings can be accessed in the pom
     by placing the tag name in ${...} ex. ${mainClass} -->
     <properties>
@@ -162,7 +192,6 @@
 
         </plugins>
     </build>
-    <name>emailapp</name>
 </project>
 
 
