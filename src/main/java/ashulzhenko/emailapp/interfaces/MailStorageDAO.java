@@ -14,20 +14,13 @@ import java.util.List;
 public interface MailStorageDAO {
     
     /**
-     * Saves provided email in the database.
-     * @param email The email to save in the database.
-     * @return the id of the saved email
+     * Deletes email that has the provided id.
+     * @param id The id of the email to delete.
+     * @return 1 if delete was successful; 0 otherwise.
      * @throws SQLException If there was a problem when writing to the database.
      */
-    int saveEmail(EmailCustom email) throws SQLException;
+    int deleteEmail(int id) throws SQLException;
 
-    /**
-     * Find an email in database with given Id.
-     * @param id The id of the email to find.
-     * @return the found email corresponding to the given id.
-     * @throws SQLException If there was a problem when reading from the database.
-     */
-    EmailCustom findEmailById(int id) throws SQLException;
 
     /**
      * Returns all email saved in the database.
@@ -43,6 +36,24 @@ public interface MailStorageDAO {
      * @throws SQLException If there was a problem when reading from the database.
      */
     List<EmailCustom> findAllInDirectory(String directory) throws SQLException;
+    
+    
+    /**
+     * Find an email in database with given Id.
+     * @param id The id of the email to find.
+     * @return the found email corresponding to the given id.
+     * @throws SQLException If there was a problem when reading from the database.
+     */
+    EmailCustom findEmailById(int id) throws SQLException;
+    
+    
+    /**
+     * Saves provided email in the database.
+     * @param email The email to save in the database.
+     * @return the id of the saved email
+     * @throws SQLException If there was a problem when writing to the database.
+     */
+    int saveEmail(EmailCustom email) throws SQLException;
 
     /**
      * Updates the directory in the database for the provided email.
@@ -52,11 +63,4 @@ public interface MailStorageDAO {
      */
     int updateEmailDirectory(EmailCustom email) throws SQLException;
 
-    /**
-     * Deletes email that has the provided id.
-     * @param id The id of the email to delete.
-     * @return 1 if delete was successful; 0 otherwise.
-     * @throws SQLException If there was a problem when writing to the database.
-     */
-    int deleteEmail(int id) throws SQLException;
 }

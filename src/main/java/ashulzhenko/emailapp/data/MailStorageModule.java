@@ -32,37 +32,6 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         super(userInfo);
     }
 
-    /**
-     * Saves provided email in the database.
-     * 
-     * @param email The email to save in the database.
-     * 
-     * @return the id of the saved email
-     * 
-     * @throws SQLException If there was a problem when writing to the database.
-     */
-    @Override
-    public int saveEmail(EmailCustom email) throws SQLException {
-        if(email == null)
-            throw new IllegalArgumentException("Email value is null.");
-        
-        int id = -1;
-        String query = "insert into emails (msgNumber, rcvDate, directory, "
-                + "bcc, cc, fromEmail, message, toEmails, replyTo, sentDate, "
-                + "subject, attachments) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-        Connection connection = getConnection();
-        try(PreparedStatement pstmt = connection.prepareStatement(query)) {
-            prepareEmail(pstmt, email, connection);
-            pstmt.executeUpdate();
-            //get id of newly created email
-            try(ResultSet rs = pstmt.getGeneratedKeys()) {
-                rs.next();
-                id = rs.getInt(1);
-            }
-        }
-        closeConnection(connection);
-        return id;
-    }
 
     /**
      * Deletes email that has the provided id.
@@ -176,6 +145,38 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         }
         closeConnection(connection);
         return email;
+    }
+    
+    /**
+     * Saves provided email in the database.
+     *
+     * @param email The email to save in the database.
+     *
+     * @return the id of the saved email
+     *
+     * @throws SQLException If there was a problem when writing to the database.
+     */
+    @Override
+    public int saveEmail(EmailCustom email) throws SQLException {
+        if(email == null)
+            throw new IllegalArgumentException("Email value is null.");
+        
+        int id;
+        String query = "insert into emails (msgNumber, rcvDate, directory, "
+                + "bcc, cc, fromEmail, message, toEmails, replyTo, sentDate, "
+                + "subject, attachments) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+        Connection connection = getConnection();
+        try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            prepareEmail(pstmt, email, connection);
+            pstmt.executeUpdate();
+            //get id of newly created email
+            try(ResultSet rs = pstmt.getGeneratedKeys()) {
+                rs.next();
+                id = rs.getInt(1);
+            }
+        }
+        closeConnection(connection);
+        return id;
     }
     
     /**
@@ -313,26 +314,6 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         return email;
     }
     
-    /**
-     * Returns directory name corresponding to the provided id.
-     * @param dirId The id of the directory to find.
-     * @return directory name corresponding to the provided id.
-     * @throws SQLException If there was a problem when reading from the database.
-     */
-    private String findDirectoryName(int dirId) throws SQLException {
-        Connection conn = getConnection();
-        String name;
-        String query = "select name from directories where id = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, dirId);
-            try(ResultSet rs = pstmt.executeQuery()) {
-                rs.next();
-                    name = rs.getString(1);
-            }
-        }
-        closeConnection(conn);
-        return name;
-    }
     
     /**
      * Returns the id of the provided directory. Creates new directory if one
@@ -369,6 +350,26 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         }
         return id;
     }
+    /**
+     * Returns directory name corresponding to the provided id.
+     * @param dirId The id of the directory to find.
+     * @return directory name corresponding to the provided id.
+     * @throws SQLException If there was a problem when reading from the database.
+     */
+    private String findDirectoryName(int dirId) throws SQLException {
+        Connection conn = getConnection();
+        String name;
+        String query = "select name from directories where id = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, dirId);
+            try(ResultSet rs = pstmt.executeQuery()) {
+                rs.next();
+                name = rs.getString(1);
+            }
+        }
+        closeConnection(conn);
+        return name;
+    }
     
     /**
      * Sets all necessary data to PreparedStatement.
@@ -380,7 +381,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
      */
     private PreparedStatement prepareEmail(PreparedStatement pstmt, EmailCustom email, Connection connection) throws SQLException {
         pstmt.setInt(1, email.getMessageNumber());
-        pstmt.setTimestamp(2, new Timestamp(email.getReceivedDate().getTime()));
+        setDate(pstmt, email.getReceivedDate(), 2);
         pstmt.setInt(3, findDirectoryId(connection, email.getDirectory()));
         pstmt.setString(4, convertArrayToStr(email.getBcc()));
         pstmt.setString(5, convertArrayToStr(email.getCc()));
@@ -388,10 +389,24 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         pstmt.setString(7, convertMessagesToStr(email.getAllMessages()));
         pstmt.setString(8, convertArrayToStr(email.getTo()));
         pstmt.setString(9, convertArrayToStr(email.getReplyTo()));
-        pstmt.setTimestamp(10, new Timestamp(email.getSentDate().getTime()));
+        setDate(pstmt, email.getSentDate(), 10);
         pstmt.setString(11, email.getSubject());
         pstmt.setString(12, convertAttachToStr(email.getAttachments()));
         return pstmt;
+    }
+    
+    /**
+     * Add date to the PreparedStatement.
+     * @param pstmt PreparedStatement for which the date is set.
+     * @param date The date to set.
+     * @param index The index of this date in sql query.
+     * @throws SQLException If there is a problem when connecting to the database.
+     */
+    private void setDate(PreparedStatement pstmt, java.util.Date date, int index) throws SQLException {
+        if(date != null)
+            pstmt.setTimestamp(index, new Timestamp(date.getTime()));
+        else
+            pstmt.setTimestamp(index, null);
     }
     
 }

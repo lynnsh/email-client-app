@@ -19,7 +19,7 @@ create table emails (
 	bcc varchar(255) default '',
 	cc varchar(255) default '',
 	fromEmail varchar(50) default '' not null,
-	message text default '',
+	message text,
 	toEmails varchar(255) default '',
 	replyTo varchar(255) default '',
 	sentDate timestamp not null,

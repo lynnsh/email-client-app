@@ -18,7 +18,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 import static java.nio.file.Files.readAllBytes;
-import static java.nio.file.Paths.get;
 import jodd.mail.EmailAddress;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,10 +37,15 @@ public class MailStorageModuleTest {
     
     @Test
     public void saveEmailTest() throws SQLException {
+        //try{
         MailStorageDAO data = new MailStorageModule(userInfo);
         EmailCustom email = createEmail();
         int id = data.saveEmail(email);
         assertEquals(email, data.findEmailById(id));
+       // }
+       // catch(NullPointerException npe){
+        //    npe.printStackTrace();
+        //}
     }
     
     @Test
@@ -117,9 +121,9 @@ public class MailStorageModuleTest {
         email.cc(new EmailAddress[]{new EmailAddress("cs.517.send@outlook.com"),
                                      new EmailAddress("cs.517.send@gmail.com")});
         email.from("cs.517.send@gmail.com");
-        email.addText("plain text");
+        email.addText("plain text3");
         email.to("cs.517.receive@gmail.com");
-        email.subject("important");
+        email.subject("important3");
         return email;
     }
     
