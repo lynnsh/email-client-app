@@ -87,8 +87,11 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
 
     /**
      * Returns all emails in the given directory.
+     * 
      * @param directory The directory where requested email are stored.
+     * 
      * @return all emails in the given directory.
+     * 
      * @throws SQLException If there was a problem when reading from the database.
      */
     @Override
@@ -97,18 +100,19 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             throw new IllegalArgumentException("Directory value is null or empty.");
         
         Connection connection = getConnection();
-        int dirId = findDirectoryId(connection, directory);
-        List<EmailCustom> emails = new ArrayList<>();
-        
-        String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
-                + "message, toEmails, replyTo, sentDate, subject, attachments "
-                + "from emails where directory = ?";
-        try(PreparedStatement pstmt = connection.prepareStatement(query)){
-            pstmt.setInt(1, dirId);
-            try(ResultSet rs = pstmt.executeQuery()){
-                while(rs.next()) {
-                    EmailCustom email = createEmail(rs);
-                    emails.add(email);
+        int dirId = findDirectoryId(connection, directory, false);
+        List<EmailCustom> emails = new ArrayList<>(0);
+        if(dirId != -1) {
+            String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
+                    + "message, toEmails, replyTo, sentDate, subject, attachments "
+                    + "from emails where directory = ?";
+            try(PreparedStatement pstmt = connection.prepareStatement(query)){
+                pstmt.setInt(1, dirId);
+                try(ResultSet rs = pstmt.executeQuery()){
+                    while(rs.next()) {
+                        EmailCustom email = createEmail(rs);
+                        emails.add(email);
+                    }
                 }
             }
         }
@@ -196,7 +200,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         int result;
         String query = "update emails set directory = ? where id = ?";
         Connection connection = getConnection();
-        int dirId = findDirectoryId(connection, email.getDirectory());
+        int dirId = findDirectoryId(connection, email.getDirectory(), true);
         try(PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, dirId);
             pstmt.setInt(2, email.getId());
@@ -320,11 +324,12 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
      * is not found in the database.
      * @param conn Database Connection object.
      * @param directory Directory name for which id is required.
-     * @return the id of the provided directory.
+     * @param addNew Indicates whether the directory needs to be created if one does not exist.
+     * @return the id of the provided directory; -1 if directory is not set and id is not found.
      * @throws SQLException If there was a problem when reading from the database.
      */
-    private int findDirectoryId(Connection conn, String directory) throws SQLException {
-        int id;
+    private int findDirectoryId(Connection conn, String directory, boolean addNew) throws SQLException {
+        int id = -1;
         String query = "select id from directories where name = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, directory);
@@ -333,7 +338,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
                 if(rs.next())
                     id = rs.getInt(1);
                 //directory does not exist, so it is created
-                else {
+                else if(addNew) {
                     query = "insert into directories (name) values (?)";
                     try(PreparedStatement pstmt2 = conn.prepareStatement
                                     (query, Statement.RETURN_GENERATED_KEYS)){
@@ -382,7 +387,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     private PreparedStatement prepareEmail(PreparedStatement pstmt, EmailCustom email, Connection connection) throws SQLException {
         pstmt.setInt(1, email.getMessageNumber());
         setDate(pstmt, email.getReceivedDate(), 2);
-        pstmt.setInt(3, findDirectoryId(connection, email.getDirectory()));
+        pstmt.setInt(3, findDirectoryId(connection, email.getDirectory(), true));
         pstmt.setString(4, convertArrayToStr(email.getBcc()));
         pstmt.setString(5, convertArrayToStr(email.getCc()));
         pstmt.setString(6, email.getFrom().getEmail());

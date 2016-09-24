@@ -9,12 +9,20 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Holds common logic for MailStorageModule and DirectoryStorageModule.
+ * 
  * @author Alena Shulzhenko.
+ * @version 23/09/2016
+ * @since 1.8
  */
 public abstract class DatabaseModule {
     private UserConfigBean userInfo;
     private final Logger log = LoggerFactory.getLogger(getClass().getName());
     
+    /**
+     * Instantiates the object with all necessary information to work with the database.
+     *
+     * @param userInfo user's information needed to connect to the database.
+     */
     public DatabaseModule(UserConfigBean userInfo) {
         if (userInfo == null)
             throw new IllegalArgumentException("User information value is null.");
@@ -44,6 +52,7 @@ public abstract class DatabaseModule {
      * Creates a connection to the database.
      * 
      * @return Connection variable.
+     * 
      * @throws SQLException If there is a problem when opening a connection.
      */
 	protected Connection getConnection() throws SQLException{
@@ -59,6 +68,7 @@ public abstract class DatabaseModule {
      * Closes the connection to the database.
      * 
      * @param connection Connection variable.
+     * 
      * @throws SQLException If there is a problem when closing a connection.
      */
     protected void closeConnection(Connection connection) throws SQLException {
