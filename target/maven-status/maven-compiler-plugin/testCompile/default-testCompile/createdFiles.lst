@@ -1,3 +1,4 @@
 ashulzhenko/emailapp/mail/MailModuleExceptionsTest.class
 ashulzhenko/emailapp/data/MailStorageModuleTest.class
 ashulzhenko/emailapp/mail/MailModuleTest.class
+ashulzhenko/emailapp/data/FolderStorageModuleTest.class

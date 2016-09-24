@@ -15,7 +15,7 @@ public interface FolderStorageDAO {
     /**
      * Creates new directory with the provided name.
      * @param name The name of the directory to create.
-     * @return id of the created directory.
+     * @return 1 if operation was successful; 0 otherwise.
      * @throws SQLException If there was a problem when writing to the database.
      */
     int createDirectory(String name) throws SQLException;
@@ -39,7 +39,7 @@ public interface FolderStorageDAO {
      * Updates directory's name.
      * @param oldName The old name of the directory.
      * @param newName The new name of the directory.
-     * @return the id of the directory if operation was successful.
+     * @return 1 if operation was successful; 0 otherwise.
      * @throws SQLException If there was a problem when reading form the database.
      */
     int updateDirectory(String oldName, String newName) throws SQLException;

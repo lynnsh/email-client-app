@@ -96,7 +96,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
      */
     @Override
     public List<EmailCustom> findAllInDirectory(String directory) throws SQLException {
-        if(directory == null || directory.isEmpty())
+        if(directory == null || directory.trim().isEmpty())
             throw new IllegalArgumentException("Directory value is null or empty.");
         
         Connection connection = getConnection();

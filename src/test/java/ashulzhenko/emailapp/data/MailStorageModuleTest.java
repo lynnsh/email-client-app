@@ -31,40 +31,21 @@ public class MailStorageModuleTest {
     private final Logger log = LogManager.getLogger(MailStorageModuleTest.class.getName());
     private UserConfigBean userInfo;
     
-    @Before
-    public void init() {
-        userInfo = new UserConfigBean("cs.517.receive@gmail.com", "3t12ll0ngl3arn",
-                993, "imap.gmail.com", 465, "smtp.gmail.com");
-        userInfo.setMysqlPassword("compsci");
-        userInfo.setMysqlPort(3306);
-        userInfo.setMysqlUserName("local");
-        userInfo.setMysqlUrl("localhost");
-        
-        log.info("Seeding");
-        final String seedDataScript = loadAsString("src/test/res/createDB.sql");
-        try (Connection connection = DriverManager.getConnection
-                        ("jdbc:mysql://"+userInfo.getMysqlUrl()+":"+userInfo.getMysqlPort(),
-                                userInfo.getMysqlUserName(), userInfo.getMysqlPassword());) {
-            for (String statement : splitStatements(new StringReader(seedDataScript), ";")) {
-                connection.prepareStatement(statement).execute();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed seeding database", e);
-        }
-    }
     
     @Test
     public void deleteEmailTest() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
         data.deleteEmail(3);
         assertEquals(null, data.findEmailById(3));
-    }   
+    } 
+    
     @Test
     public void deleteEmailTest_IdNotExists() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
         int result = data.deleteEmail(33);
         assertEquals(result, 1);
     }   
+    
     @Test(expected=IllegalArgumentException.class)
     public void deleteEmailTest_InvalidArgument() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
@@ -77,13 +58,15 @@ public class MailStorageModuleTest {
         MailStorageDAO data = new MailStorageModule(userInfo);
         List <EmailCustom> list = data.findAllInDirectory("inbox");
         assertEquals(list.size(), 3);
-    }   
+    }  
+    
     @Test
     public void findAllInDirectoryTest_DirNotExists() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
         List <EmailCustom> list = data.findAllInDirectory("new");
         assertEquals(list.size(), 0);
-    }  
+    } 
+    
     @Test(expected=IllegalArgumentException.class)
     public void findAllInDirectoryTest_InvalidArgument() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
@@ -104,13 +87,15 @@ public class MailStorageModuleTest {
         EmailCustom emailDb = data.findEmailById(3);
         EmailCustom email = createEmail();
         assertEquals(email, emailDb);
-    }   
+    } 
+    
     @Test(expected=IllegalArgumentException.class)
     public void findEmailByIdTest_InvalidArgument() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
         data.findEmailById(-3);
         fail();
-    }    
+    }  
+    
     @Test
     public void findEmailByIdTest_NotInDb() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
@@ -125,6 +110,7 @@ public class MailStorageModuleTest {
         int id = data.saveEmail(email);
         assertEquals(email, data.findEmailById(id));
     }
+    
     @Test(expected=IllegalArgumentException.class)
     public void saveEmailTest_InvalidArgument() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
@@ -139,7 +125,8 @@ public class MailStorageModuleTest {
         email.setDirectory("trash");
         data.updateEmailDirectory(email);
         assertEquals("trash", data.findEmailById(4).getDirectory());
-    }  
+    } 
+    
     @Test
     public void updateEmailDirectoryTest_EmailIdNotInDb() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
@@ -148,11 +135,35 @@ public class MailStorageModuleTest {
         int result = data.updateEmailDirectory(email);
         assertEquals(1, result);
     }
+    
     @Test(expected=IllegalArgumentException.class)
     public void updateEmailDirectoryTest_InvalidArgument() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
         data.updateEmailDirectory(null);
         fail();
+    }
+    
+    
+    @Before
+    public void init() {
+        userInfo = new UserConfigBean("cs.517.receive@gmail.com", "3t12ll0ngl3arn",
+                993, "imap.gmail.com", 465, "smtp.gmail.com");
+        userInfo.setMysqlPassword("compsci");
+        userInfo.setMysqlPort(3306);
+        userInfo.setMysqlUserName("local");
+        userInfo.setMysqlUrl("localhost");
+        
+        log.info("Seeding");
+        final String seedDataScript = loadAsString("src/test/res/createDB.sql");
+        try (Connection connection = DriverManager.getConnection
+                        ("jdbc:mysql://"+userInfo.getMysqlUrl()+":"+userInfo.getMysqlPort(),
+                                userInfo.getMysqlUserName(), userInfo.getMysqlPassword());) {
+            for (String statement : splitStatements(new StringReader(seedDataScript), ";")) {
+                connection.prepareStatement(statement).execute();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed seeding database", e);
+        }
     }
     
     /**

@@ -2,6 +2,7 @@ package ashulzhenko.emailapp.data;
 
 import ashulzhenko.emailapp.interfaces.FolderStorageDAO;
 import ashulzhenko.emailapp.bean.UserConfigBean;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FolderStorageModule class is used to create, rename, update, and delete directories.
@@ -18,6 +21,7 @@ import java.util.List;
  * @since 1.8
  */
 public class FolderStorageModule extends DatabaseModule implements FolderStorageDAO {
+    private final Logger log = LoggerFactory.getLogger(getClass().getName());
     
     /**
      * Instantiates the object with all necessary information to work with the database.
@@ -33,30 +37,31 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
      * 
      * @param name The name of the directory to create.
      * 
-     * @return id of the created directory.
+     * @return 1 if operation was successful; 0 otherwise.
      * 
      * @throws SQLException If there was a problem when writing to the database.
      */
     @Override
     public int createDirectory(String name) throws SQLException {
-        if(name == null || name.isEmpty())
+        if(name == null || name.trim().isEmpty())
             throw new IllegalArgumentException("Directory name value is invalid.");
         
-        int id;
+        int result;
         String query = "insert into directories (name) values (?)";
-        Connection connection = getConnection();
-        try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, name);
-            pstmt.executeUpdate();
-            //get id of newly created directory
-            try(ResultSet rs = pstmt.getGeneratedKeys()) {
-                rs.next();
-                id = rs.getInt(1);
+        try {
+            Connection connection = getConnection();
+            try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, name);
+                pstmt.executeUpdate();
+                result = 1;
             }
+            closeConnection(connection);
         }
-        
-        closeConnection(connection);
-        return id;
+        catch(MySQLIntegrityConstraintViolationException e) {
+            log.error("Such directory already exists", e);
+            throw new IllegalArgumentException("Such directory already exists: " + name);
+        }
+        return result;
     }
 
     /**
@@ -70,9 +75,9 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
      */
     @Override
     public int deleteDirectory(String name) throws SQLException {
-        if(name == null || name.isEmpty())
+        if(name == null || name.trim().isEmpty())
             throw new IllegalArgumentException("Directory name value is invalid.");
-        
+
         int result;
         String query = "delete from directories where name = ?";
         Connection connection = getConnection();
@@ -81,7 +86,7 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
             pstmt.executeUpdate();
             result = 1;
         }
-        
+
         closeConnection(connection);
         return result;
     }
@@ -114,33 +119,38 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
      * @param oldName The old name of the directory.
      * @param newName The new name of the directory.
      * 
-     * @return the id of the directory if operation was successful.
+     * @return 1 if operation was successful; 0 otherwise.
      * 
      * @throws SQLException If there was a problem when reading form the database.
      */
     @Override
     public int updateDirectory(String oldName, String newName) throws SQLException {
-        if(oldName == null || oldName.isEmpty())
+        if(oldName == null || oldName.trim().isEmpty())
             throw new IllegalArgumentException("Old directory name value is invalid.");
-        if(newName == null || newName.isEmpty())
+        if(newName == null || newName.trim().isEmpty())
             throw new IllegalArgumentException("New directory name value is invalid.");
+        oldName = oldName.trim();
+        newName = newName.trim();
+        if(oldName.equals(newName))
+            throw new IllegalArgumentException("Both names are the same.");
         
-        int id;
+        int result;
         String query = "update directories set name = ? where name = ?";
-        Connection connection = getConnection();
-        try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, newName);
-            pstmt.setString(1, oldName);
-            pstmt.executeUpdate();
-            //get id of updated directory
-            try(ResultSet rs = pstmt.getGeneratedKeys()) {
-                rs.next();
-                id = rs.getInt(1);
+        try{
+            Connection connection = getConnection();
+            try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, newName);
+                pstmt.setString(2, oldName);
+                pstmt.executeUpdate();
+                result = 1;
             }
+            closeConnection(connection);
         }
-        
-        closeConnection(connection);
-        return id;
+        catch(MySQLIntegrityConstraintViolationException e) {
+            log.error("Such directory already exists", e);
+            throw new IllegalArgumentException("Such directory already exists: " + newName);
+        }
+        return result;
     }
     
 }
