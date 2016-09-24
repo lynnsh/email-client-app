@@ -22,7 +22,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import static java.nio.file.Paths.get;
 import static org.junit.Assert.fail;
-
+@Ignore
 /**
  * Tests MailStorageModule.
  * @author Alena Shulzhenko

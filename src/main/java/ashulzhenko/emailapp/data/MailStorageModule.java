@@ -136,7 +136,6 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         
         Connection connection = getConnection();
         EmailCustom email  = null;
-        
         String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
                 + "message, toEmails, replyTo, sentDate, subject, attachments "
                 + "from emails where id = ?";
@@ -279,8 +278,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     private String convertMessagesToStr(List<EmailMessage> list) {
         String str = "";
         if(list != null && !list.isEmpty()) {
-            for(EmailMessage em : list)
-                str += em.getContent() + ",";
+            str = list.stream().map(x -> x.getContent() + ",").reduce(str, String::concat);
         }
         return str;
     }
@@ -339,22 +337,14 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
                     id = rs.getInt(1);
                 //directory does not exist, so it is created
                 else if(addNew) {
-                    query = "insert into directories (name) values (?)";
-                    try(PreparedStatement pstmt2 = conn.prepareStatement
-                                    (query, Statement.RETURN_GENERATED_KEYS)){
-                        pstmt2.setString(1, directory);
-                        pstmt2.executeUpdate();
-                        //get id of newly created directory
-                        try(ResultSet rs2 = pstmt2.getGeneratedKeys()) {
-                            rs2.next();
-                            id = rs2.getInt(1);
-                        }
-                    }
+                    FolderStorageModule fs = new FolderStorageModule(getUserInfo());
+                    id = fs.createDirectory(directory);
                 }
             }
         }
         return id;
     }
+    
     /**
      * Returns directory name corresponding to the provided id.
      * @param dirId The id of the directory to find.

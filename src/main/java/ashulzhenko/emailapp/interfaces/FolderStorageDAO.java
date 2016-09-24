@@ -15,7 +15,7 @@ public interface FolderStorageDAO {
     /**
      * Creates new directory with the provided name.
      * @param name The name of the directory to create.
-     * @return 1 if operation was successful; 0 otherwise.
+     * @return the id of the created directory.
      * @throws SQLException If there was a problem when writing to the database.
      */
     int createDirectory(String name) throws SQLException;

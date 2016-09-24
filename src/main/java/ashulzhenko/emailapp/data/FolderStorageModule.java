@@ -37,7 +37,7 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
      * 
      * @param name The name of the directory to create.
      * 
-     * @return 1 if operation was successful; 0 otherwise.
+     * @return the id of the created directory.
      * 
      * @throws SQLException If there was a problem when writing to the database.
      */
@@ -46,14 +46,18 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
         if(name == null || name.trim().isEmpty())
             throw new IllegalArgumentException("Directory name value is invalid.");
         
-        int result;
+        int id = -1;
         String query = "insert into directories (name) values (?)";
         try {
             Connection connection = getConnection();
             try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, name);
                 pstmt.executeUpdate();
-                result = 1;
+                //get id of newly created directory
+                try(ResultSet rs = pstmt.getGeneratedKeys()) {
+                    rs.next();
+                    id = rs.getInt(1);
+                }
             }
             closeConnection(connection);
         }
@@ -61,7 +65,7 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
             log.error("Such directory already exists", e);
             throw new IllegalArgumentException("Such directory already exists: " + name);
         }
-        return result;
+        return id;
     }
 
     /**
@@ -125,14 +129,7 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
      */
     @Override
     public int updateDirectory(String oldName, String newName) throws SQLException {
-        if(oldName == null || oldName.trim().isEmpty())
-            throw new IllegalArgumentException("Old directory name value is invalid.");
-        if(newName == null || newName.trim().isEmpty())
-            throw new IllegalArgumentException("New directory name value is invalid.");
-        oldName = oldName.trim();
-        newName = newName.trim();
-        if(oldName.equals(newName))
-            throw new IllegalArgumentException("Both names are the same.");
+        checkNames(oldName, newName);
         
         int result;
         String query = "update directories set name = ? where name = ?";
@@ -151,6 +148,22 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
             throw new IllegalArgumentException("Such directory already exists: " + newName);
         }
         return result;
+    }
+    
+    /**
+     * Verifies that provided names are not empty and not the same.
+     * @param oldName The old name of the directory.
+     * @param newName The new name of the directory.
+     */
+    private void checkNames(String oldName, String newName) {
+        if(oldName == null || oldName.trim().isEmpty())
+            throw new IllegalArgumentException("Old directory name value is invalid.");
+        if(newName == null || newName.trim().isEmpty())
+            throw new IllegalArgumentException("New directory name value is invalid.");
+        oldName = oldName.trim();
+        newName = newName.trim();
+        if(oldName.equals(newName))
+            throw new IllegalArgumentException("Both names are the same.");
     }
     
 }
