@@ -4,6 +4,7 @@ import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.interfaces.MailStorageDAO;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -20,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import static java.nio.file.Paths.get;
+import jodd.mail.EmailAttachment;
 import static org.junit.Assert.fail;
 
 /**
@@ -106,6 +108,8 @@ public class MailStorageModuleTest {
     public void saveEmailTest() throws SQLException {
         MailStorageDAO data = new MailStorageModule(userInfo);
         EmailCustom email = createEmail();
+        email.embed(EmailAttachment.attachment().bytes(new File("src/test/res/c.jpg")));
+        email.attach(EmailAttachment.attachment().file(new File("src/test/res/w.jpg")));
         int id = data.saveEmail(email);
         assertEquals(email, data.findEmailById(id));
     }

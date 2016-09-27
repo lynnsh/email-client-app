@@ -72,11 +72,12 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         List<EmailCustom> emails = new ArrayList<>();
         
         String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
-                + "message, toEmails, replyTo, sentDate, subject, attachments from emails";
+                + "message, toEmails, replyTo, sentDate, subject from emails";
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
             try(ResultSet rs = pstmt.executeQuery()){
                 while(rs.next()) {
                     EmailCustom email = createEmail(rs);
+                    addAttachments(email, connection);
                     emails.add(email);
                 }
             }
@@ -104,13 +105,14 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         List<EmailCustom> emails = new ArrayList<>(0);
         if(dirId != -1) {
             String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
-                    + "message, toEmails, replyTo, sentDate, subject, attachments "
+                    + "message, toEmails, replyTo, sentDate, subject "
                     + "from emails where directory = ?";
             try(PreparedStatement pstmt = connection.prepareStatement(query)){
                 pstmt.setInt(1, dirId);
                 try(ResultSet rs = pstmt.executeQuery()){
                     while(rs.next()) {
                         EmailCustom email = createEmail(rs);
+                        addAttachments(email, connection);
                         emails.add(email);
                     }
                 }
@@ -137,13 +139,15 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         Connection connection = getConnection();
         EmailCustom email  = null;
         String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
-                + "message, toEmails, replyTo, sentDate, subject, attachments "
+                + "message, toEmails, replyTo, sentDate, subject "
                 + "from emails where id = ?";
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
             pstmt.setInt(1, id);
             try(ResultSet rs = pstmt.executeQuery()){
-                if(rs.next())
+                if(rs.next()) {
                     email = createEmail(rs);
+                    addAttachments(email, connection);
+                }
             }
         }
         closeConnection(connection);
@@ -167,7 +171,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         int id;
         String query = "insert into emails (msgNumber, rcvDate, directory, "
                 + "bcc, cc, fromEmail, message, toEmails, replyTo, sentDate, "
-                + "subject, attachments) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "subject) values (?,?,?,?,?,?,?,?,?,?,?)";
         Connection connection = getConnection();
         try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             prepareEmail(pstmt, email, connection);
@@ -177,6 +181,8 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
                 rs.next();
                 id = rs.getInt(1);
             }
+            email.setId(id);
+            saveAttachments(email, connection);
         }
         closeConnection(connection);
         return id;
@@ -211,15 +217,23 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     }
     
     /**
-     * Adds embedded attachments.
+     * Adds embedded attachments to an email.
      * @param email the email to which the attachments are added
-     * @param attachments The attachments to add to email.
      */
-    private void addAttachments(Email email, String attachments) {
-        try {
-            if(!attachments.isEmpty())
-                for(String str : attachments.split(","))
-                    email.embed(EmailAttachment.attachment().bytes(str.getBytes()));
+    private void addAttachments(EmailCustom email, Connection connection) {
+        
+        try {       
+            String query = "select binarydata, filename from attachments where email = ?";
+            try(PreparedStatement pstmt = connection.prepareStatement(query)){
+                pstmt.setInt(1, email.getId());
+                try(ResultSet rs = pstmt.executeQuery()){
+                    while(rs.next()) {
+                        byte[] attach = rs.getBytes(1);
+                        String name = rs.getString(2);
+                        email.embed(EmailAttachment.attachment().bytes(attach).setName(name));
+                    }
+                }
+            }  
         } 
         catch (Exception ex) {
             log.error("Error with the attachments", ex);
@@ -252,23 +266,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         }
         return str;
     }
-    
-    /**
-     * Returns string with attachments as byte string separated by comma.
-     * @param list EmailAttachment list to convert.
-     * @return string with attachments as byte string separated by comma.
-     */
-    private String convertAttachToStr(List<EmailAttachment> list) {
-        String str = "";
-        if(list != null && !list.isEmpty()) {
-            for(EmailAttachment ea : list) {
-                byte[] array = ea.toByteArray();
-                String byteStr = new String(array);
-                str += byteStr + ",";
-            }
-        }
-        return str;
-    }
+
     
     /**
      * Returns string with messages separated by comma.
@@ -311,7 +309,6 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             email.replyTo(str.split(";"));
         email.setSentDate(rs.getTimestamp(11));
         email.subject(rs.getString(12));
-        addAttachments(email, rs.getString(13));
         
         return email;
     }
@@ -386,8 +383,28 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         pstmt.setString(9, convertArrayToStr(email.getReplyTo()));
         setDate(pstmt, email.getSentDate(), 10);
         pstmt.setString(11, email.getSubject());
-        pstmt.setString(12, convertAttachToStr(email.getAttachments()));
         return pstmt;
+    }
+    
+    /**
+     * Saves email attachments to the database.
+     * @param email The email where the attachments come from.
+     * @param connection Database Connection object.
+     * @throws SQLException If there is a problem when writing to the database.
+     */
+    private void saveAttachments(EmailCustom email, Connection connection) throws SQLException {
+        String query = "insert into attachments (binarydata, filename, email) values (?,?,?)";
+        List<EmailAttachment> list = email.getAttachments();
+        if(list != null && !list.isEmpty()) {
+            try(PreparedStatement pstmt = connection.prepareStatement(query)){
+                for(EmailAttachment ea : list) {
+                    pstmt.setBytes(1, ea.toByteArray());
+                    pstmt.setString(2, ea.getName());
+                    pstmt.setInt(3, email.getId());
+                    pstmt.executeUpdate();
+                }
+            }
+        }
     }
     
     /**
