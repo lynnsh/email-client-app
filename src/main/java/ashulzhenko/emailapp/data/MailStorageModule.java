@@ -234,7 +234,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
      * @param messages The messages to add to email.
      */
     private void addMessages(Email email, String messages) {
-        for(String str : messages.split(",")) {
+        for(String str : messages.split(";")) {
             email.addHtml(str);
         }
     }
@@ -248,7 +248,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         String str = "";
         if(array != null && array.length != 0) {
             for(MailAddress ma : array)
-                str += ma.getEmail() + ",";
+                str += ma.getEmail() + ";";
         }
         return str;
     }
@@ -278,7 +278,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     private String convertMessagesToStr(List<EmailMessage> list) {
         String str = "";
         if(list != null && !list.isEmpty()) {
-            str = list.stream().map(x -> x.getContent() + ",").reduce(str, String::concat);
+            str = list.stream().map(x -> x.getContent() + ";").reduce(str, String::concat);
         }
         return str;
     }
@@ -297,18 +297,18 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         email.setDirectory(findDirectoryName(rs.getInt(4)));
         String str = rs.getString(5);
         if(!str.isEmpty())
-            email.bcc(str.split(","));
+            email.bcc(str.split(";"));
         str = rs.getString(6);
         if(!str.isEmpty())
-            email.cc(str.split(","));
+            email.cc(str.split(";"));
         email.from(rs.getString(7));
         addMessages(email, rs.getString(8));
         str = rs.getString(9);
         if(!str.isEmpty())
-            email.to(str.split(","));
+            email.to(str.split(";"));
         str = rs.getString(10);
         if(!str.isEmpty())
-            email.replyTo(str.split(","));
+            email.replyTo(str.split(";"));
         email.setSentDate(rs.getTimestamp(11));
         email.subject(rs.getString(12));
         addAttachments(email, rs.getString(13));

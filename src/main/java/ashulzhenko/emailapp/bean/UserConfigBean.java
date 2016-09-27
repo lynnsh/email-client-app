@@ -7,7 +7,7 @@ import java.io.Serializable;
  * password, IMAP and SMTP information for this account.
  *
  * @author Alena Shulzhenko
- * @version 16/09/2016
+ * @version 27/09/2016
  * @since 1.8
  */
 public class UserConfigBean implements Serializable {
@@ -23,6 +23,8 @@ public class UserConfigBean implements Serializable {
     private String mysqlUser;
     private int smtpPort;
     private String smtpUrl;
+    private String mysqlDbName;
+
     
     
     /**
@@ -63,6 +65,22 @@ public class UserConfigBean implements Serializable {
         this.imapUrl = imapUrl;
         this.smtpPort = smtpPort;
         this.smtpUrl = smtpUrl;
+    }
+    /**
+     * Returns the database name.
+     *
+     * @return the database name.
+     */
+    public String getMysqlDbName() {
+        return mysqlDbName;
+    }
+    /**
+     * Sets the database name.
+     *
+     * @param mysqlDbName the database name to set.
+     */
+    public void setMysqlDbName(String mysqlDbName) {
+        this.mysqlDbName = mysqlDbName;
     }
     /**
      * Returns the password for the user's email account.

@@ -45,6 +45,7 @@ public abstract class DatabaseModule {
      * @param userInfo user's information needed to send the email.
      */
     public void setUserInfo(UserConfigBean userInfo) {
+        
         this.userInfo = userInfo;
     }
     
@@ -55,10 +56,18 @@ public abstract class DatabaseModule {
      * 
      * @throws SQLException If there is a problem when opening a connection.
      */
-	protected Connection getConnection() throws SQLException{
+	protected Connection getConnection() throws SQLException {
+        String url = userInfo.getMysqlUrl();
+        int port = userInfo.getMysqlPort();
+        String dbName = userInfo.getMysqlDbName();
+        String user = userInfo.getMysqlUserName();
+        String password = userInfo.getMysqlPassword();
+        if(url == null || url.isEmpty() || port < 1 || dbName == null || dbName.isEmpty() ||
+                user == null || user.isEmpty() || password == null)
+            throw new IllegalArgumentException ("Invalid values provided. Cannot connect to teh database.");
+        
 		Connection connection = DriverManager.getConnection
-            ("jdbc:mysql://"+userInfo.getMysqlUrl() + ":"+userInfo.getMysqlPort()+"/emailapp", 
-            userInfo.getMysqlUserName(), userInfo.getMysqlPassword());
+            ("jdbc:mysql://"+url + ":"+port+"/"+dbName, user, password);
         
 		log.info("Connected to the database.");  
         return connection;

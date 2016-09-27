@@ -20,9 +20,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-@Ignore
+
 /**
  * Tests FolderStorageModule.
  * @author Alena Shulzhenko
@@ -116,12 +115,14 @@ public class FolderStorageModuleTest {
         userInfo.setMysqlPort(3306);
         userInfo.setMysqlUserName("local");
         userInfo.setMysqlUrl("localhost");
+        userInfo.setMysqlDbName("emailapp");
         
         log.info("Seeding");
         final String seedDataScript = loadAsString("src/test/res/createDB.sql");
         try (Connection connection = DriverManager.getConnection
-                        ("jdbc:mysql://"+userInfo.getMysqlUrl()+":"+userInfo.getMysqlPort(),
-                                userInfo.getMysqlUserName(), userInfo.getMysqlPassword());) {
+                        ("jdbc:mysql://"+userInfo.getMysqlUrl()+":"+userInfo.getMysqlPort()+"/"+
+                                userInfo.getMysqlDbName(), userInfo.getMysqlUserName(), 
+                                userInfo.getMysqlPassword());) {
             for (String statement : splitStatements(new StringReader(seedDataScript), ";")) {
                 connection.prepareStatement(statement).execute();
             }

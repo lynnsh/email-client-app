@@ -1,8 +1,3 @@
-drop database if exists emailapp;
-create database emailapp;
-
-use emailapp;
-
 drop table if exists emails;
 drop table if exists directories;
 
@@ -37,7 +32,7 @@ insert into directories (name) values ('starred');
 
 insert into emails (msgNumber, rcvDate, directory, bcc, cc, fromEmail, message, toEmails, replyTo, sentDate, subject, attachments) values (1, now(), 1, '', '', 'cs.517.send@gmail.com', 'plain text', 'cs.517.receive@gmail.com', '', '2016-09-18 01:28:00', 'important', ''),
 (2, now(), 1, '', '', 'cs.517.send@gmail.com', 'plain text2', 'cs.517.receive@gmail.com', '', '2016-09-18 01:28:01', 'important2', ''),
-(3, now(), 1, '', 'cs.517.send@outlook.com,cs.517.send@gmail.com', 'cs.517.send@gmail.com', 'plain text3', 'cs.517.receive@gmail.com', '', '2016-09-18 01:28:01', 'important3', ''),
+(3, now(), 1, '', 'cs.517.send@outlook.com;cs.517.send@gmail.com', 'cs.517.send@gmail.com', 'plain text3', 'cs.517.receive@gmail.com', '', '2016-09-18 01:28:01', 'important3', ''),
 (4, now(), 2, '', '', 'cs.517.receive@gmail.com', 'plain text4', 'cs.517.send@gmail.com', '', '2016-09-18 01:28:01', 'important4', ''),
 (5, now(), 5, '', '', 'cs.517.receive@gmail.com', 'plain text5', 'cs.517.send@gmail.com', '', '2016-09-18 01:28:01', 'important5', ''),
 (6, now(), 2, '', '', 'cs.517.receive@gmail.com', '<html><body><h2>not plain</h2><img src="cid:c.jpg"/><body></html>', 'cs.517.send@gmail.com', '', '2016-09-18 01:28:01', 'important4', '');
