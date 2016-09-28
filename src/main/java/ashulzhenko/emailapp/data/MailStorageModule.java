@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * MailStorageModule class is used to save, find, update, and delete messages.
  *
  * @author Alena Shulzhenko
- * @version 23/09/2016
+ * @version 27/09/2016
  * @since 1.8
  */
 public class MailStorageModule extends DatabaseModule implements MailStorageDAO {
@@ -27,8 +27,10 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
      * Instantiates the object with all necessary information to work with the database.
      *
      * @param userInfo user's information needed to connect to the database.
+     * 
+     * @throws SQLException If there is a problem when connecting to the database.
      */
-    public MailStorageModule(UserConfigBean userInfo) {
+    public MailStorageModule(UserConfigBean userInfo) throws SQLException {
         super(userInfo);
     }
 
@@ -55,7 +57,9 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             pstmt.executeUpdate();
             result = 1;
         }
-        closeConnection(connection);
+        finally {
+            closeConnection(connection);
+        }
         return result;
     }
 
@@ -82,7 +86,9 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
                 }
             }
         }
-        closeConnection(connection);
+        finally {
+            closeConnection(connection);
+        }
         return emails;
     }
 
@@ -150,7 +156,9 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
                 }
             }
         }
-        closeConnection(connection);
+        finally {
+            closeConnection(connection);
+        }
         return email;
     }
     
@@ -184,7 +192,9 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             email.setId(id);
             saveAttachments(email, connection);
         }
-        closeConnection(connection);
+        finally {
+            closeConnection(connection);
+        }
         return id;
     }
     
@@ -212,34 +222,29 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             pstmt.executeUpdate();
             result = 1;
         }
-        closeConnection(connection);
+        finally {
+            closeConnection(connection);
+        }
         return result;
     }
     
     /**
      * Adds embedded attachments to an email.
-     * @param email the email to which the attachments are added
+     * @param email the email to which the attachments are added.
+     * @throws SQLException If there is a problem when connecting to the database.
      */
-    private void addAttachments(EmailCustom email, Connection connection) {
-        
-        try {       
-            String query = "select binarydata, filename from attachments where email = ?";
-            try(PreparedStatement pstmt = connection.prepareStatement(query)){
-                pstmt.setInt(1, email.getId());
-                try(ResultSet rs = pstmt.executeQuery()){
-                    while(rs.next()) {
-                        byte[] attach = rs.getBytes(1);
-                        String name = rs.getString(2);
-                        email.embed(EmailAttachment.attachment().bytes(attach).setName(name));
-                    }
+    private void addAttachments(EmailCustom email, Connection connection) throws SQLException {             
+        String query = "select binarydata, filename from attachments where email = ?";
+        try(PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setInt(1, email.getId());
+            try(ResultSet rs = pstmt.executeQuery()){
+                while(rs.next()) {
+                    byte[] attach = rs.getBytes(1);
+                    String name = rs.getString(2);
+                    email.embed(EmailAttachment.attachment().bytes(attach).setName(name));
                 }
-            }  
-        } 
-        catch (Exception ex) {
-            log.error("Error with the attachments", ex);
-            throw new IllegalArgumentException("Attachment error: " + ex.getMessage());
-        }
-        
+            }
+        }  
     }
     
     /**
@@ -254,9 +259,9 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     }
     
     /**
-     * Returns string with mail addresses separated by comma.
+     * Returns string with mail addresses separated by semicolon.
      * @param array MailAddress array to convert.
-     * @return string with mail addresses separated by comma.
+     * @return string with mail addresses separated by semicolon.
      */
     private String convertArrayToStr(MailAddress[] array) {
         String str = "";
@@ -269,9 +274,9 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
 
     
     /**
-     * Returns string with messages separated by comma.
+     * Returns string with messages separated by semicolon.
      * @param list EmailMessage list to convert.
-     * @return string with messages separated by comma.
+     * @return string with messages separated by semicolon.
      */
     private String convertMessagesToStr(List<EmailMessage> list) {
         String str = "";
@@ -359,7 +364,9 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
                 name = rs.getString(1);
             }
         }
-        closeConnection(conn);
+        finally{
+            closeConnection(conn);
+        }
         return name;
     }
     
@@ -371,13 +378,15 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
      * @return PreparedStatement with all necessary data to execute it.
      * @throws SQLException If there is a problem when connecting to the database.
      */
-    private PreparedStatement prepareEmail(PreparedStatement pstmt, EmailCustom email, Connection connection) throws SQLException {
+    private PreparedStatement prepareEmail(PreparedStatement pstmt, EmailCustom email, 
+                                           Connection connection) throws SQLException {
         pstmt.setInt(1, email.getMessageNumber());
         setDate(pstmt, email.getReceivedDate(), 2);
         pstmt.setInt(3, findDirectoryId(connection, email.getDirectory(), true));
         pstmt.setString(4, convertArrayToStr(email.getBcc()));
         pstmt.setString(5, convertArrayToStr(email.getCc()));
-        pstmt.setString(6, email.getFrom().getEmail());
+        String from = (email.getFrom() == null? null : email.getFrom().getEmail()); 
+        pstmt.setString(6, from);
         pstmt.setString(7, convertMessagesToStr(email.getAllMessages()));
         pstmt.setString(8, convertArrayToStr(email.getTo()));
         pstmt.setString(9, convertArrayToStr(email.getReplyTo()));

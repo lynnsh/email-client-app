@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * FolderStorageModule class is used to create, rename, update, and delete directories.
  *
  * @author Alena Shulzhenko
- * @version 23/09/2016
+ * @version 27/09/2016
  * @since 1.8
  */
 public class FolderStorageModule extends DatabaseModule implements FolderStorageDAO {
@@ -27,8 +27,9 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
      * Instantiates the object with all necessary information to work with the database.
      *
      * @param userInfo user's information needed to connect to the database.
+     * @throws SQLException If there is a problem when connecting to the database.
      */
-    public FolderStorageModule(UserConfigBean userInfo) {
+    public FolderStorageModule(UserConfigBean userInfo) throws SQLException {
         super(userInfo);
     }
 
@@ -59,7 +60,9 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
                     id = rs.getInt(1);
                 }
             }
-            closeConnection(connection);
+            finally {
+                closeConnection(connection);
+            }
         }
         catch(MySQLIntegrityConstraintViolationException e) {
             log.error("Such directory already exists", e);
@@ -90,8 +93,9 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
             pstmt.executeUpdate();
             result = 1;
         }
-
-        closeConnection(connection);
+        finally {
+            closeConnection(connection);
+        }
         return result;
     }
 
@@ -113,7 +117,9 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
                     dirs.add(rs.getString(1));
             }
         }
-        closeConnection(connection);
+        finally {
+            closeConnection(connection);
+        }
         return dirs;
     }
 
@@ -141,7 +147,9 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
                 pstmt.executeUpdate();
                 result = 1;
             }
-            closeConnection(connection);
+            finally {
+                closeConnection(connection);
+            }
         }
         catch(MySQLIntegrityConstraintViolationException e) {
             log.error("Such directory already exists", e);

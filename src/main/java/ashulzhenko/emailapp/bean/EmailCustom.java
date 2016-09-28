@@ -254,10 +254,7 @@ public class EmailCustom extends Email implements Serializable {
      * @param rcvDate The received date of the email.
      */
     public void setReceivedDate(Date rcvDate) {
-        if(rcvDate != null)
             this.rcvDate = rcvDate;
-        else
-            throw new IllegalArgumentException("Received date value is null.");
     }
 
 

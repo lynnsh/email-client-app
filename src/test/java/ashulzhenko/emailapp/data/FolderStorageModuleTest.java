@@ -28,88 +28,77 @@ import org.junit.Test;
  */
 public class FolderStorageModuleTest {
     private final Logger log = LogManager.getLogger(MailStorageModuleTest.class.getName());
-    private UserConfigBean userInfo;
+    private FolderStorageDAO data;
     
     @Test
     public void createDirectoryTest() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.createDirectory("newdir");
         assertTrue(data.findAll().contains("newdir"));
     } 
     
     @Test(expected=IllegalArgumentException.class)
     public void createDirectoryTest_InvalidArgument() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.createDirectory("");
         fail();
     }
     
     @Test(expected=IllegalArgumentException.class)
     public void createDirectoryTest_DuplicateDir() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.createDirectory("new");
         fail();
     }
     
     @Test
     public void deleteDirectoryTest() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.deleteDirectory("new");
         assertFalse(data.findAll().contains("new"));
     } 
     
     @Test
     public void deleteDirectoryTest_DirNotExists() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         int result = data.deleteDirectory("newdir");
         assertEquals(1, result);
     } 
     
     @Test(expected=IllegalArgumentException.class)
     public void deleteDirectoryTest_InvalidArgument() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.deleteDirectory("");
         fail();
     }
     
     @Test
     public void findAllTest() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         List <String> list = data.findAll();
         assertEquals(list.size(), 6);
     }
     
     @Test
     public void updateDirectoryTest() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.updateDirectory("new","newdir");
         assertTrue(data.findAll().contains("newdir") && !data.findAll().contains("new"));
     } 
     
     @Test(expected=IllegalArgumentException.class)
     public void updateDirectoryTest_InvalidSameValueArgument() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.updateDirectory("new", "new");
         fail();
     }
     
     @Test(expected=IllegalArgumentException.class)
     public void updateDirectoryTest_InvalidArgument() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.updateDirectory("", "");
         fail();
     }
     
     @Test(expected=IllegalArgumentException.class)
     public void updateDirectoryTest_DuplicateDir() throws SQLException {
-        FolderStorageDAO data = new FolderStorageModule(userInfo);
         data.updateDirectory("new", "trash");
         fail();
     }
     
     @Before
     public void init() {
-        userInfo = new UserConfigBean("cs.517.receive@gmail.com", "3t12ll0ngl3arn",
+        UserConfigBean userInfo = new UserConfigBean("cs.517.receive@gmail.com", "3t12ll0ngl3arn",
                 993, "imap.gmail.com", 465, "smtp.gmail.com");
         userInfo.setMysqlPassword("compsci");
         userInfo.setMysqlPort(3306);
@@ -123,6 +112,9 @@ public class FolderStorageModuleTest {
                         ("jdbc:mysql://"+userInfo.getMysqlUrl()+":"+userInfo.getMysqlPort()+"/"+
                                 userInfo.getMysqlDbName(), userInfo.getMysqlUserName(), 
                                 userInfo.getMysqlPassword());) {
+            
+            data = new FolderStorageModule(userInfo);
+            
             for (String statement : splitStatements(new StringReader(seedDataScript), ";")) {
                 connection.prepareStatement(statement).execute();
             }

@@ -1,12 +1,12 @@
-ashulzhenko/emailapp/compare/EmailMessageSorter.class
 ashulzhenko/emailapp/interfaces/FolderStorageDAO.class
 ashulzhenko/emailapp/bean/UserConfigBean.class
 ashulzhenko/emailapp/interfaces/MailStorageDAO.class
 ashulzhenko/emailapp/mail/MailModule.class
 ashulzhenko/emailapp/data/MailStorageModule.class
+ashulzhenko/emailapp/data/DatabaseModule.class
+ashulzhenko/emailapp/compare/EmailMessageSorter.class
 ashulzhenko/emailapp/compare/EmailAttachmentSorter.class
 ashulzhenko/emailapp/data/FolderStorageModule.class
 ashulzhenko/emailapp/bean/EmailCustom.class
 ashulzhenko/emailapp/interfaces/Mailer.class
-ashulzhenko/emailapp/data/DatabaseModule.class
 ashulzhenko/emailapp/compare/MailAddressSorter.class
