@@ -8,7 +8,7 @@ import java.util.List;
  * The interface for MailStorageModule
  *
  * @author Alena Shulzhenko
- * @version 23/09/2016
+ * @version 30/09/2016
  * @since 1.8
  */
 public interface MailStorageDAO {
@@ -16,7 +16,7 @@ public interface MailStorageDAO {
     /**
      * Deletes email that has the provided id.
      * @param id The id of the email to delete.
-     * @return 1 if delete was successful; 0 otherwise.
+     * @return the number of deleted rows.
      * @throws SQLException If there was a problem when writing to the database.
      */
     int deleteEmail(int id) throws SQLException;
@@ -58,7 +58,7 @@ public interface MailStorageDAO {
     /**
      * Updates the directory in the database for the provided email.
      * @param email The email containing new directory name.
-     * @return 1 if update was successful; 0 otherwise.
+     * @return the number of updated rows.
      * @throws SQLException If there was a problem when writing to the database.
      */
     int updateEmailDirectory(EmailCustom email) throws SQLException;

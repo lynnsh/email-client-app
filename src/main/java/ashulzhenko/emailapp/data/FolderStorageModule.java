@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * FolderStorageModule class is used to create, rename, update, and delete directories.
  *
  * @author Alena Shulzhenko
- * @version 27/09/2016
+ * @version 30/09/2016
  * @since 1.8
  */
 public class FolderStorageModule extends DatabaseModule implements FolderStorageDAO {
@@ -76,7 +76,7 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
      * 
      * @param name The name of the directory to delete.
      * 
-     * @return 1 if operation was successful; 0 otherwise.
+     * @return number of deleted directories.
      * 
      * @throws SQLException If there was a problem when writing to the database.
      */
@@ -90,8 +90,7 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
         Connection connection = getConnection();
         try(PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, name);
-            pstmt.executeUpdate();
-            result = 1;
+            result = pstmt.executeUpdate();
         }
         finally {
             closeConnection(connection);
@@ -129,7 +128,7 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
      * @param oldName The old name of the directory.
      * @param newName The new name of the directory.
      * 
-     * @return 1 if operation was successful; 0 otherwise.
+     * @return the number of updated directories.
      * 
      * @throws SQLException If there was a problem when reading form the database.
      */
@@ -144,8 +143,7 @@ public class FolderStorageModule extends DatabaseModule implements FolderStorage
             try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, newName);
                 pstmt.setString(2, oldName);
-                pstmt.executeUpdate();
-                result = 1;
+                result = pstmt.executeUpdate();
             }
             finally {
                 closeConnection(connection);

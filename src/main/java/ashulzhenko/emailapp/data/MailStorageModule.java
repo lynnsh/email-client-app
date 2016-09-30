@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * MailStorageModule class is used to save, find, update, and delete messages.
  *
  * @author Alena Shulzhenko
- * @version 27/09/2016
+ * @version 30/09/2016
  * @since 1.8
  */
 public class MailStorageModule extends DatabaseModule implements MailStorageDAO {
@@ -40,7 +40,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
      * 
      * @param id The id of the email to delete.
      * 
-     * @return 1 if delete was successful; 0 otherwise.
+     * @return the number of deleted rows.
      * 
      * @throws SQLException If there was a problem when writing to the database.
      */
@@ -54,8 +54,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         Connection connection = getConnection();
         try(PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-            result = 1;
+            result = pstmt.executeUpdate();
         }
         finally {
             closeConnection(connection);
@@ -203,7 +202,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
      * 
      * @param email The email containing new directory name.
      * 
-     * @return 1 if update was successful; 0 otherwise.
+     * @return the number of updated rows.
      * 
      * @throws SQLException If there was a problem when writing to the database.
      */
@@ -219,8 +218,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         try(PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, dirId);
             pstmt.setInt(2, email.getId());
-            pstmt.executeUpdate();
-            result = 1;
+            result = pstmt.executeUpdate();
         }
         finally {
             closeConnection(connection);
