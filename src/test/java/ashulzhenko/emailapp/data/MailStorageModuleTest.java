@@ -32,6 +32,12 @@ public class MailStorageModuleTest {
     private final Logger log = LogManager.getLogger(MailStorageModuleTest.class.getName());
     private MailStorageDAO data;
     
+     //A Rule is implemented as a class with methods that are associated     
+     //with the lifecycle of a unit test. These methods run when required.     
+     //Avoids the need to cut and paste code into every test method.     
+    @Rule     
+    public MethodLogger methodLogger = new MethodLogger();
+    
     @Test
     public void deleteEmailTest() throws SQLException {
         data.deleteEmail(3);
