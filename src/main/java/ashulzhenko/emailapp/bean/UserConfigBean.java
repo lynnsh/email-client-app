@@ -7,7 +7,7 @@ import java.io.Serializable;
  * password, IMAP and SMTP information for this account.
  *
  * @author Alena Shulzhenko
- * @version 27/09/2016
+ * @version 30/09/2016
  * @since 1.8
  */
 public class UserConfigBean implements Serializable {
@@ -32,17 +32,7 @@ public class UserConfigBean implements Serializable {
      * Gmail information is used as default.
      */
     public UserConfigBean() {
-        super();
-        this.fromEmail = "";
-        this.emailPassword = "";
-        this.imapPort = 993;
-        this.smtpPort = 465;
-        this.imapUrl = "imap.gmail.com";
-        this.smtpUrl = "smtp.gmail.com";
-        this.mysqlUrl = "";
-        this.mysqlPort = 3306;
-        this.mysqlUser = "";
-        this.mysqlPassword = "";
+        this("", "", 993, 465, "imap.gmail.com", "smtp.gmail.com", "", 3306, "", "");
     }
 
     /**
