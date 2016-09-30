@@ -1,0 +1,1335 @@
+[INFO ] 2016-09-30 17:18:17.051 [main] FolderStorageModuleTest - Starting test [createDirectoryTest]
+[INFO ] 2016-09-30 17:18:17.055 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:18.076 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:18.898 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:18.946 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:18.950 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:18:18.951 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:18.959 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:19.593 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:18:19.673 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'trash' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.updateDirectory(FolderStorageModule.java:146) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.updateDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:103) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:18:19.685 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:18:19.686 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:19.707 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:20.253 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:20.254 [main] FolderStorageModuleTest - Failed test [deleteDirectoryTest_DirNotExists
+expected:<1> but was:<0>]
+[INFO ] 2016-09-30 17:18:20.262 [main] FolderStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:18:20.262 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:20.272 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:20.980 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:20.983 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:18:20.984 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:20.992 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:21.557 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest]
+[INFO ] 2016-09-30 17:18:21.557 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:21.567 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:22.131 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:22.174 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:22.176 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest]
+[INFO ] 2016-09-30 17:18:22.176 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:22.187 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:22.792 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:22.834 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:22.841 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:22.843 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:18:22.843 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:22.850 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:23.456 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidSameValueArgument]
+[INFO ] 2016-09-30 17:18:23.456 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:23.464 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:24.085 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:18:24.085 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:24.099 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:24.754 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:18:24.754 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:24.762 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:25.341 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:18:25.378 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'new' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.createDirectory(FolderStorageModule.java:56) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.createDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:55) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:18:25.392 [main] MailStorageModuleTest - Starting test [findEmailByIdTest]
+[INFO ] 2016-09-30 17:18:25.393 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:25.405 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:25.988 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:26.024 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:26.089 [main] MailStorageModuleTest - Starting test [deleteEmailTest]
+[INFO ] 2016-09-30 17:18:26.089 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:26.097 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:26.835 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:26.880 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:26.884 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest]
+[INFO ] 2016-09-30 17:18:26.885 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:26.895 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:27.471 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:27.477 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:27.482 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:27.488 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:27.490 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:18:27.490 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:27.504 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:28.056 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:28.058 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_NotInDb]
+[INFO ] 2016-09-30 17:18:28.059 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:28.068 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:29.268 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:29.270 [main] MailStorageModuleTest - Starting test [deleteEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:18:29.270 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:29.275 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:29.847 [main] MailStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:18:29.848 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:29.858 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:30.415 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:30.423 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:30.430 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:30.436 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:30.440 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:30.444 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:30.448 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:30.451 [main] MailStorageModuleTest - Starting test [deleteEmailTest_IdNotExists]
+[INFO ] 2016-09-30 17:18:30.451 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:30.457 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:31.105 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:31.107 [main] MailStorageModuleTest - Failed test [deleteEmailTest_IdNotExists
+expected:<0> but was:<1>]
+[INFO ] 2016-09-30 17:18:31.109 [main] MailStorageModuleTest - Starting test [saveEmailTest]
+[INFO ] 2016-09-30 17:18:31.110 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:31.118 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:31.807 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:32.074 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:32.078 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:32.088 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:18:32.089 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:32.097 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:32.653 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_InvalidArgument]
+[INFO ] 2016-09-30 17:18:32.653 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:32.660 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:33.302 [main] MailStorageModuleTest - Starting test [saveEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:18:33.302 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:33.308 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:33.989 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest]
+[INFO ] 2016-09-30 17:18:33.989 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:33.998 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:34.577 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:34.586 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:34.590 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:34.622 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:34.626 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:34.628 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_EmailIdNotInDb]
+[INFO ] 2016-09-30 17:18:34.628 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:34.639 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:35.306 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:18:35.308 [main] MailStorageModuleTest - Failed test [updateEmailDirectoryTest_EmailIdNotInDb
+expected:<1> but was:<0>]
+[INFO ] 2016-09-30 17:18:35.309 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:18:35.309 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:18:35.315 [main] MailStorageModule - Connected to the database.
+[DEBUG] 2016-09-30 17:18:35.941 [main] MailModuleExceptionsTest - in TestExceptions with no to's addresses
+[DEBUG] 2016-09-30 17:18:35.943 [main] MailModuleExceptionsTest - in TestExceptions with null for cc
+[DEBUG] 2016-09-30 17:18:35.944 [main] MailModuleExceptionsTest - in TestExceptions with to with invalid email
+[DEBUG] 2016-09-30 17:18:35.945 [main] MailModuleExceptionsTest - in TestExceptions with cc with invalid email
+[DEBUG] 2016-09-30 17:18:35.947 [main] MailModuleExceptionsTest - in TestExceptions with bcc with invalid email
+[DEBUG] 2016-09-30 17:18:35.948 [main] MailModuleExceptionsTest - in TestExceptions with attachment error: file not found
+[INFO ] 2016-09-30 17:20:47.020 [main] FolderStorageModuleTest - Starting test [createDirectoryTest]
+[INFO ] 2016-09-30 17:20:47.024 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:47.331 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:48.001 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:48.042 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:48.045 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:20:48.046 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:48.056 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:48.608 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:20:48.648 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'trash' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.updateDirectory(FolderStorageModule.java:146) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.updateDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:103) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:20:48.657 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:20:48.657 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:48.682 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:49.261 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:49.264 [main] FolderStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:20:49.265 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:49.276 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:49.899 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:49.904 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:20:49.904 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:49.914 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:50.475 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest]
+[INFO ] 2016-09-30 17:20:50.476 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:50.488 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:51.094 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:51.137 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:51.139 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest]
+[INFO ] 2016-09-30 17:20:51.140 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:51.151 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:51.747 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:51.788 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:51.793 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:51.795 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:20:51.796 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:51.813 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:52.377 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidSameValueArgument]
+[INFO ] 2016-09-30 17:20:52.377 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:52.383 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:53.265 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:20:53.265 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:53.274 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:53.863 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:20:53.864 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:53.872 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:54.625 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:20:54.666 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'new' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.createDirectory(FolderStorageModule.java:56) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.createDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:55) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:20:54.675 [main] MailStorageModuleTest - Starting test [findEmailByIdTest]
+[INFO ] 2016-09-30 17:20:54.676 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:54.697 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:55.452 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:55.461 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:55.496 [main] MailStorageModuleTest - Starting test [deleteEmailTest]
+[INFO ] 2016-09-30 17:20:55.496 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:55.502 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:56.102 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:56.145 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:56.147 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest]
+[INFO ] 2016-09-30 17:20:56.172 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:56.183 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:56.750 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:56.756 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:56.762 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:56.766 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:56.768 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:20:56.768 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:56.777 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:57.351 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:57.354 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_NotInDb]
+[INFO ] 2016-09-30 17:20:57.354 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:57.360 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:58.336 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:58.338 [main] MailStorageModuleTest - Starting test [deleteEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:20:58.339 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:58.346 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:58.904 [main] MailStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:20:58.904 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:58.917 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:59.565 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:59.569 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:59.573 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:59.577 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:59.582 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:59.586 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:59.590 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:20:59.591 [main] MailStorageModuleTest - Starting test [deleteEmailTest_IdNotExists]
+[INFO ] 2016-09-30 17:20:59.592 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:20:59.597 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:00.247 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:00.248 [main] MailStorageModuleTest - Failed test [deleteEmailTest_IdNotExists
+expected:<0> but was:<1>]
+[INFO ] 2016-09-30 17:21:00.256 [main] MailStorageModuleTest - Starting test [saveEmailTest]
+[INFO ] 2016-09-30 17:21:00.257 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:21:00.266 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:00.855 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:01.086 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:01.093 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:01.103 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:21:01.103 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:21:01.111 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:01.731 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_InvalidArgument]
+[INFO ] 2016-09-30 17:21:01.731 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:21:01.743 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:02.444 [main] MailStorageModuleTest - Starting test [saveEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:21:02.444 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:21:02.449 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:03.672 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest]
+[INFO ] 2016-09-30 17:21:03.673 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:21:03.680 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:04.312 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:04.315 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:04.321 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:04.369 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:04.374 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:04.376 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_EmailIdNotInDb]
+[INFO ] 2016-09-30 17:21:04.376 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:21:04.382 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:05.204 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:21:05.206 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:21:05.206 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:21:05.215 [main] MailStorageModule - Connected to the database.
+[DEBUG] 2016-09-30 17:21:05.813 [main] MailModuleExceptionsTest - in TestExceptions with no to's addresses
+[DEBUG] 2016-09-30 17:21:05.816 [main] MailModuleExceptionsTest - in TestExceptions with null for cc
+[DEBUG] 2016-09-30 17:21:05.819 [main] MailModuleExceptionsTest - in TestExceptions with to with invalid email
+[DEBUG] 2016-09-30 17:21:05.820 [main] MailModuleExceptionsTest - in TestExceptions with cc with invalid email
+[DEBUG] 2016-09-30 17:21:05.822 [main] MailModuleExceptionsTest - in TestExceptions with bcc with invalid email
+[DEBUG] 2016-09-30 17:21:05.825 [main] MailModuleExceptionsTest - in TestExceptions with attachment error: file not found
+[INFO ] 2016-09-30 17:23:46.677 [main] FolderStorageModuleTest - Starting test [createDirectoryTest]
+[INFO ] 2016-09-30 17:23:46.681 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:46.956 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:47.647 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:47.688 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:47.692 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:23:47.693 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:47.704 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:48.274 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:23:48.329 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'trash' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.updateDirectory(FolderStorageModule.java:146) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.updateDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:103) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:23:48.343 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:23:48.344 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:48.358 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:48.976 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:48.981 [main] FolderStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:23:48.981 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:48.998 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:49.566 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:49.569 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:23:49.570 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:49.583 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:50.155 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest]
+[INFO ] 2016-09-30 17:23:50.156 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:50.172 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:50.761 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:50.795 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:50.799 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest]
+[INFO ] 2016-09-30 17:23:50.799 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:50.810 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:51.419 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:51.452 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:51.455 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:51.457 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:23:51.457 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:51.465 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:52.022 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidSameValueArgument]
+[INFO ] 2016-09-30 17:23:52.023 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:52.036 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:52.647 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:23:52.647 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:52.653 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:53.230 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:23:53.231 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:53.245 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:53.793 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:23:53.832 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'new' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.createDirectory(FolderStorageModule.java:56) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.createDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:55) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:23:53.845 [main] MailStorageModuleTest - Starting test [findEmailByIdTest]
+[INFO ] 2016-09-30 17:23:53.845 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:53.857 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:54.500 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:54.516 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:54.550 [main] MailStorageModuleTest - Starting test [deleteEmailTest]
+[INFO ] 2016-09-30 17:23:54.550 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:54.556 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:55.181 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:55.246 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:55.249 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest]
+[INFO ] 2016-09-30 17:23:55.250 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:55.255 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:55.839 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:55.845 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:55.850 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:55.853 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:55.855 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:23:55.856 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:55.861 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:56.557 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:56.560 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_NotInDb]
+[INFO ] 2016-09-30 17:23:56.560 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:56.569 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:57.338 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:57.340 [main] MailStorageModuleTest - Starting test [deleteEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:23:57.341 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:57.350 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.136 [main] MailStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:23:58.137 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:58.146 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.724 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.732 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.738 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.743 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.749 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.753 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.758 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:58.760 [main] MailStorageModuleTest - Starting test [deleteEmailTest_IdNotExists]
+[INFO ] 2016-09-30 17:23:58.760 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:58.767 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:59.318 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:23:59.321 [main] MailStorageModuleTest - Starting test [saveEmailTest]
+[INFO ] 2016-09-30 17:23:59.322 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:23:59.335 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:00.006 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:00.296 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:00.302 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:00.315 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:24:00.316 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:24:00.323 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:01.054 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_InvalidArgument]
+[INFO ] 2016-09-30 17:24:01.054 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:24:01.067 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:01.702 [main] MailStorageModuleTest - Starting test [saveEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:24:01.703 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:24:01.715 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:02.283 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest]
+[INFO ] 2016-09-30 17:24:02.284 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:24:02.298 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:03.438 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:03.445 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:03.453 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:03.491 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:03.495 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:03.497 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_EmailIdNotInDb]
+[INFO ] 2016-09-30 17:24:03.498 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:24:03.504 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:04.110 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:24:04.113 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:24:04.114 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:24:04.125 [main] MailStorageModule - Connected to the database.
+[DEBUG] 2016-09-30 17:24:04.700 [main] MailModuleExceptionsTest - in TestExceptions with no to's addresses
+[DEBUG] 2016-09-30 17:24:04.705 [main] MailModuleExceptionsTest - in TestExceptions with null for cc
+[DEBUG] 2016-09-30 17:24:04.707 [main] MailModuleExceptionsTest - in TestExceptions with to with invalid email
+[DEBUG] 2016-09-30 17:24:04.708 [main] MailModuleExceptionsTest - in TestExceptions with cc with invalid email
+[DEBUG] 2016-09-30 17:24:04.711 [main] MailModuleExceptionsTest - in TestExceptions with bcc with invalid email
+[DEBUG] 2016-09-30 17:24:04.714 [main] MailModuleExceptionsTest - in TestExceptions with attachment error: file not found
+[INFO ] 2016-09-30 17:36:54.166 [main] FolderStorageModuleTest - Starting test [createDirectoryTest]
+[INFO ] 2016-09-30 17:36:54.171 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:54.445 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:55.117 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:55.159 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:55.163 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:36:55.163 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:55.171 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:55.733 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:36:55.783 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'trash' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.updateDirectory(FolderStorageModule.java:146) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.updateDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:103) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:36:55.795 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:36:55.795 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:55.811 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:56.375 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:56.378 [main] FolderStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:36:56.379 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:56.391 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:56.976 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:56.979 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:36:56.979 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:56.992 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:57.637 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest]
+[INFO ] 2016-09-30 17:36:57.638 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:57.650 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:58.222 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:58.255 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:58.259 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest]
+[INFO ] 2016-09-30 17:36:58.259 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:58.269 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:58.819 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:58.860 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:58.864 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:58.866 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:36:58.866 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:58.873 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:36:59.426 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidSameValueArgument]
+[INFO ] 2016-09-30 17:36:59.426 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:36:59.434 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:00.042 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:37:00.042 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:00.048 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:00.636 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:37:00.637 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:00.647 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:01.198 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:37:01.237 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'new' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.createDirectory(FolderStorageModule.java:56) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.createDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:55) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:37:01.245 [main] MailStorageModuleTest - Starting test [findEmailByIdTest]
+[INFO ] 2016-09-30 17:37:01.246 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:01.257 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:01.847 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:01.864 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:01.903 [main] MailStorageModuleTest - Starting test [deleteEmailTest]
+[INFO ] 2016-09-30 17:37:01.903 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:01.908 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:02.507 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:02.551 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:02.555 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest]
+[INFO ] 2016-09-30 17:37:02.556 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:02.583 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:03.300 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:03.305 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:03.311 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:03.316 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:03.318 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:37:03.318 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:03.324 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:03.924 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:03.927 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_NotInDb]
+[INFO ] 2016-09-30 17:37:03.927 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:03.935 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:04.475 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:04.478 [main] MailStorageModuleTest - Starting test [deleteEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:37:04.478 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:04.486 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:05.431 [main] MailStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:37:05.431 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:05.443 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.017 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.025 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.036 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.044 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.049 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.055 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.061 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.063 [main] MailStorageModuleTest - Starting test [deleteEmailTest_IdNotExists]
+[INFO ] 2016-09-30 17:37:06.064 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:06.069 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.632 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:06.635 [main] MailStorageModuleTest - Starting test [saveEmailTest]
+[INFO ] 2016-09-30 17:37:06.635 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:06.646 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:07.301 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:07.614 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:07.623 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:07.638 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:37:07.638 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:07.644 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:08.333 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_InvalidArgument]
+[INFO ] 2016-09-30 17:37:08.333 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:08.345 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:08.925 [main] MailStorageModuleTest - Starting test [saveEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:37:08.926 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:08.938 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:09.564 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest]
+[INFO ] 2016-09-30 17:37:09.565 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:09.574 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:10.251 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:10.258 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:10.264 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:10.315 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:10.319 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:10.321 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_EmailIdNotInDb]
+[INFO ] 2016-09-30 17:37:10.321 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:10.330 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:10.889 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:10.892 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:37:10.892 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:37:10.902 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:37:11.527 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-09-30 17:37:11.529 [main] PropertiesManagerTest - Failed test [testWriteText
+null]
+[DEBUG] 2016-09-30 17:37:11.563 [main] MailModuleExceptionsTest - in TestExceptions with no to's addresses
+[DEBUG] 2016-09-30 17:37:11.566 [main] MailModuleExceptionsTest - in TestExceptions with null for cc
+[DEBUG] 2016-09-30 17:37:11.567 [main] MailModuleExceptionsTest - in TestExceptions with to with invalid email
+[DEBUG] 2016-09-30 17:37:11.568 [main] MailModuleExceptionsTest - in TestExceptions with cc with invalid email
+[DEBUG] 2016-09-30 17:37:11.570 [main] MailModuleExceptionsTest - in TestExceptions with bcc with invalid email
+[DEBUG] 2016-09-30 17:37:11.572 [main] MailModuleExceptionsTest - in TestExceptions with attachment error: file not found
+[INFO ] 2016-09-30 17:42:10.809 [main] FolderStorageModuleTest - Starting test [createDirectoryTest]
+[INFO ] 2016-09-30 17:42:10.813 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:11.126 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:11.804 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:11.838 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:11.842 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:42:11.843 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:11.855 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:12.396 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:42:12.448 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'trash' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.updateDirectory(FolderStorageModule.java:146) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.updateDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:103) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:42:12.463 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:42:12.463 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:12.480 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:13.020 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:13.025 [main] FolderStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:42:13.025 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:13.036 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:13.640 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:13.643 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:42:13.644 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:13.659 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:14.213 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest]
+[INFO ] 2016-09-30 17:42:14.214 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:14.228 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:14.923 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:14.967 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:14.971 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest]
+[INFO ] 2016-09-30 17:42:14.971 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:14.984 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:15.583 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:15.615 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:15.620 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:15.621 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:42:15.622 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:15.630 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:16.160 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidSameValueArgument]
+[INFO ] 2016-09-30 17:42:16.161 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:16.172 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:16.752 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:42:16.752 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:16.761 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:17.424 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:42:17.425 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:17.434 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:18.143 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:42:18.182 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'new' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.createDirectory(FolderStorageModule.java:56) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.createDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:55) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:42:18.199 [main] MailStorageModuleTest - Starting test [findEmailByIdTest]
+[INFO ] 2016-09-30 17:42:18.200 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:18.212 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:18.882 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:18.896 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:18.932 [main] MailStorageModuleTest - Starting test [deleteEmailTest]
+[INFO ] 2016-09-30 17:42:18.932 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:18.938 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:19.661 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:19.717 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:19.719 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest]
+[INFO ] 2016-09-30 17:42:19.719 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:19.726 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:20.342 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:20.346 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:20.350 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:20.353 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:20.355 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:42:20.355 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:20.360 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:21.035 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:21.037 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_NotInDb]
+[INFO ] 2016-09-30 17:42:21.038 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:21.044 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:21.996 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:21.997 [main] MailStorageModuleTest - Starting test [deleteEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:42:21.998 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:22.003 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:22.574 [main] MailStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:42:22.575 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:22.584 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.195 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.202 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.209 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.216 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.223 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.229 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.234 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.236 [main] MailStorageModuleTest - Starting test [deleteEmailTest_IdNotExists]
+[INFO ] 2016-09-30 17:42:23.236 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:23.244 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.850 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:23.851 [main] MailStorageModuleTest - Starting test [saveEmailTest]
+[INFO ] 2016-09-30 17:42:23.852 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:23.858 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:24.486 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:24.682 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:24.685 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:24.693 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:42:24.693 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:24.698 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:25.395 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_InvalidArgument]
+[INFO ] 2016-09-30 17:42:25.396 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:25.407 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:26.014 [main] MailStorageModuleTest - Starting test [saveEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:42:26.014 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:26.022 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:26.700 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest]
+[INFO ] 2016-09-30 17:42:26.701 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:26.709 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:27.311 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:27.316 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:27.335 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:27.375 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:27.378 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:27.380 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_EmailIdNotInDb]
+[INFO ] 2016-09-30 17:42:27.380 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:27.385 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:27.939 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:27.941 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:42:27.941 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:42:27.946 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:42:28.530 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-09-30 17:42:28.532 [main] PropertiesManagerTest - Failed test [testWriteText
+null]
+[DEBUG] 2016-09-30 17:42:28.566 [main] MailModuleExceptionsTest - in TestExceptions with no to's addresses
+[DEBUG] 2016-09-30 17:42:28.568 [main] MailModuleExceptionsTest - in TestExceptions with null for cc
+[DEBUG] 2016-09-30 17:42:28.568 [main] MailModuleExceptionsTest - in TestExceptions with to with invalid email
+[DEBUG] 2016-09-30 17:42:28.570 [main] MailModuleExceptionsTest - in TestExceptions with cc with invalid email
+[DEBUG] 2016-09-30 17:42:28.570 [main] MailModuleExceptionsTest - in TestExceptions with bcc with invalid email
+[DEBUG] 2016-09-30 17:42:28.571 [main] MailModuleExceptionsTest - in TestExceptions with attachment error: file not found
+[INFO ] 2016-09-30 17:45:22.648 [main] FolderStorageModuleTest - Starting test [createDirectoryTest]
+[INFO ] 2016-09-30 17:45:22.651 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:22.934 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:23.655 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:23.691 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:23.697 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:45:23.697 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:23.708 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:24.305 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:45:24.355 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'trash' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.updateDirectory(FolderStorageModule.java:146) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.updateDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:103) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:45:24.367 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:45:24.368 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:24.385 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:24.965 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:24.968 [main] FolderStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:45:24.968 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:24.981 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:25.545 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:25.548 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:45:25.548 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:25.556 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:26.199 [main] FolderStorageModuleTest - Starting test [deleteDirectoryTest]
+[INFO ] 2016-09-30 17:45:26.199 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:26.209 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:26.772 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:26.817 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:26.818 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest]
+[INFO ] 2016-09-30 17:45:26.818 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:26.827 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:27.478 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:27.522 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:27.526 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:27.528 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:45:27.528 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:27.535 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:28.067 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidSameValueArgument]
+[INFO ] 2016-09-30 17:45:28.067 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:28.076 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:28.637 [main] FolderStorageModuleTest - Starting test [updateDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:45:28.638 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:28.648 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:29.330 [main] FolderStorageModuleTest - Starting test [createDirectoryTest_DuplicateDir]
+[INFO ] 2016-09-30 17:45:29.332 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:29.342 [main] FolderStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:29.926 [main] FolderStorageModule - Connected to the database.
+[ERROR] 2016-09-30 17:45:29.956 [main] FolderStorageModule - Such directory already exists
+com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry 'new' for key 'name'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[?:1.8.0_91]
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423) ~[?:1.8.0_91]
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.Util.getInstance(Util.java:387) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:934) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3966) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3902) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2549) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1861) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2073) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdateInternal(PreparedStatement.java:2009) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeLargeUpdate(PreparedStatement.java:5098) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at com.mysql.jdbc.PreparedStatement.executeUpdate(PreparedStatement.java:1994) ~[mysql-connector-java-5.1.39.jar:5.1.39]
+	at ashulzhenko.emailapp.data.FolderStorageModule.createDirectory(FolderStorageModule.java:56) [classes/:?]
+	at ashulzhenko.emailapp.data.FolderStorageModuleTest.createDirectoryTest_DuplicateDir(FolderStorageModuleTest.java:55) [test-classes/:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_91]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_91]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_91]
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_91]
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit-4.12.jar:4.12]
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19) [junit-4.12.jar:4.12]
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26) [junit-4.12.jar:4.12]
+	at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55) [junit-4.12.jar:4.12]
+	at org.junit.rules.RunRules.evaluate(RunRules.java:20) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78) [junit-4.12.jar:4.12]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268) [junit-4.12.jar:4.12]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363) [junit-4.12.jar:4.12]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:367) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:274) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:238) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:161) [surefire-junit4-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:290) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:242) [surefire-booter-2.19.1.jar:2.19.1]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:121) [surefire-booter-2.19.1.jar:2.19.1]
+[INFO ] 2016-09-30 17:45:29.970 [main] MailStorageModuleTest - Starting test [findEmailByIdTest]
+[INFO ] 2016-09-30 17:45:29.970 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:29.981 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:30.529 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:30.541 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:30.574 [main] MailStorageModuleTest - Starting test [deleteEmailTest]
+[INFO ] 2016-09-30 17:45:30.574 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:30.579 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:31.301 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:31.369 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:31.371 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest]
+[INFO ] 2016-09-30 17:45:31.371 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:31.377 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:31.939 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:31.945 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:31.950 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:31.954 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:31.956 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_DirNotExists]
+[INFO ] 2016-09-30 17:45:31.957 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:31.962 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:32.529 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:32.531 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_NotInDb]
+[INFO ] 2016-09-30 17:45:32.531 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:32.538 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:33.823 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:33.825 [main] MailStorageModuleTest - Starting test [deleteEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:45:33.825 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:33.830 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:34.460 [main] MailStorageModuleTest - Starting test [findAllTest]
+[INFO ] 2016-09-30 17:45:34.461 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:34.473 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.090 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.098 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.107 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.113 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.118 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.122 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.128 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.130 [main] MailStorageModuleTest - Starting test [deleteEmailTest_IdNotExists]
+[INFO ] 2016-09-30 17:45:35.131 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:35.138 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.725 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:35.727 [main] MailStorageModuleTest - Starting test [saveEmailTest]
+[INFO ] 2016-09-30 17:45:35.727 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:35.736 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:36.406 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:36.721 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:36.728 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:36.740 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:45:36.740 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:36.746 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:37.342 [main] MailStorageModuleTest - Starting test [findEmailByIdTest_InvalidArgument]
+[INFO ] 2016-09-30 17:45:37.342 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:37.352 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:38.063 [main] MailStorageModuleTest - Starting test [saveEmailTest_InvalidArgument]
+[INFO ] 2016-09-30 17:45:38.063 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:38.075 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:38.639 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest]
+[INFO ] 2016-09-30 17:45:38.639 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:38.650 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:39.293 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:39.298 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:39.304 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:39.347 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:39.352 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:39.355 [main] MailStorageModuleTest - Starting test [updateEmailDirectoryTest_EmailIdNotInDb]
+[INFO ] 2016-09-30 17:45:39.355 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:39.361 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:40.076 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:40.078 [main] MailStorageModuleTest - Starting test [findAllInDirectoryTest_InvalidArgument]
+[INFO ] 2016-09-30 17:45:40.078 [main] MailStorageModuleTest - Seeding
+[INFO ] 2016-09-30 17:45:40.086 [main] MailStorageModule - Connected to the database.
+[INFO ] 2016-09-30 17:45:40.674 [main] PropertiesManagerTest - Starting test [testWriteText]
+[DEBUG] 2016-09-30 17:45:40.701 [main] MailModuleExceptionsTest - in TestExceptions with no to's addresses
+[DEBUG] 2016-09-30 17:45:40.704 [main] MailModuleExceptionsTest - in TestExceptions with null for cc
+[DEBUG] 2016-09-30 17:45:40.705 [main] MailModuleExceptionsTest - in TestExceptions with to with invalid email
+[DEBUG] 2016-09-30 17:45:40.706 [main] MailModuleExceptionsTest - in TestExceptions with cc with invalid email
+[DEBUG] 2016-09-30 17:45:40.707 [main] MailModuleExceptionsTest - in TestExceptions with bcc with invalid email
+[DEBUG] 2016-09-30 17:45:40.708 [main] MailModuleExceptionsTest - in TestExceptions with attachment error: file not found

@@ -2,6 +2,7 @@ package ashulzhenko.emailapp.data;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.interfaces.FolderStorageDAO;
+import ashulzhenko.emailapp.rules.MethodLogger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -21,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Rule;
 
 /**
  * Tests FolderStorageModule.
@@ -63,7 +65,7 @@ public class FolderStorageModuleTest {
     @Test
     public void deleteDirectoryTest_DirNotExists() throws SQLException {
         int result = data.deleteDirectory("newdir");
-        assertEquals(1, result);
+        assertEquals(0, result);
     } 
     
     @Test(expected=IllegalArgumentException.class)

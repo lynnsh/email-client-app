@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ashulzhenko.emailapp.rules;
 
 import org.junit.rules.TestWatcher; 
@@ -19,7 +14,12 @@ import org.slf4j.LoggerFactory;
  * @author Ken Fogel  
  *  
  */ 
-public class MethodLogger extends TestWatcher {          
+public class MethodLogger extends TestWatcher { 
+    
+    // See method prepareLogger for the reason the logger is not instantiated here.     
+    private Logger log;
+    
+    
     /**      
      * Constructor      
      */     

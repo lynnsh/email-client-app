@@ -4,6 +4,7 @@ ashulzhenko/emailapp/interfaces/MailStorageDAO.class
 ashulzhenko/emailapp/mail/MailModule.class
 ashulzhenko/emailapp/data/MailStorageModule.class
 ashulzhenko/emailapp/data/DatabaseModule.class
+ashulzhenko/emailapp/properties/PropertiesManager.class
 ashulzhenko/emailapp/compare/EmailMessageSorter.class
 ashulzhenko/emailapp/compare/EmailAttachmentSorter.class
 ashulzhenko/emailapp/data/FolderStorageModule.class

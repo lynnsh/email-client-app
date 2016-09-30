@@ -3,6 +3,7 @@ package ashulzhenko.emailapp.data;
 import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.interfaces.MailStorageDAO;
+import ashulzhenko.emailapp.rules.MethodLogger;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Rule;
 import static java.nio.file.Paths.get;
 import jodd.mail.EmailAttachment;
 import static org.junit.Assert.fail;
@@ -47,7 +49,7 @@ public class MailStorageModuleTest {
     @Test
     public void deleteEmailTest_IdNotExists() throws SQLException {
         int result = data.deleteEmail(33);
-        assertEquals(result, 1);
+        assertEquals(result, 0);
     }   
     
     @Test(expected=IllegalArgumentException.class)
@@ -127,7 +129,7 @@ public class MailStorageModuleTest {
         EmailCustom email = createEmail();
         email.setId(100);
         int result = data.updateEmailDirectory(email);
-        assertEquals(1, result);
+        assertEquals(0, result);
     }
     
     @Test(expected=IllegalArgumentException.class)
