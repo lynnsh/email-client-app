@@ -10,4 +10,5 @@ ashulzhenko/emailapp/compare/EmailAttachmentSorter.class
 ashulzhenko/emailapp/data/FolderStorageModule.class
 ashulzhenko/emailapp/bean/EmailCustom.class
 ashulzhenko/emailapp/interfaces/Mailer.class
+ashulzhenko/emailapp/data/AddressType.class
 ashulzhenko/emailapp/compare/MailAddressSorter.class

@@ -7,6 +7,7 @@
 /home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/data/MailStorageModule.java
 /home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/compare/MailAddressSorter.java
 /home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/interfaces/MailStorageDAO.java
+/home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/data/AddressType.java
 /home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/interfaces/Mailer.java
 /home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/data/DatabaseModule.java
 /home/aline/Documents/NetBeansProjects/java-email-application/src/main/java/ashulzhenko/emailapp/interfaces/FolderStorageDAO.java

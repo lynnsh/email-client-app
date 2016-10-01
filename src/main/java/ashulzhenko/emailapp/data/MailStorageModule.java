@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import jodd.mail.Email;
+import jodd.mail.EmailAddress;
 import jodd.mail.EmailAttachment;
 import jodd.mail.EmailMessage;
 import jodd.mail.MailAddress;
@@ -74,12 +75,15 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         Connection connection = getConnection();
         List<EmailCustom> emails = new ArrayList<>();
         
-        String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
-                + "message, toEmails, replyTo, sentDate, subject from emails";
+        String query = "select id, msgNumber, rcvDate, "
+                + "(select name from directories where id = directory), "
+                + "(select address from addresses where id = fromEmail), "
+                + "message, sentDate, subject from emails";
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
             try(ResultSet rs = pstmt.executeQuery()){
                 while(rs.next()) {
                     EmailCustom email = createEmail(rs);
+                    addEmails(email, connection);
                     addAttachments(email, connection);
                     emails.add(email);
                 }
@@ -109,8 +113,10 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         int dirId = findDirectoryId(connection, directory, false);
         List<EmailCustom> emails = new ArrayList<>(0);
         if(dirId != -1) {
-            String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
-                    + "message, toEmails, replyTo, sentDate, subject "
+            String query = "select id, msgNumber, rcvDate, "
+                    + "(select name from directories where id = directory), "
+                    + "(select address from addresses where id = fromEmail), "
+                    + "message, sentDate, subject "
                     + "from emails where directory = ?";
             try(PreparedStatement pstmt = connection.prepareStatement(query)){
                 pstmt.setInt(1, dirId);
@@ -118,6 +124,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
                     while(rs.next()) {
                         EmailCustom email = createEmail(rs);
                         addAttachments(email, connection);
+                        addEmails(email, connection);
                         emails.add(email);
                     }
                 }
@@ -143,8 +150,10 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         
         Connection connection = getConnection();
         EmailCustom email  = null;
-        String query = "select id, msgNumber, rcvDate, directory, bcc, cc, fromEmail, "
-                + "message, toEmails, replyTo, sentDate, subject "
+        String query = "select id, msgNumber, rcvDate, "
+                + "(select name from directories where id = directory), "
+                + "(select address from addresses where id = fromEmail), "
+                + "message, sentDate, subject "
                 + "from emails where id = ?";
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
             pstmt.setInt(1, id);
@@ -152,6 +161,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
                 if(rs.next()) {
                     email = createEmail(rs);
                     addAttachments(email, connection);
+                    addEmails(email, connection);
                 }
             }
         }
@@ -177,8 +187,8 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         
         int id;
         String query = "insert into emails (msgNumber, rcvDate, directory, "
-                + "bcc, cc, fromEmail, message, toEmails, replyTo, sentDate, "
-                + "subject) values (?,?,?,?,?,?,?,?,?,?,?)";
+                + "fromEmail, message, sentDate, subject) "
+                + "values (?,?,?,?,?,?,?)";
         Connection connection = getConnection();
         try(PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             prepareEmail(pstmt, email, connection);
@@ -190,6 +200,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             }
             email.setId(id);
             saveAttachments(email, connection);
+            saveAddresses(email, connection);
         }
         finally {
             closeConnection(connection);
@@ -229,6 +240,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     /**
      * Adds embedded attachments to an email.
      * @param email the email to which the attachments are added.
+     * @param connection the Connection object to the the database.
      * @throws SQLException If there is a problem when connecting to the database.
      */
     private void addAttachments(EmailCustom email, Connection connection) throws SQLException {             
@@ -246,6 +258,30 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     }
     
     /**
+     * Adds email addresses (bcc, cc, to, replyTo) to an email.
+     * @param email the email to which the attachments are added.
+     * @param connection the Connection object to the the database.
+     * @throws SQLException If there is a problem when connecting to the database.
+     */
+    private void addEmails(EmailCustom email, Connection connection) throws SQLException {             
+        String query = "select (select address from addresses where addressid = id) "
+                        + "from email_address where emailid = ? "
+                        + "and address_type = ?";
+        AddressType[] addresses = AddressType.values();
+        try(PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setInt(1, email.getId());
+            for(int i = addresses[0].getType(); i < addresses.length; i++) {
+                pstmt.setInt(2, i);
+                try(ResultSet rs = pstmt.executeQuery()){
+                    while(rs.next()) {
+                        AddressType.addToEmail(email, i, rs.getString(1));
+                    }
+                }
+            }
+        }  
+    }
+    
+    /**
      * Adds messages to email.
      * @param email The email to which the messages are added
      * @param messages The messages to add to email.
@@ -254,20 +290,6 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         for(String str : messages.split(";")) {
             email.addHtml(str);
         }
-    }
-    
-    /**
-     * Returns string with mail addresses separated by semicolon.
-     * @param array MailAddress array to convert.
-     * @return string with mail addresses separated by semicolon.
-     */
-    private String convertArrayToStr(MailAddress[] array) {
-        String str = "";
-        if(array != null && array.length != 0) {
-            for(MailAddress ma : array)
-                str += ma.getEmail() + ";";
-        }
-        return str;
     }
 
     
@@ -284,6 +306,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         return str;
     }
     
+    
     /**
      * Creates email from database data.
      * @param rs ResultSet containing database data.
@@ -295,23 +318,11 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         email.setId(rs.getInt(1));
         email.setMessageNumber(rs.getInt(2));
         email.setReceivedDate(rs.getTimestamp(3));
-        email.setDirectory(findDirectoryName(rs.getInt(4)));
-        String str = rs.getString(5);
-        if(!str.isEmpty())
-            email.bcc(str.split(";"));
-        str = rs.getString(6);
-        if(!str.isEmpty())
-            email.cc(str.split(";"));
-        email.from(rs.getString(7));
-        addMessages(email, rs.getString(8));
-        str = rs.getString(9);
-        if(!str.isEmpty())
-            email.to(str.split(";"));
-        str = rs.getString(10);
-        if(!str.isEmpty())
-            email.replyTo(str.split(";"));
-        email.setSentDate(rs.getTimestamp(11));
-        email.subject(rs.getString(12));
+        email.setDirectory(rs.getString(4));
+        email.from(rs.getString(5));
+        addMessages(email, rs.getString(6));
+        email.setSentDate(rs.getTimestamp(7));
+        email.subject(rs.getString(8));
         
         return email;
     }
@@ -344,29 +355,7 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         }
         return id;
     }
-    
-    /**
-     * Returns directory name corresponding to the provided id.
-     * @param dirId The id of the directory to find.
-     * @return directory name corresponding to the provided id.
-     * @throws SQLException If there was a problem when reading from the database.
-     */
-    private String findDirectoryName(int dirId) throws SQLException {
-        Connection conn = getConnection();
-        String name;
-        String query = "select name from directories where id = ?";
-        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, dirId);
-            try(ResultSet rs = pstmt.executeQuery()) {
-                rs.next();
-                name = rs.getString(1);
-            }
-        }
-        finally{
-            closeConnection(conn);
-        }
-        return name;
-    }
+   
     
     /**
      * Sets all necessary data to PreparedStatement.
@@ -381,15 +370,11 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         pstmt.setInt(1, email.getMessageNumber());
         setDate(pstmt, email.getReceivedDate(), 2);
         pstmt.setInt(3, findDirectoryId(connection, email.getDirectory(), true));
-        pstmt.setString(4, convertArrayToStr(email.getBcc()));
-        pstmt.setString(5, convertArrayToStr(email.getCc()));
         String from = (email.getFrom() == null? null : email.getFrom().getEmail()); 
-        pstmt.setString(6, from);
-        pstmt.setString(7, convertMessagesToStr(email.getAllMessages()));
-        pstmt.setString(8, convertArrayToStr(email.getTo()));
-        pstmt.setString(9, convertArrayToStr(email.getReplyTo()));
-        setDate(pstmt, email.getSentDate(), 10);
-        pstmt.setString(11, email.getSubject());
+        pstmt.setInt(4, saveAddress(from, connection));
+        pstmt.setString(5, convertMessagesToStr(email.getAllMessages()));
+        setDate(pstmt, email.getSentDate(), 6);
+        pstmt.setString(7, email.getSubject());
         return pstmt;
     }
     
@@ -413,6 +398,60 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             }
         }
     }
+    
+    /**
+     * Saves email addresses to the database.
+     * @param email The email where the addresses come from.
+     * @param connection Database Connection object.
+     * @throws SQLException If there is a problem when writing to the database.
+     */
+    private void saveAddresses(EmailCustom email, Connection connection) throws SQLException {
+        String query = "insert into email_address values (?,?,?)";
+        AddressType[] addresses = AddressType.values();
+        for(int i = addresses[0].getType(); i < addresses.length; i++) {
+            List<MailAddress> list = AddressType.getList(email, i);
+            if(list != null && !list.isEmpty()) {
+                try(PreparedStatement pstmt = connection.prepareStatement(query)){
+                    for(MailAddress ma : list) {
+                        pstmt.setInt(1, email.getId());
+                        int addressid = saveAddress(ma.getEmail(), connection);
+                        pstmt.setInt(2, addressid);
+                        pstmt.setInt(3, i); 
+                        pstmt.executeUpdate();
+                    }
+                }
+            }
+        }
+    }
+    
+    private int saveAddress(String address, Connection conn) throws SQLException {
+        int id;
+        String query = "select id from addresses where address = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, address);
+            try(ResultSet rs = pstmt.executeQuery()) {
+                //address exists
+                if(rs.next())
+                    id = rs.getInt(1);
+                //address does not exist, so it is created
+                else {
+                    query = "insert into addresses (address) values (?)";
+                    try(PreparedStatement pstmt2 = conn.prepareStatement
+                                            (query, Statement.RETURN_GENERATED_KEYS)) {
+                        pstmt2.setString(1, address);
+                        pstmt2.executeUpdate();
+                        //get id of newly created address
+                        try(ResultSet rs2 = pstmt2.getGeneratedKeys()) {
+                            rs2.next();
+                            id = rs2.getInt(1);
+                        }
+                    }
+                }
+            }
+        }
+        return id;
+    }
+    
     
     /**
      * Add date to the PreparedStatement.
