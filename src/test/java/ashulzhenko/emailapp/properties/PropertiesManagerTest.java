@@ -26,8 +26,8 @@ public class PropertiesManagerTest {
         public void testWriteText() throws FileNotFoundException, IOException {         
             UserConfigBean userConfig1 = new UserConfigBean("cs.517.send@gmail.com", "v3ryl0ngp@2s", 
                                             993, "imap.gmail.com", 465, "smtp.gmail.com");
-            pm.writeTextProperties("", "TextProps", userConfig1);         
-            UserConfigBean userConfig2 = pm.loadTextProperties("", "TextProps");         
+            pm.writeTextProperties("", "src/test/res/TextProps", userConfig1);         
+            UserConfigBean userConfig2 = pm.loadTextProperties("", "src/test/res/TextProps");         
             assertEquals("The two beans do not match", userConfig1, userConfig2);     
         } 
 }

@@ -17,7 +17,7 @@ and the format it will appear as -->
 	 </Console>         
 	 <!-- Output to a file. append=true each run appends its         
 	 output to the same file while false overwites the file -->        
-	 <File name="file-log" fileName="${log-path}/loggingdemo.log" append="true" >             
+	 <File name="file-log" fileName="${log-path}/logging.log" append="true" >             
 		 <PatternLayout>                 
 			 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n                 
 			 </pattern>             
