@@ -7,7 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import jodd.mail.Email;
-import jodd.mail.EmailAddress;
 import jodd.mail.EmailAttachment;
 import jodd.mail.EmailMessage;
 import jodd.mail.MailAddress;
@@ -270,11 +269,11 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
         AddressType[] addresses = AddressType.values();
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
             pstmt.setInt(1, email.getId());
-            for(int i = addresses[0].getType(); i < addresses.length; i++) {
-                pstmt.setInt(2, i);
+            for(AddressType address : addresses) {
+                pstmt.setInt(2, address.getType());
                 try(ResultSet rs = pstmt.executeQuery()){
                     while(rs.next()) {
-                        AddressType.addToEmail(email, i, rs.getString(1));
+                        address.addToEmail(email, rs.getString(1));
                     }
                 }
             }
@@ -408,15 +407,15 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     private void saveAddresses(EmailCustom email, Connection connection) throws SQLException {
         String query = "insert into email_address values (?,?,?)";
         AddressType[] addresses = AddressType.values();
-        for(int i = addresses[0].getType(); i < addresses.length; i++) {
-            List<MailAddress> list = AddressType.getList(email, i);
-            if(list != null && !list.isEmpty()) {
+        for(AddressType address : addresses) {
+            MailAddress[] array = address.getList(email);
+            if(array != null && array.length != 0) {
                 try(PreparedStatement pstmt = connection.prepareStatement(query)){
-                    for(MailAddress ma : list) {
+                    for(MailAddress ma : array) {
                         pstmt.setInt(1, email.getId());
                         int addressid = saveAddress(ma.getEmail(), connection);
                         pstmt.setInt(2, addressid);
-                        pstmt.setInt(3, i); 
+                        pstmt.setInt(3, address.getType()); 
                         pstmt.executeUpdate();
                     }
                 }

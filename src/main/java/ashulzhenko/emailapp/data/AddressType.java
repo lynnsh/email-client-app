@@ -1,9 +1,6 @@
 package ashulzhenko.emailapp.data;
 
 import ashulzhenko.emailapp.bean.EmailCustom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import jodd.mail.MailAddress;
 
 /**
@@ -29,6 +26,56 @@ public enum AddressType {
 	 */
 	private AddressType(int type) {
 		this.type = type;
+	}
+    
+    /**
+	 * Returns an EmailCustom with added address.
+	 * 
+     * @param email Email message to which the address is added.
+     * @param address The specific email address to add.
+	 * 
+	 * @return EmailCustom email message to which the address is added.
+	 */
+	public EmailCustom addToEmail(EmailCustom email, String address) {
+        if(address == null || address.isEmpty() || email == null)
+            throw new IllegalArgumentException ("Invalid address or email.");
+        
+		switch (type) {
+			case 1 : email.bcc(address);
+				   	   break;
+			case 2 : email.cc(address);
+					   break;
+			case 3 : email.to(address);
+				       break;
+			case 4 : email.replyTo(address);
+				       break;
+		}
+		return email;
+	}
+    
+    /**
+	 * Returns the array of email addresses for a particular type.
+	 * 
+     * @param email Email message to which the address is added.
+	 * 
+	 * @return the array of email addresses for a particular type.
+	 */
+	public MailAddress[] getList(EmailCustom email) {
+        if(email == null)
+            throw new IllegalArgumentException ("Invalid email.");
+        
+        MailAddress[] array = new MailAddress[0];
+		switch (type) {
+			case 1 : array = email.getBcc();
+				   	   break;
+			case 2 : array = email.getCc();
+					   break;
+			case 3 : array = email.getTo();
+				       break;
+			case 4 : array = email.getReplyTo();
+				       break;
+		}
+		return array;
 	}
     
     /**
@@ -68,60 +115,7 @@ public enum AddressType {
 		return address;
 	}
     
-    /**
-	 * Returns an EmailCustom with added address.
-	 * 
-     * @param email Email message to which the address is added.
-	 * @param type The type of the address to add.
-     * @param address The specific email address to add.
-	 * 
-	 * @return EmailCustom email message to which the address is added.
-	 */
-	public static EmailCustom addToEmail(EmailCustom email, int type, String address) {
-        if(address == null || address.isEmpty() || email == null)
-            throw new IllegalArgumentException ("Invalid address or email.");
-        
-		switch (type) {
-			case 1 : email.bcc(address);
-				   	   break;
-			case 2 : email.cc(address);
-					   break;
-			case 3 : email.to(address);
-				       break;
-			case 4 : email.replyTo(address);
-				       break;
-		    //No matching enum constant
-			default :  throw new IllegalArgumentException(type
-							+ " is not a valid type for the address.");
-		}
-		return email;
-	}
     
-    /**
-	 * Returns the list of email addresses for a particular type.
-	 * 
-     * @param email Email message to which the address is added.
-	 * @param type The type of the address to add.
-	 * 
-	 * @return the list of email addresses for a particular type.
-	 */
-	public static List<MailAddress> getList(EmailCustom email, int type) {
-        if(email == null)
-            throw new IllegalArgumentException ("Invalid email.");
-        List<MailAddress> list = new ArrayList<>(0);
-		switch (type) {
-			case 1 : list = Arrays.asList(email.getBcc());
-				   	   break;
-			case 2 : list = Arrays.asList(email.getCc());
-					   break;
-			case 3 : list = Arrays.asList(email.getTo());
-				       break;
-			case 4 : list = Arrays.asList(email.getReplyTo());
-				       break;
-		    //No matching enum constant
-			default :  throw new IllegalArgumentException(type
-							+ " is not a valid type for the address.");
-		}
-		return list;
-	}
+    
+    
 }
