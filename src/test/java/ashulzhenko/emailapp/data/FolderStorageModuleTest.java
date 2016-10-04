@@ -23,6 +23,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Rule;
+import org.junit.Ignore;
 
 /**
  * Tests FolderStorageModule.
@@ -108,11 +109,11 @@ public class FolderStorageModuleTest {
     public void init() {
         UserConfigBean userInfo = new UserConfigBean("cs.517.receive@gmail.com", "3t12ll0ngl3arn",
                 993, "imap.gmail.com", 465, "smtp.gmail.com");
-        userInfo.setMysqlPassword("compsci");
+        userInfo.setMysqlPassword("harsioco");
         userInfo.setMysqlPort(3306);
-        userInfo.setMysqlUserName("local");
-        userInfo.setMysqlUrl("localhost");
-        userInfo.setMysqlDbName("emailapp");
+        userInfo.setMysqlUserName("CS1242395");
+        userInfo.setMysqlUrl("waldo2.dawsoncollege.qc.ca");
+        userInfo.setMysqlDbName("cs1242395");
         
         log.info("Seeding");
         final String seedDataScript = loadAsString("src/test/res/createDB.sql");

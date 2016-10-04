@@ -49,11 +49,4 @@ public interface Mailer {
      */
     EmailCustom sendEmail(EmailCustom email);
     
-    
-    /**
-     * Sets user information using UserConfigBean.
-     * @param userInfo user's information needed to send the email.
-     */
-    void setUserInfo(UserConfigBean userInfo);
-    
 }

@@ -185,19 +185,6 @@ public class MailModule implements Mailer {
         return sendEmail(email);
     }
     
-    
-    /**
-     * Sets user information using UserConfigBean.
-     *
-     * @param userInfo user's information needed to send the email.
-     */
-    @Override
-    public void setUserInfo(UserConfigBean userInfo) {
-        if (userInfo == null) {
-            throw new IllegalArgumentException("No user information provided");
-        }
-        this.userInfo = userInfo;
-    }
 
     /**
      * Adds embedded and ordinary attachments.

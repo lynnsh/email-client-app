@@ -22,20 +22,20 @@ import jodd.mail.ReceivedEmail;
  * field for the email directory.
  *
  * @author Alena Shulzhenko
- * @version 23/09/2016
+ * @version 04/10/2016
  * @since 1.8
  */
 public class EmailCustom extends Email implements Serializable {
     
     private static final long serialVersionUID = 42051768871L;
-    private List<ReceivedEmail> attachedMessages;
+    private List<ReceivedEmail> attachedMessages; //ReceivedEmail field
     //used to differentiate send and received emails ("sent" and "inbox" directories)
     private String directory;
-    private Flags flags;
+    private Flags flags; //ReceivedEmail field
     private int id = -1;
-    private int messageNumber;
+    private int messageNumber; //ReceivedEmail field
     //Date type for consistency since Jodd uses Date for sent date
-    private Date rcvDate;
+    private Date rcvDate; //ReceivedEmail field
 
     /**
      * Instantiates EmailCustom object. Sets directory default to sent.
@@ -124,56 +124,7 @@ public class EmailCustom extends Email implements Serializable {
 
         return Objects.equals(this.subject, email.subject);
     }
-
-    /**
-     * Returns the attached messages.
-     *
-     * @return the attached messages.
-     */
-    public List<ReceivedEmail> getAttachedMessages() {
-        return attachedMessages;
-    }
-    /**
-     * Returns the directory name where the email is located.
-     *
-     * @return the directory name where the email is located.
-     */
-    public String getDirectory() {
-        return directory;
-    }
-    /**
-     * Returns flags for the received message.
-     *
-     * @return flags for the received message.
-     */
-    public Flags getFlags() {
-        return flags;
-    }
-    /**
-     * Returns the unique id of the message.
-     *
-     * @return id of the message.
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * Returns the message number.
-     *
-     * @return the message number.
-     */
-    public int getMessageNumber() {
-        return messageNumber;
-    }
-    /**
-     * Returns the received date of this email.
-     *
-     * @return the received date of this email.
-     */
-    public Date getReceivedDate() {
-        return rcvDate;
-    }
+    
     /**
      * Returns a hash code value for this object.
      *
@@ -192,7 +143,61 @@ public class EmailCustom extends Email implements Serializable {
     }
 
     /**
-     * Sets the attached messages for this email.
+     * Returns the attached messages. ReceivedEmail method.
+     *
+     * @return the attached messages.
+     */
+    public List<ReceivedEmail> getAttachedMessages() {
+        return attachedMessages;
+    }
+    
+    /**
+     * Returns the directory name where the email is located.
+     *
+     * @return the directory name where the email is located.
+     */
+    public String getDirectory() {
+        return directory;
+    }
+    
+    /**
+     * Returns flags for the received message. ReceivedEmail method.
+     *
+     * @return flags for the received message.
+     */
+    public Flags getFlags() {
+        return flags;
+    }
+    
+    /**
+     * Returns the unique id of the message.
+     *
+     * @return id of the message.
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * Returns the message number. ReceivedEmail method.
+     *
+     * @return the message number.
+     */
+    public int getMessageNumber() {
+        return messageNumber;
+    }
+    
+    /**
+     * Returns the received date of this email. ReceivedEmail method.
+     *
+     * @return the received date of this email.
+     */
+    public Date getReceivedDate() {
+        return rcvDate;
+    }
+
+    /**
+     * Sets the attached messages for this email. ReceivedEmail method.
      *
      * @param attachedMessages The attached messages for this email.
      */
@@ -216,7 +221,7 @@ public class EmailCustom extends Email implements Serializable {
     }
 
     /**
-     * Sets flags for received message.
+     * Sets flags for received message. ReceivedEmail method.
      *
      * @param flags Flags for received message to set.
      */
@@ -240,7 +245,7 @@ public class EmailCustom extends Email implements Serializable {
     }
     
     /**
-     * Sets the message number.
+     * Sets the message number. ReceivedEmail method.
      *
      * @param messageNumber The message number.
      */
@@ -249,7 +254,7 @@ public class EmailCustom extends Email implements Serializable {
     }
     
     /**
-     * Sets the received date of the email.
+     * Sets the received date of the email. ReceivedEmail method.
      *
      * @param rcvDate The received date of the email.
      */
