@@ -1,6 +1,6 @@
-ashulzhenko\emailapp\data\FolderStorageModuleTest.class
-ashulzhenko\emailapp\rules\MethodLogger.class
-ashulzhenko\emailapp\mail\MailModuleTest.class
-ashulzhenko\emailapp\properties\PropertiesManagerTest.class
-ashulzhenko\emailapp\data\MailStorageModuleTest.class
-ashulzhenko\emailapp\mail\MailModuleExceptionsTest.class
+ashulzhenko/emailapp/mail/MailModuleExceptionsTest.class
+ashulzhenko/emailapp/data/MailStorageModuleTest.class
+ashulzhenko/emailapp/properties/PropertiesManagerTest.class
+ashulzhenko/emailapp/mail/MailModuleTest.class
+ashulzhenko/emailapp/rules/MethodLogger.class
+ashulzhenko/emailapp/data/FolderStorageModuleTest.class

@@ -22,10 +22,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Rule;
-import static java.nio.file.Paths.get;
 import jodd.mail.EmailAttachment;
 import static org.junit.Assert.fail;
-import org.junit.Ignore;
+import static java.nio.file.Paths.get;
 
 /**
  * Tests MailStorageModule.
@@ -81,6 +80,18 @@ public class MailStorageModuleTest {
     public void findAllTest() throws SQLException {
         List <EmailCustom> list = data.findAll();
         assertEquals(list.size(), 6);
+    }
+    
+    @Test
+    public void findEmailsWithNumberTest() throws SQLException {
+        List <EmailCustom> list = data.findEmails(3);
+        assertEquals(list.size(), 3);
+    }
+    
+    @Test
+    public void findEmailsWithNumberAndStartTest() throws SQLException {
+        List <EmailCustom> list = data.findEmails(4, 3);
+        assertEquals(list.size(), 2);
     }
     
     @Test

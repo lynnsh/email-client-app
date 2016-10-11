@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * MailModule class is used to send and receive emails.
  *
  * @author Alena Shulzhenko
- * @version 16/09/2016
+ * @version 04/10/2016
  * @since 1.8
  */
 public class MailModule implements Mailer {

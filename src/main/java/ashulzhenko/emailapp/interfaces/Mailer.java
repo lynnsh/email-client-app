@@ -8,7 +8,7 @@ import java.util.List;
  * The interface for MailModule
  *
  * @author Alena Shulzhenko
- * @version 16/09/2016
+ * @version 04/10/2016
  * @since 1.8
  */
 public interface Mailer {

@@ -23,7 +23,25 @@ public interface MailStorageDAO {
 
 
     /**
-     * Returns all email saved in the database.
+     * Returns emails saved in the database (from start index with the indicated
+     * number of records).
+     * @param start the starting index for retrieving emails.
+     * @param number the number of emails to retrieve.
+     * @return all email saved in the database.
+     * @throws SQLException If there was a problem when reading from the database.
+     */
+    List<EmailCustom> findEmails(int start, int number) throws SQLException;
+    
+    /**
+     * Returns the indicated number of emails saved in the database.
+     * @param number the number of emails to retrieve.
+     * @return all email saved in the database.
+     * @throws SQLException If there was a problem when reading from the database.
+     */
+    List<EmailCustom> findEmails(int number) throws SQLException;
+    
+    /**
+     * Returns all emails saved in the database.
      * @return all email saved in the database.
      * @throws SQLException If there was a problem when reading from the database.
      */

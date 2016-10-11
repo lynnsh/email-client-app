@@ -10,8 +10,6 @@ import jodd.mail.Email;
 import jodd.mail.EmailAttachment;
 import jodd.mail.EmailMessage;
 import jodd.mail.MailAddress;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * MailStorageModule class is used to save, find, update, and delete messages.
@@ -21,7 +19,6 @@ import org.slf4j.LoggerFactory;
  * @since 1.8
  */
 public class MailStorageModule extends DatabaseModule implements MailStorageDAO {
-    private final Logger log = LoggerFactory.getLogger(getClass().getName());
     
     /**
      * Instantiates the object with all necessary information to work with the database.
@@ -63,22 +60,32 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
     }
 
     /**
-     * Returns all email saved in the database.
+     * Returns emails saved in the database (from start index with the indicated
+     * number of records).
+     * 
+     * @param start the starting index for retrieving emails (non-inclusive).
+     * 
+     * @param number the number of emails to retrieve.
      * 
      * @return all email saved in the database.
      * 
      * @throws SQLException If there was a problem when reading from the database.
      */
     @Override
-    public List<EmailCustom> findAll() throws SQLException {
+    public List<EmailCustom> findEmails(int start, int number) throws SQLException {
+        if(start < 0 || number < 0)
+            throw new IllegalArgumentException ("Invalid arguments. start > 0 and number > 0.");
+        
         Connection connection = getConnection();
         List<EmailCustom> emails = new ArrayList<>();
         
         String query = "select id, msgNumber, rcvDate, "
                 + "(select name from directories where id = directory), "
                 + "(select address from addresses where id = fromEmail), "
-                + "message, sentDate, subject from emails";
+                + "message, sentDate, subject from emails order by id limit ?, ?";
         try(PreparedStatement pstmt = connection.prepareStatement(query)){
+            pstmt.setInt(1, start);
+            pstmt.setInt(2, number);
             try(ResultSet rs = pstmt.executeQuery()){
                 while(rs.next()) {
                     EmailCustom email = createEmail(rs);
@@ -92,6 +99,32 @@ public class MailStorageModule extends DatabaseModule implements MailStorageDAO 
             closeConnection(connection);
         }
         return emails;
+    }
+    
+    /**
+     * Returns the indicated number of emails saved in the database.
+     * 
+     * @param number the number of emails to retrieve.
+     * 
+     * @return all email saved in the database.
+     * 
+     * @throws SQLException If there was a problem when reading from the database.
+     */
+    @Override
+    public List<EmailCustom> findEmails(int number) throws SQLException {
+        return findEmails(0, number);
+    }
+    
+    /**
+     * Returns all emails saved in the database.
+     * 
+     * @return all email saved in the database.
+     * 
+     * @throws SQLException If there was a problem when reading from the database.
+     */
+    @Override
+    public List<EmailCustom> findAll() throws SQLException {
+        return findEmails(0, Integer.MAX_VALUE);
     }
 
     /**
