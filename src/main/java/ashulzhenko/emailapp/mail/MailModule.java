@@ -25,12 +25,13 @@ import org.slf4j.LoggerFactory;
  * MailModule class is used to send and receive emails.
  *
  * @author Alena Shulzhenko
- * @version 04/10/2016
+ * @version 18/10/2016
  * @since 1.8
  */
 public class MailModule implements Mailer {
 
     private String[] embedCopy;
+    private int before;
     private final Logger log = LoggerFactory.getLogger(getClass().getName());
     private UserConfigBean userInfo;
 
@@ -199,13 +200,15 @@ public class MailModule implements Mailer {
             }
             //copy of the embedded attachments array to add to the sent email
             //since session object removes it
-            embedCopy = Arrays.copyOf(embed, embed.length);
+            embedCopy = Arrays.copyOf(embed, embed.length);           
         }
         if (attach.length != 0) {
             for (String file : attach) {
                 email.attach(EmailAttachment.attachment().file(new File(file)));
             }
         }
+        List<EmailAttachment> list = email.getAttachments();
+        before = list == null? 0 : list.size();
     }
     
     /**
@@ -216,11 +219,13 @@ public class MailModule implements Mailer {
      * @return email with added embedded attachments.
      */
     private EmailCustom addEmbed(EmailCustom email) {
-        if(embedCopy != null) {
+        List<EmailAttachment> list = email.getAttachments();
+        if(list != null && before > list.size() && embedCopy != null) {           
             for(String file : embedCopy)
                 email.embed(EmailAttachment.attachment().bytes(new File(file)));
             //default to null for the next email
             embedCopy = null;
+            before = 0;
         }
         return email;
     }
