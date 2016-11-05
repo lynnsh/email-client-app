@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<BorderPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ashulzhenko.emailapp.ui.EmailAppController">
+    <top>
+       <MenuBar BorderPane.alignment="CENTER">
+         <menus>
+           <Menu mnemonicParsing="false" text="%app">
+             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#checkNew" text="%newMsg" />
+                  <MenuItem mnemonicParsing="false" onAction="#configure" text="%config" />
+               <MenuItem mnemonicParsing="false" onAction="#onClose" text="%close" />
+             </items>
+           </Menu>
+            <Menu mnemonicParsing="false" text="%dir">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#newDir" text="%new" />
+                  <MenuItem mnemonicParsing="false" onAction="#renameDir" text="%rename" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteDir" text="%delete" />
+              </items>
+            </Menu>
+           <Menu mnemonicParsing="false" text="%message">
+             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#newEmail" text="%new" />
+                  <MenuItem mnemonicParsing="false" onAction="#replyToEmail" text="%reply" />
+                  <MenuItem mnemonicParsing="false" onAction="#forwardEmail" text="%forward" />
+               <MenuItem mnemonicParsing="false" onAction="#deleteEmail" text="%delete" />
+                  <MenuItem mnemonicParsing="false" onAction="#onSaveAttach" text="%saveAttach" />
+             </items>
+           </Menu>
+           <Menu mnemonicParsing="false" text="%help">
+             <items>
+               <MenuItem mnemonicParsing="false" text="%about" />
+             </items>
+           </Menu>
+         </menus>
+       </MenuBar>
+    </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+             <SplitPane dividerPositions="0.22909698996655517" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <items>
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                      <children>
+                        <TreeView fx:id="dirTree" prefHeight="569.0" prefWidth="190.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                      </children>
+                   </AnchorPane>
+                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                      <children>
+                         <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="195.0" prefWidth="416.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <items>
+                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                  <children>
+                                     <TableView fx:id="emailTable" layoutX="27.0" onDragDetected="#onDragDetect" prefHeight="194.0" prefWidth="454.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <columns>
+                                         <TableColumn fx:id="contactColumn" prefWidth="200.0" text="%from" />
+                                          <TableColumn fx:id="subjectColumn" prefWidth="100.0" text="%subject" />
+                                           <TableColumn fx:id="dateColumn" prefWidth="100.0" text="%date" />
+                                       </columns>
+                                     </TableView>
+                                  </children>
+                               </AnchorPane>
+                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <HTMLEditor fx:id="htmlDisplay" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="279.0" prefWidth="648.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                         </SplitPane>
+                      </children>
+                   </AnchorPane>
+               </items>
+             </SplitPane>
+         </center>
+         <top>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" text="Button" />
+              </items>
+            </ToolBar>
+         </top>
+      </BorderPane>
+   </center>
+</BorderPane>

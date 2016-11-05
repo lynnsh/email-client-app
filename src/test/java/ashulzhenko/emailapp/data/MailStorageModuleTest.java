@@ -25,7 +25,8 @@ import org.junit.Rule;
 import jodd.mail.EmailAttachment;
 import static org.junit.Assert.fail;
 import static java.nio.file.Paths.get;
-
+import org.junit.Ignore;
+@Ignore
 /**
  * Tests MailStorageModule.
  * @author Alena Shulzhenko

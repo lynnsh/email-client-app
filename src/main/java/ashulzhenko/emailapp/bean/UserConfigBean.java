@@ -2,29 +2,31 @@ package ashulzhenko.emailapp.bean;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * UserConfigBean class that encapsulates user information, such as email,
  * password, IMAP and SMTP information for this account.
  *
  * @author Alena Shulzhenko
- * @version 30/09/2016
+ * @version 22/10/2016
  * @since 1.8
  */
 public class UserConfigBean implements Serializable {
     
     private static final long serialVersionUID = 42051768871L;
-    private String emailPassword;
-    private String fromEmail;
-    private int imapPort;
-    private String imapUrl;
-    private String mysqlDbName;
-    private String mysqlPassword;
-    private int mysqlPort;
-    private String mysqlUrl;
-    private String mysqlUser;
-    private int smtpPort;
-    private String smtpUrl;
+    private StringProperty emailPassword;
+    private StringProperty fromEmail;
+    private StringProperty imapPort;
+    private StringProperty imapUrl;
+    private StringProperty mysqlDbName;
+    private StringProperty mysqlPassword;
+    private StringProperty mysqlPort;
+    private StringProperty mysqlUrl;
+    private StringProperty mysqlUser;
+    private StringProperty smtpPort;
+    private StringProperty smtpUrl;
 
     
     /**
@@ -49,17 +51,17 @@ public class UserConfigBean implements Serializable {
     public UserConfigBean(String fromEmail, String passwordEmail, int imapPort,
                           String imapUrl, int smtpPort, String smtpUrl) {
         super();
-        this.fromEmail = fromEmail;
-        this.emailPassword = passwordEmail;
-        this.imapPort = imapPort;
-        this.imapUrl = imapUrl;
-        this.smtpPort = smtpPort;
-        this.smtpUrl = smtpUrl;
-        this.mysqlPort = 3306;
-        this.mysqlDbName = "";
-        this.mysqlPassword = "";
-        this.mysqlUrl = "";
-        this.mysqlUser = "";
+        this.fromEmail = new SimpleStringProperty(fromEmail);
+        this.emailPassword = new SimpleStringProperty(passwordEmail);
+        this.imapPort = new SimpleStringProperty(imapPort+"");
+        this.imapUrl = new SimpleStringProperty(imapUrl);
+        this.smtpPort = new SimpleStringProperty(smtpPort+"");
+        this.smtpUrl = new SimpleStringProperty(smtpUrl);
+        this.mysqlPort = new SimpleStringProperty("3306");
+        this.mysqlDbName = new SimpleStringProperty("");
+        this.mysqlPassword = new SimpleStringProperty("");
+        this.mysqlUrl = new SimpleStringProperty("");
+        this.mysqlUser = new SimpleStringProperty("");
     }
     
     
@@ -82,38 +84,38 @@ public class UserConfigBean implements Serializable {
             return false;
         }
         final UserConfigBean other = (UserConfigBean) obj;
-        if (this.imapPort != other.imapPort) {
+        if (!Objects.equals(this.imapPort.get(), other.imapPort.get())) {
             return false;
         }
-        if (this.mysqlPort != other.mysqlPort) {
+        if (!Objects.equals(this.mysqlPort.get(), other.mysqlPort.get())) {
             return false;
         }
-        if (this.smtpPort != other.smtpPort) {
+        if (!Objects.equals(this.smtpPort.get(), other.smtpPort.get())) {
             return false;
         }
-        if (!Objects.equals(this.emailPassword, other.emailPassword)) {
+        if (!Objects.equals(this.emailPassword.get(), other.emailPassword.get())) {
             return false;
         }
-        if (!Objects.equals(this.fromEmail, other.fromEmail)) {
+        if (!Objects.equals(this.fromEmail.get(), other.fromEmail.get())) {
             return false;
         }
-        if (!Objects.equals(this.imapUrl, other.imapUrl)) {
+        if (!Objects.equals(this.imapUrl.get(), other.imapUrl.get())) {
             return false;
         }
-        if (!Objects.equals(this.mysqlPassword, other.mysqlPassword)) {
+        if (!Objects.equals(this.mysqlPassword.get(), other.mysqlPassword.get())) {
             return false;
         }
-        if (!Objects.equals(this.mysqlUrl, other.mysqlUrl)) {
+        if (!Objects.equals(this.mysqlUrl.get(), other.mysqlUrl.get())) {
             return false;
         }
-        if (!Objects.equals(this.mysqlUser, other.mysqlUser)) {
+        if (!Objects.equals(this.mysqlUser.get(), other.mysqlUser.get())) {
             return false;
         }
-        if (!Objects.equals(this.smtpUrl, other.smtpUrl)) {
+        if (!Objects.equals(this.smtpUrl.get(), other.smtpUrl.get())) {
             return false;
         }
         
-        return Objects.equals(this.mysqlDbName, other.mysqlDbName);
+        return Objects.equals(this.mysqlDbName.get(), other.mysqlDbName.get());
     }
     
     
@@ -123,7 +125,7 @@ public class UserConfigBean implements Serializable {
      * @return the password for the user's email account.
      */
     public String getEmailPassword() {
-        return emailPassword;
+        return emailPassword.get();
     }
     
     /**
@@ -132,7 +134,7 @@ public class UserConfigBean implements Serializable {
      * @return user's email address.
      */
     public String getFromEmail() {
-        return fromEmail;
+        return fromEmail.get();
     }
 
     /**
@@ -141,7 +143,7 @@ public class UserConfigBean implements Serializable {
      * @return port number of the used IMAP server.
      */
     public int getImapPort() {
-        return imapPort;
+        return Integer.parseInt(imapPort.get());
     }
 
     /**
@@ -150,7 +152,7 @@ public class UserConfigBean implements Serializable {
      * @return the URL of the IMAP server.
      */
     public String getImapUrl() {
-        return imapUrl;
+        return imapUrl.get();
     }
     
     /**
@@ -159,7 +161,7 @@ public class UserConfigBean implements Serializable {
      * @return the database name.
      */
     public String getMysqlDbName() {
-        return mysqlDbName;
+        return mysqlDbName.get();
     }
     
     /**
@@ -168,7 +170,7 @@ public class UserConfigBean implements Serializable {
      * @return the password of MySQL user.
      */
     public String getMysqlPassword() {
-        return mysqlPassword;
+        return mysqlPassword.get();
     }
     
     /**
@@ -177,7 +179,7 @@ public class UserConfigBean implements Serializable {
      * @return the port number of the MySQL server.
      */
     public int getMysqlPort() {
-        return mysqlPort;
+        return Integer.parseInt(mysqlPort.get());
     }
     
     /**
@@ -186,7 +188,7 @@ public class UserConfigBean implements Serializable {
      * @return the URL of the MySQL server.
      */
     public String getMysqlUrl() {
-        return mysqlUrl;
+        return mysqlUrl.get();
     }
     
     /**
@@ -195,7 +197,7 @@ public class UserConfigBean implements Serializable {
      * @return the username of MySQL user.
      */
     public String getMysqlUserName() {
-        return mysqlUser;
+        return mysqlUser.get();
     }
 
     /**
@@ -204,7 +206,7 @@ public class UserConfigBean implements Serializable {
      * @return the port number of the SMTP server.
      */
     public int getSmtpPort() {
-        return smtpPort;
+        return Integer.parseInt(smtpPort.get());
     }
 
     /**
@@ -213,6 +215,105 @@ public class UserConfigBean implements Serializable {
      * @return the URL of the SMTP server.
      */
     public String getSmtpUrl() {
+        return smtpUrl.get();
+    }
+    
+    /**
+     * Returns the password for the user's email account as a property.
+     *
+     * @return the password for the user's email account as a property.
+     */
+    public StringProperty emailPassword() {
+        return emailPassword;
+    }
+    
+    /**
+     * Returns user's email address as a property.
+     *
+     * @return user's email address as a property.
+     */
+    public StringProperty fromEmail() {
+        return fromEmail;
+    }
+    
+    /**
+     * Returns port number of the used IMAP server as a property.
+     *
+     * @return port number of the used IMAP server as a property.
+     */
+    public StringProperty imapPort() {
+        return imapPort;
+    }
+    
+    /**
+     * Returns the URL of the IMAP server as a property.
+     *
+     * @return the URL of the IMAP server as a property.
+     */
+    public StringProperty imapUrl() {
+        return imapUrl;
+    }
+    
+    /**
+     * Returns the database name as a property.
+     *
+     * @return the database name as a property.
+     */
+    public StringProperty mysqlDbName() {
+        return mysqlDbName;
+    }
+    
+    /**
+     * Returns the password of MySQL user as a property.
+     *
+     * @return the password of MySQL user as a property.
+     */
+    public StringProperty mysqlPassword() {
+        return mysqlPassword;
+    }
+    
+    /**
+     * Returns the port number of the MySQL server as a property.
+     *
+     * @return the port number of the MySQL server as a property.
+     */
+    public StringProperty mysqlPort() {
+        return mysqlPort;
+    }
+    
+    /**
+     * Returns the URL of the MySQL server as a property.
+     *
+     * @return the URL of the MySQL server as a property.
+     */
+    public StringProperty mysqlUrl() {
+        return mysqlUrl;
+    }
+    
+    /**
+     * Returns the username of MySQL user as a property.
+     *
+     * @return the username of MySQL user as a property.
+     */
+    public StringProperty mysqlUser() {
+        return mysqlUser;
+    }
+    
+    /**
+     * Returns the port number of the SMTP server as a property.
+     *
+     * @return the port number of the SMTP server as a property.
+     */
+    public StringProperty smtpPort() {
+        return smtpPort;
+    }
+    
+    /**
+     * Returns the URL of the SMTP server as a property.
+     *
+     * @return the URL of the SMTP server as a property.
+     */
+    public StringProperty smtpUrl() {
         return smtpUrl;
     }
     
@@ -224,17 +325,17 @@ public class UserConfigBean implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.emailPassword);
-        hash = 23 * hash + Objects.hashCode(this.fromEmail);
-        hash = 23 * hash + this.imapPort;
-        hash = 23 * hash + Objects.hashCode(this.imapUrl);
-        hash = 23 * hash + Objects.hashCode(this.mysqlPassword);
-        hash = 23 * hash + this.mysqlPort;
-        hash = 23 * hash + Objects.hashCode(this.mysqlUrl);
-        hash = 23 * hash + Objects.hashCode(this.mysqlUser);
-        hash = 23 * hash + this.smtpPort;
-        hash = 23 * hash + Objects.hashCode(this.smtpUrl);
-        hash = 23 * hash + Objects.hashCode(this.mysqlDbName);
+        hash = 23 * hash + Objects.hashCode(this.emailPassword.get());
+        hash = 23 * hash + Objects.hashCode(this.fromEmail.get());
+        hash = 23 * hash + Objects.hashCode(this.imapPort.get());
+        hash = 23 * hash + Objects.hashCode(this.imapUrl.get());
+        hash = 23 * hash + Objects.hashCode(this.mysqlPassword.get());
+        hash = 23 * hash + Objects.hashCode(this.mysqlPort.get());
+        hash = 23 * hash + Objects.hashCode(this.mysqlUrl.get());
+        hash = 23 * hash + Objects.hashCode(this.mysqlUser.get());
+        hash = 23 * hash + Objects.hashCode(this.smtpPort.get());
+        hash = 23 * hash + Objects.hashCode(this.smtpUrl.get());
+        hash = 23 * hash + Objects.hashCode(this.mysqlDbName.get());
         return hash;
     }
     
@@ -244,7 +345,7 @@ public class UserConfigBean implements Serializable {
      * @param emailPassword the password of the user's email account.
      */
     public void setEmailPassword(String emailPassword) {
-        this.emailPassword = emailPassword;
+        this.emailPassword.set(emailPassword);
     }
     
     /**
@@ -253,7 +354,7 @@ public class UserConfigBean implements Serializable {
      * @param fromEmail user's email address to set.
      */
     public void setFromEmail(String fromEmail) {
-        this.fromEmail = fromEmail;
+        this.fromEmail.set(fromEmail);
     }
 
     /**
@@ -262,7 +363,7 @@ public class UserConfigBean implements Serializable {
      * @param imapPort the port number of the IMAP server.
      */
     public void setImapPort(int imapPort) {
-        this.imapPort = imapPort;
+        this.imapPort.set(imapPort+"");
     }
 
     /**
@@ -271,7 +372,7 @@ public class UserConfigBean implements Serializable {
      * @param imapUrl the URL of the IMAP server.
      */
     public void setImapUrl(String imapUrl) {
-        this.imapUrl = imapUrl;
+        this.imapUrl.set(imapUrl);
     }
     
     /**
@@ -280,7 +381,7 @@ public class UserConfigBean implements Serializable {
      * @param mysqlDbName the database name to set.
      */
     public void setMysqlDbName(String mysqlDbName) {
-        this.mysqlDbName = mysqlDbName;
+        this.mysqlDbName.set(mysqlDbName);
     }
     
     /**
@@ -289,7 +390,7 @@ public class UserConfigBean implements Serializable {
      * @param mysqlPassword the password of MySQL user.
      */
     public void setMysqlPassword(String mysqlPassword) {
-        this.mysqlPassword = mysqlPassword;
+        this.mysqlPassword.set(mysqlPassword);
     }
     
     /**
@@ -298,7 +399,7 @@ public class UserConfigBean implements Serializable {
      * @param mysqlPort the port number of the MySQL server.
      */
     public void setMysqlPort(int mysqlPort) {
-        this.mysqlPort = mysqlPort;
+        this.mysqlPort.set(mysqlPort+"");
     }
     
     /**
@@ -307,7 +408,7 @@ public class UserConfigBean implements Serializable {
      * @param mysqlUrl the URL of the MySQL server.
      */
     public void setMysqlUrl(String mysqlUrl) {
-        this.mysqlUrl = mysqlUrl;
+        this.mysqlUrl.set(mysqlUrl);
     }
     
     /**
@@ -316,7 +417,7 @@ public class UserConfigBean implements Serializable {
      * @param mysqlUser the username of MySQL user.
      */
     public void setMysqlUserName(String mysqlUser) {
-        this.mysqlUser = mysqlUser;
+        this.mysqlUser.set(mysqlUser);
     }
 
     /**
@@ -325,7 +426,7 @@ public class UserConfigBean implements Serializable {
      * @param smtpPort the port number of the SMTP server.
      */
     public void setSmtpPort(int smtpPort) {
-        this.smtpPort = smtpPort;
+        this.smtpPort.set(smtpPort+"");
     }
 
     /**
@@ -334,7 +435,7 @@ public class UserConfigBean implements Serializable {
      * @param smtpUrl the URL of the SMTP server.
      */
     public void setSmtpUrl(String smtpUrl) {
-        this.smtpUrl = smtpUrl;
+        this.smtpUrl.set(smtpUrl);
     }
 
     
@@ -347,12 +448,12 @@ public class UserConfigBean implements Serializable {
      */
     @Override
     public String toString() {
-        return "UserConfigBean{" + "emailPassword=" + emailPassword + 
-                ", fromEmail=" + fromEmail + ", imapPort=" + imapPort + 
-                ", imapUrl=" + imapUrl + ", mysqlDbName=" + mysqlDbName + 
-                ", mysqlPassword=" + mysqlPassword + ", mysqlPort=" + mysqlPort + 
-                ", mysqlUrl=" + mysqlUrl + ", mysqlUser=" + mysqlUser + 
-                ", smtpPort=" + smtpPort + ", smtpUrl=" + smtpUrl + '}';
+        return "UserConfigBean{" + "emailPassword=" + emailPassword.get() + 
+                ", fromEmail=" + fromEmail.get() + ", imapPort=" + imapPort.get() + 
+                ", imapUrl=" + imapUrl.get() + ", mysqlDbName=" + mysqlDbName.get() + 
+                ", mysqlPassword=" + mysqlPassword.get() + ", mysqlPort=" + mysqlPort.get() + 
+                ", mysqlUrl=" + mysqlUrl.get() + ", mysqlUser=" + mysqlUser.get() + 
+                ", smtpPort=" + smtpPort.get() + ", smtpUrl=" + smtpUrl.get() + "}";
     }
 
 }

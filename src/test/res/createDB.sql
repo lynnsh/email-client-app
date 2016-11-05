@@ -20,11 +20,11 @@ create table addresses (
 create table emails (
 	id integer primary key AUTO_INCREMENT,
 	msgNumber integer default 0,
-	rcvDate timestamp,
+	rcvDate timestamp null,
 	directory integer,
 	fromEmail integer,
 	message text,
-	sentDate timestamp,
+	sentDate timestamp null,
 	subject varchar(50) default '',
 	foreign key (directory) references directories(id) ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key (fromEmail) references addresses(id)
@@ -65,12 +65,12 @@ insert into addresses (address) values ('cs.517.send@outlook.com');
 
 
 insert into emails (msgNumber, rcvDate, directory, fromEmail, message, sentDate, subject) values 
-(1, now(), 1, 1, 'plain text', '2016-09-18 01:28:00', 'important'),
-(2, now(), 1, 1, 'plain text2', '2016-09-18 01:28:01', 'important2'),
-(3, now(), 1, 1, 'plain text3', '2016-09-18 01:28:01', 'important3'),
-(4, now(), 2, 2, 'plain text4', '2016-09-18 01:28:01', 'important4'),
-(5, now(), 5, 2, 'plain text5', '2016-09-18 01:28:01', 'important5'),
-(6, now(), 2, 2, '<html><body><h2>not plain</h2><img src="cid:c.jpg"/><body></html>', '2016-09-18 01:28:01', 'important6');
+(1, '2015-09-18 01:28:01', 1, 1, 'plain text', null, 'important'),
+(2, '2016-09-18 01:28:01', 1, 1, 'plain text2', null, 'important2'),
+(3, now(), 1, 1, 'plain text3', null, 'important3'),
+(4, null, 2, 2, 'plain text4', '2016-09-18 01:28:01', 'important4'),
+(5, null, 5, 2, 'plain text5', '2016-09-18 01:28:01', 'important5'),
+(6, null, 2, 2, '<html><body><h2>not plain</h2><img src="cid:c.jpg"/><body></html>', now(), 'important6');
 
 
 insert into email_address values (1, 2, 3);

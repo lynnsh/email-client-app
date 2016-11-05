@@ -4,4 +4,22 @@
             <actionName>CUSTOM-MailController</actionName>
             <displayName>MailController</displayName>
         </action>
+        <action>
+            <actionName>CUSTOM-EmailApp</actionName>
+            <displayName>EmailApp</displayName>
+        </action>
+        <action>
+            <actionName>run</actionName>
+            <packagings>
+                <packaging>jar</packaging>
+            </packagings>
+            <goals>
+                <goal>process-classes</goal>
+                <goal>org.codehaus.mojo:exec-maven-plugin:1.2.1:exec</goal>
+            </goals>
+            <properties>
+                <exec.args>-classpath %classpath ashulzhenko.emailapp.ui.MainApp</exec.args>
+                <exec.executable>java</exec.executable>
+            </properties>
+        </action>
     </actions>

@@ -13,11 +13,11 @@ create table addresses (
 create table emails (
 	id integer primary key AUTO_INCREMENT,
 	msgNumber integer default 0,
-	rcvDate timestamp,
+	rcvDate timestamp null,
 	directory integer,
 	fromEmail integer,
 	message text,
-	sentDate timestamp,
+	sentDate timestamp null,
 	subject varchar(50) default '',
 	foreign key (directory) references directories(id) ON DELETE CASCADE ON UPDATE CASCADE,
     foreign key (fromEmail) references addresses(id)
@@ -42,3 +42,7 @@ create table attachments (
     email integer,
     foreign key (email) references emails(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- default directories
+insert into directories (name) values ('inbox');
+insert into directories (name) values ('sent');

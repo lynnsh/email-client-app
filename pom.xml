@@ -41,7 +41,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- class that has the main method -->
-        <mainClass>${groupId}.${artifactId}.mail.MainApp</mainClass>
+        <mainClass>${groupId}.${artifactId}.ui.MainApp</mainClass>
     </properties>
 
     <dependencies>
