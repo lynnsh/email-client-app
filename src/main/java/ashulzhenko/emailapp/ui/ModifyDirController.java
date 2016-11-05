@@ -65,7 +65,7 @@ public class ModifyDirController implements Initializable {
                 if(current != null) {
                     List<TreeItem<String>> list = parent.getChildren();
                     list.set(list.indexOf(current), new TreeItem<>(newDir));
-                    dirs.set(dirs.indexOf(current), newDir);
+                    dirs.set(dirs.indexOf(current.getValue()), newDir);
                     folderdao.updateDirectory(current.getValue(), newDir);
                 }
                 else {
