@@ -7,6 +7,7 @@ import ashulzhenko.emailapp.data.MailStorageModule;
 import ashulzhenko.emailapp.interfaces.FolderStorageDAO;
 import ashulzhenko.emailapp.interfaces.MailStorageDAO;
 import ashulzhenko.emailapp.mail.MailModule;
+import ashulzhenko.emailapp.properties.PropertiesManager;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,7 +18,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -86,6 +86,9 @@ public class EmailAppController implements Initializable {
     
     private ResourceBundle bundle;
     private FileChooser fileChooser;
+    private PropertiesManager pm;
+    //the path to properties file
+    private static String PROPERTIES_PATH;
     private final org.slf4j.Logger log = LoggerFactory.getLogger(getClass().getName());
     
     public EmailAppController() {}
@@ -382,8 +385,15 @@ public class EmailAppController implements Initializable {
     
     @FXML 
     private void configure(ActionEvent event) {
-        Stage stage = new Stage();
-        mainApp.displayForm(stage, user, true);
+        try {
+            Stage stage = new Stage();
+            mainApp.displayForm(stage, user, true);
+            //restore valid data if user cancels with invalid data
+            user = pm.loadTextProperties(PROPERTIES_PATH, "data");
+        } catch (IOException ex) {
+            log.error("Error retrieving properties file: ", ex.getMessage());
+            Platform.exit();
+        }
     }
     
     @FXML 
@@ -546,6 +556,14 @@ public class EmailAppController implements Initializable {
         event.consume();
     }
 
-    
+    /**
+     * Sets the PropertiesManager as well as the path to the properties file.
+     * @param pm PropertiesManager object.
+     * @param path the path to the properties file.
+     */
+    public void setProperties(PropertiesManager pm, String path) {
+        this.pm = pm;
+        PROPERTIES_PATH = path;
+    }
     
 }

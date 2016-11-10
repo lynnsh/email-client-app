@@ -80,7 +80,8 @@ public class CreateEmailController implements Initializable {
         String text = getEmailText(email);
         html.setHtmlText("<font size='2'>"+text+"</font>");
         subject.setText(email.getSubject());
-        to.setText(getTo(email));
+        if(subject.getText().contains("RE:"))
+            to.setText(email.getFrom().getEmail());
     }
     
     private String getEmailText(EmailCustom email) {  

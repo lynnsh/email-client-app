@@ -5223,3 +5223,31 @@ java.lang.NullPointerException
 [INFO ] 2016-11-05 01:59:19.444 [JavaFX Application Thread] MailStorageModule - Connected to the database.
 [INFO ] 2016-11-05 01:59:37.979 [JavaFX Application Thread] MailStorageModule - Connected to the database.
 [INFO ] 2016-11-09 17:31:22.669 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-11-09 17:35:33.820 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-11-09 17:35:49.851 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:35:49.870 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:35:54.153 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:49:18.541 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:49:43.559 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:49:44.113 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:50:15.824 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:50:16.994 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:50:17.790 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:50:18.341 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:50:18.863 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 17:50:19.480 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 18:25:54.182 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 18:25:54.192 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 18:25:56.914 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 18:40:38.590 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 18:40:38.599 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 18:40:42.745 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:02:26.878 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-11-09 19:03:48.269 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:03:48.278 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:04:11.323 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:05:36.928 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-11-09 19:05:44.614 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:05:44.625 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:05:52.884 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:31:27.900 [main] PropertiesManagerTest - Starting test [testWriteText]

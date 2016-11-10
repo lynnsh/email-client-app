@@ -4,6 +4,7 @@ import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.properties.PropertiesManager;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static javafx.application.Application.launch;
 import javafx.scene.layout.BorderPane;
+import static javafx.application.Application.launch;
 
 
 public class MainApp extends Application {   
@@ -24,7 +25,7 @@ public class MainApp extends Application {
     private static final String PROPERTIES_PATH = "src/main/resources/properties";
     
     public MainApp() {
-        bundle = ResourceBundle.getBundle("resources/LanguageBundle");//, Locale.CANADA_FRENCH);
+        bundle = ResourceBundle.getBundle("resources/LanguageBundle", Locale.CANADA_FRENCH);
     }
     
     @Override
@@ -66,6 +67,7 @@ public class MainApp extends Application {
             EmailAppController controller = loader.getController();
             controller.setMainApp(this);
             controller.setUserInfo(user);
+            controller.setProperties(pm, PROPERTIES_PATH);
             stage.show();
         } catch (IOException ex) {
             log.error("Error reading the file: ", ex.getMessage());
@@ -85,7 +87,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
             controller.setUserInfo(user);
             controller.setProperties(pm, PROPERTIES_PATH);
-            controller.setIsSecondWindow(second);
+            controller.setIsChild(second);
             stage.show();
         } 
         catch (IOException ex) {

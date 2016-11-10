@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import org.slf4j.LoggerFactory;
 
 /**
- * The controller that is responsible for displaying stage for
+ * The controller that is responsible for displaying the stage for
  * renaming or adding a new folder.
  *
  * @author Alena Shulzhenko
@@ -64,7 +64,7 @@ public class ModifyDirController implements Initializable {
     }  
     
     /**
-     * Closes the stage if uses presses cancel button.
+     * Closes the stage if the user presses cancel button.
      * 
      * @param event the event that triggered this action.
      */
