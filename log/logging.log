@@ -5251,3 +5251,19 @@ java.lang.NullPointerException
 [INFO ] 2016-11-09 19:05:44.625 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
 [INFO ] 2016-11-09 19:05:52.884 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
 [INFO ] 2016-11-09 19:31:27.900 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-11-09 19:32:15.564 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:32:15.575 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 19:32:18.246 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:13:57.292 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-11-09 20:14:04.399 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:14:04.410 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:14:09.542 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:14:12.610 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:14:14.565 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:14:16.693 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:14:44.927 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:16:23.643 [main] PropertiesManagerTest - Starting test [testWriteText]
+[INFO ] 2016-11-09 20:16:31.918 [JavaFX Application Thread] MailStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:16:31.930 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:16:33.987 [JavaFX Application Thread] FolderStorageModule - Connected to the database.
+[INFO ] 2016-11-09 20:16:36.829 [JavaFX Application Thread] MailStorageModule - Connected to the database.

@@ -435,7 +435,7 @@ public class EmailAppController implements Initializable {
             scene.getStylesheets().add("/styles/Styles.css");
             
             CreateEmailController controller = loader.getController();
-            controller.setUserInfo(user, mail, maildao);
+            controller.setMailUtilities(mail, maildao);
             controller.setFileChooser(fileChooser);
             if(email != null) 
                 controller.setEmail(email);

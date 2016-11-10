@@ -4,8 +4,7 @@ import ashulzhenko.emailapp.interfaces.FolderStorageDAO;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.ResourceBundle;
-import javafx.application.Platform;
+import java.util.ResourceBundle;;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +20,9 @@ import org.slf4j.LoggerFactory;
 /**
  * The controller that is responsible for displaying the stage for
  * renaming or adding a new folder.
+ * 
+ * Note: since it is a child window, when an error occurs (e.g. SQLException),
+ * the window is closed to display the main app, and the error is logged.
  *
  * @author Alena Shulzhenko
  * @version 09/11/2016
@@ -54,7 +56,7 @@ public class ModifyDirController implements Initializable {
      * @param url The location used to resolve relative paths for 
      *            the root object, or null if the location is not known.
      * @param rb The resources used to localize the root object, 
-     *           or null if the root object was not localized.
+     *            or null if the root object was not localized.
      */
     @FXML
     @Override
@@ -103,11 +105,12 @@ public class ModifyDirController implements Initializable {
                     dirs.add(newDir);
                     folderdao.createDirectory(newDir);
                 }
-                ((Node)(event.getSource())).getScene().getWindow().hide();
             }
             catch (SQLException ex) {
-                log.error("Unable to modify directory table: ", ex.getMessage());
-                Platform.exit();
+                log.error("Unable to modify directory table: ", ex.getMessage());                
+            }
+            finally {
+                ((Node)(event.getSource())).getScene().getWindow().hide();
             }
         }
     }
@@ -123,7 +126,7 @@ public class ModifyDirController implements Initializable {
     private boolean validateDir(String dir) {
         if(dir == null || dir.trim().isEmpty()) {
             dirError.setVisible(true);
-            dirError.setText(bundle.getString("noValueErr") + " " + bundle.getString("dir"));
+            dirError.setText(bundle.getString("noValueErr"));
             return false;
         }
         List<TreeItem<String>> list = parent.getChildren();
