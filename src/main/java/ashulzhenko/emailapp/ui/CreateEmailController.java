@@ -1,7 +1,6 @@
 package ashulzhenko.emailapp.ui;
 
 import ashulzhenko.emailapp.bean.EmailCustom;
-import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.interfaces.MailStorageDAO;
 import ashulzhenko.emailapp.interfaces.Mailer;
 import java.io.File;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -159,7 +157,7 @@ public class CreateEmailController implements Initializable {
     }
     
     /**
-     * Returns the full data of the provided email as a String.
+     * Returns the full date of the provided email as a String.
      * 
      * @param email the email which date is to be returned.
      * 

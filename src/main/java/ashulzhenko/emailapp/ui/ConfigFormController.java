@@ -62,8 +62,8 @@ public class ConfigFormController implements Initializable {
      * 
      * @param url The location used to resolve relative paths for 
      *            the root object, or null if the location is not known.
-     * @param rb The resources used to localize the root object, 
-     *           or null if the root object was not localized.
+     * @param rb  The resources used to localize the root object, 
+     *            or null if the root object was not localized.
      */
     @FXML
     @Override
@@ -142,7 +142,7 @@ public class ConfigFormController implements Initializable {
     }  
 
     /**
-     * Is called by the main application to give a reference back to itself.
+     * Called by the main application to give a reference back to itself.
      * 
      * @param mainApp the reference to the main app.
      */
