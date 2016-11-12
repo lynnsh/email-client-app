@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -59,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * view messages content.
  *
  * @author Alena Shulzhenko
- * @version 11/11/2016
+ * @version 12/11/2016
  * @since 1.8
  */
 public class EmailAppController {
@@ -96,8 +97,8 @@ public class EmailAppController {
     private final org.slf4j.Logger log = LoggerFactory.getLogger(getClass().getName());
     
     /**
-    * Instantiates the object.
-    */
+     * Instantiates the object.
+     */
     public EmailAppController() {}
     
     /**
@@ -408,7 +409,6 @@ public class EmailAppController {
         }
     }
     
-    
     /**
      * Displays the information about user selected email.
      */
@@ -427,7 +427,8 @@ public class EmailAppController {
              .append("<b>").append(bundle.getString("text")).append(":</b> ")
              .append(getMessages()).append("<br/><b>").append(bundle.getString("date"))
              .append(":</b> ").append(getDate());
-                      
+                  
+        email.trimToSize();
         htmlDisplay.setHtmlText(email.toString());      
     }
     
@@ -465,7 +466,7 @@ public class EmailAppController {
         
         if(array.length > 1)
             return str.substring(0, str.length()-2);
-        
+        str.trimToSize();
         return str.toString();
     }
     
@@ -474,12 +475,39 @@ public class EmailAppController {
      * 
      * @return all messages belonging to the selected email.
      */
-    private StringBuilder getMessages() {
+    private String getMessages() {
         StringBuilder message = new StringBuilder("");
         List<EmailMessage> list = currentEmail.getAllMessages();
         for(EmailMessage em : list)
             message.append(em.getContent()).append("<br/>");
-        
+        return replaceImage(message);
+    }
+    
+    /**
+     * Makes the embedded image viewable in the HTMLEditor.
+     * 
+     * @param str the original message with the embedded image(s).
+     * 
+     * @return the modified message that can show the embedded image(s). 
+     */
+    private String replaceImage(StringBuilder str) {
+        str.trimToSize();
+        String message = str.toString();
+        List<EmailAttachment> attach = currentEmail.getAttachments();
+        if(attach != null && attach.size() > 0) {
+            for(EmailAttachment ea : attach) {
+                String file = ea.getName();
+                log.debug(file);
+                if(message.contains("cid:"+file)) {
+                    message = message.replace("<img src=\"cid:"+file+"\">",
+                        "<img src=\"data:image/"
+                        +file.substring(file.lastIndexOf(".")+1)
+                        +";base64,"+Base64.getMimeEncoder().encodeToString(ea.toByteArray())
+                        +"\"/>");
+                }
+            }
+                
+        }
         return message;
     }
     

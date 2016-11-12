@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * the window is closed to display the main app, and the error is logged.
  *
  * @author Alena Shulzhenko
- * @version 11/11/2016
+ * @version 12/11/2016
  * @since 1.8
  */
 public class CreateEmailController implements Initializable {
@@ -160,7 +160,7 @@ public class CreateEmailController implements Initializable {
             .append(bundle.getString("date")).append(":</b> ")
             .append(getDate(email)).append("<br/>-------------------------")
             .append("----------------------------<br/>");
-        
+        text.trimToSize();
         return text.toString();
     }
     
@@ -200,7 +200,7 @@ public class CreateEmailController implements Initializable {
         
         if(array.length > 1)
             return emails.substring(0, emails.length()-2);
-        
+        emails.trimToSize();
         return emails.toString();
     }
     
@@ -216,7 +216,7 @@ public class CreateEmailController implements Initializable {
         List<EmailMessage> list = email.getAllMessages();
         for(EmailMessage em : list)
             message.append(em.getContent()).append("<br/>");
-        
+        message.trimToSize();
         return message;
     }
     

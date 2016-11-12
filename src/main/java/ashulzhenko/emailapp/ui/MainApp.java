@@ -14,31 +14,47 @@ import org.slf4j.LoggerFactory;
 import javafx.scene.layout.BorderPane;
 import static javafx.application.Application.launch;
 
-
+/**
+ * The class responsible for starting the Email Application.
+ *
+ * @author Alena Shulzhenko
+ * @version 12/11/2016
+ * @since 1.8
+ */
 public class MainApp extends Application {   
     private final Logger log = LoggerFactory.getLogger(getClass().getName());
-    private Stage stage;
     private PropertiesManager pm;
     private ResourceBundle bundle;
     private static final String PROPERTIES_PATH = "src/main/resources/properties";
     
+    /**
+     * Instantiates the object.
+     */
     public MainApp() {
         bundle = ResourceBundle.getBundle("resources/LanguageBundle");//, Locale.CANADA_FRENCH);
     }
     
+    /**
+     * The main entry point for JavaFX application.
+     * 
+     * @param stage the primary stage for this application, 
+     *               onto which the application scene can be set.
+     */
     @Override
     public void start(Stage stage) {
-        this.stage = stage;
         try {           
             pm = new PropertiesManager();
-            UserConfigBean user = pm.loadTextProperties(PROPERTIES_PATH, "data");            
-            if(user.getEmailPassword().isEmpty())             
+            UserConfigBean user = pm.loadTextProperties(PROPERTIES_PATH, "data");
+            //if there is at least one value missing, 
+            //the config form should be displayed
+            if(isEmptyBean(user))             
                 displayForm(stage, user, false);
             else               
                 displayEmailApp(stage, user);          
         }
         catch(Exception e) {
             log.error("Error displaying layout", e);
+            System.exit(1);
         }
     }
 
@@ -94,6 +110,36 @@ public class MainApp extends Application {
             log.error("Error in Config Form: ", ex.getMessage());
             System.exit(1);
         }
+    }
+    
+    /**
+     * Verifies the UserConfigBean if some values are empty.
+     * 
+     * @param user the UserConfigBean to verify.
+     * 
+     * @return true if there are empty fields present or port number is invalid;
+     *         false otherwise.
+     */
+    private boolean isEmptyBean(UserConfigBean user) {
+        if(user.getEmailPassword().trim().isEmpty())
+            return true;
+        if(user.getFromEmail().trim().isEmpty())
+            return true;      
+        int[] ports = new int[]{user.getImapPort(), user.getMysqlPort(), user.getSmtpPort()};
+        for(int port: ports)
+            if(port < 0 || port > 65536)
+                return true;
+        if(user.getImapUrl().trim().isEmpty())
+            return true;
+        if(user.getMysqlDbName().trim().isEmpty())
+            return true;
+        if(user.getMysqlPassword().trim().isEmpty())
+            return true;
+        if(user.getMysqlUrl().trim().isEmpty())
+            return true;
+        if(user.getMysqlUserName().trim().isEmpty())
+            return true;
+        return user.getSmtpUrl().trim().isEmpty();
     }
 
 
