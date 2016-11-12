@@ -38,6 +38,7 @@
              <items>
                   <MenuItem mnemonicParsing="false" onAction="#newEmail" text="%new" />
                   <MenuItem mnemonicParsing="false" onAction="#replyToEmail" text="%reply" />
+                  <MenuItem mnemonicParsing="false" onAction="#replyToAll" text="%replyAll" />
                   <MenuItem mnemonicParsing="false" onAction="#forwardEmail" text="%forward" />
                <MenuItem mnemonicParsing="false" onAction="#deleteEmail" text="%delete" />
                   <MenuItem mnemonicParsing="false" onAction="#onSaveAttach" text="%saveAttach" />
@@ -45,7 +46,7 @@
            </Menu>
            <Menu mnemonicParsing="false" text="%help">
              <items>
-               <MenuItem mnemonicParsing="false" text="%about" />
+               <MenuItem mnemonicParsing="false" onAction="#about" text="%about" />
              </items>
            </Menu>
          </menus>
@@ -89,9 +90,9 @@
              </SplitPane>
          </center>
          <top>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <ToolBar BorderPane.alignment="CENTER">
               <items>
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0">
+                  <HBox alignment="CENTER">
                      <children>
                       <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#checkNew">
                            <graphic>
@@ -152,6 +153,15 @@
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/reply.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#replyToAll">
+                           <graphic>
+                              <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/replyAll.png" />
                                  </image>
                               </ImageView>
                            </graphic>

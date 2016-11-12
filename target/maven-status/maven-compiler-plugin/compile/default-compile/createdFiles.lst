@@ -1,14 +1,11 @@
 ashulzhenko/emailapp/ui/ModifyDirController.class
 ashulzhenko/emailapp/interfaces/FolderStorageDAO.class
-ashulzhenko/emailapp/ui/EmailAppController$1$2.class
 ashulzhenko/emailapp/interfaces/MailStorageDAO.class
-ashulzhenko/emailapp/ui/EmailAppController$1$4.class
 ashulzhenko/emailapp/data/MailStorageModule.class
 ashulzhenko/emailapp/ui/EmailAppController.class
 ashulzhenko/emailapp/ui/CreateEmailController.class
 ashulzhenko/emailapp/ui/EmailAppController$1.class
 ashulzhenko/emailapp/interfaces/Mailer.class
-ashulzhenko/emailapp/ui/EmailAppController$1$3.class
 ashulzhenko/emailapp/bean/UserConfigBean.class
 ashulzhenko/emailapp/ui/MainApp.class
 ashulzhenko/emailapp/mail/MailModule.class
@@ -16,7 +13,6 @@ ashulzhenko/emailapp/ui/EmailAppController$1$1.class
 ashulzhenko/emailapp/data/DatabaseModule.class
 ashulzhenko/emailapp/properties/PropertiesManager.class
 ashulzhenko/emailapp/compare/EmailMessageSorter.class
-ashulzhenko/emailapp/ui/EmailAppController$2.class
 ashulzhenko/emailapp/compare/EmailAttachmentSorter.class
 ashulzhenko/emailapp/data/FolderStorageModule.class
 ashulzhenko/emailapp/ui/ConfigFormController.class

@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * the window is closed to display the main app, and the error is logged.
  *
  * @author Alena Shulzhenko
- * @version 09/11/2016
+ * @version 11/11/2016
  * @since 1.8
  */
 public class CreateEmailController implements Initializable {
@@ -126,8 +126,16 @@ public class CreateEmailController implements Initializable {
         String text = getEmailText(email);
         html.setHtmlText("<font size='2'>"+text+"</font>");
         subject.setText(email.getSubject());
-        if(subject.getText().contains("RE:"))
-            to.setText(email.getFrom().getEmail());
+    }
+    
+    /**
+     * If the email is a reply, sets the recipients
+     * (sender if reply was chosen, sender and CC if reply all was chosen).
+     * 
+     * @param toStr the recipient addresses.
+     */
+    public void setText(String toStr) {
+        to.setText(toStr);
     }
     
     /**

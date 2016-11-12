@@ -201,8 +201,7 @@ public class ConfigFormController implements Initializable {
         String digits = "^[1-9][0-9]*$";
         for(TextField num : ports) {
             String errMessage = bundle.getString("invalidPortErr") + " " +
-                                num.getText()+ " " + bundle.getString("for") + 
-                                " " + num.getId();
+                                num.getText();
             if(!Pattern.matches(digits, num.getText())) {
                 displayError(errMessage);
                 return false;

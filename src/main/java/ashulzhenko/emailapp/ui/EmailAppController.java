@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -27,7 +26,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -61,10 +59,10 @@ import org.slf4j.LoggerFactory;
  * view messages content.
  *
  * @author Alena Shulzhenko
- * @version 09/11/2016
+ * @version 11/11/2016
  * @since 1.8
  */
-public class EmailAppController implements Initializable {
+public class EmailAppController {
     
     @FXML
     private TableView<EmailCustom> emailTable;
@@ -103,20 +101,21 @@ public class EmailAppController implements Initializable {
     public EmailAppController() {}
     
     /**
-     * Called to initialize a controller after its root element 
-     * has been completely processed.
+     * Sets the ResourceBundle used for localization.
      * 
-     * @param url The location used to resolve relative paths for 
-     *            the root object, or null if the location is not known.
-     * @param rb  The resources used to localize the root object, 
+     * @param rb The resources used to localize the root object, 
      *            or null if the root object was not localized.
      */
-    @FXML
-    @Override
-    public void initialize(URL url, ResourceBundle rb) { 
-        this.bundle = rb;
+    public void setBundle(ResourceBundle rb) {
+        this.bundle = rb;      
+        controllerSetUp();     
+    }
+    
+    /**
+     * Initializes the important GUI components.
+     */
+    private void controllerSetUp() {
         fileChooser = new FileChooser();        
-        
         dirTree.setRoot(new TreeItem<>(bundle.getString("dirs")));        
         setTreeEvents();       
         
@@ -129,7 +128,7 @@ public class EmailAppController implements Initializable {
                 (getDate(cellData)));
         
         htmlDisplay.setDisable(true);
-    }    
+    }
     
     /**
      * Returns the contact to display in the table.
@@ -143,7 +142,7 @@ public class EmailAppController implements Initializable {
     private String getContact(TableColumn.CellDataFeatures<EmailCustom,String> cellData) {
         EmailCustom email = cellData.getValue();
         String contact = email.getFrom().getEmail();
-        if (contact.equals(user.getFromEmail()))
+        if (contact.equals(user.getFromEmail()) && email.getTo().length != 0)
             contact = email.getTo()[0].getEmail();                
         return contact;
     }
@@ -195,6 +194,7 @@ public class EmailAppController implements Initializable {
                 };               
                 treeCell.setOnDragOver(event -> dragOver(event, treeCell));
                 treeCell.setOnDragEntered(event -> dragEnter(event, treeCell));
+                treeCell.setOnDragExited(event -> dragExit(event, treeCell));
                 treeCell.setOnDragDropped(event -> dragDrop(event, treeCell));
                 return treeCell;
             }
@@ -235,6 +235,21 @@ public class EmailAppController implements Initializable {
     }
     
     /**
+     * Executed when the drag-and-drop gesture exits the target.
+     * 
+     * @param event the event that triggered this method.
+     * @param treeCell the tree cell where the event happened.
+     */
+    private void dragExit(DragEvent event, TreeCell<String> treeCell) {
+        // show to the user that it is an actual gesture target 
+        if (event.getGestureSource() != treeCell &&
+                event.getDragboard().hasString()) {
+            treeCell.setTextFill(Color.BLACK);
+        }
+        event.consume();
+    }
+    
+    /**
      * Executed when the source is dropped onto the target.
      * 
      * @param event the event that triggered this method.
@@ -250,8 +265,8 @@ public class EmailAppController implements Initializable {
                 currentEmail.setDirectory(newDir);
                 maildao.updateEmailDirectory(currentEmail);
                 success = true;
-                log.info("Changed firectory for" + currentEmail 
-                        + " from " + oldDir + " to " + newDir);
+                log.info("Changed directory for" + currentEmail 
+                        + " from " + oldDir + " to " + newDir); 
             } catch (SQLException ex) {
                 log.error(ex.getMessage(), ex);
             }
@@ -328,6 +343,9 @@ public class EmailAppController implements Initializable {
      */
     private void populateTreeView() {
         if (dirs != null) {
+            //update TreeView directories
+            if(dirTree.getRoot().getChildren() != null)
+                dirTree.getRoot().getChildren().clear();
             for (String str : dirs) {
                 TreeItem<String> item = new TreeItem<>(str);
                 dirTree.getRoot().getChildren().add(item);
@@ -501,6 +519,31 @@ public class EmailAppController implements Initializable {
     }
     
     /**
+     * Shows the information about the app.
+     * 
+     * @param event the event that triggered this action.
+     */
+    @FXML
+    private void about(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            stage.setTitle(bundle.getString("about"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/About.fxml"), bundle);
+            GridPane root = (GridPane)loader.load();
+            
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            scene.getStylesheets().add("/styles/Styles.css");
+            
+            stage.initOwner((Stage) emailTable.getScene().getWindow());
+            stage.showAndWait();
+        } catch (IOException ex) {
+            log.error("Error reading the file: ", ex.getMessage());
+            Platform.exit();
+        }
+    }
+    
+    /**
      * Displays a warning or error alert dialog if user input was invalid.
      * 
      * @param message the error message to display in the alert dialog.
@@ -524,6 +567,7 @@ public class EmailAppController implements Initializable {
             mainApp.displayForm(stage, user, true);
             //restore valid values if user cancels with invalid data
             user = pm.loadTextProperties(PROPERTIES_PATH, "data");
+            //setUserInfo(user);
         } catch (IOException ex) {
             log.error("Error retrieving properties file: ", ex.getMessage());
             Platform.exit();
@@ -564,7 +608,7 @@ public class EmailAppController implements Initializable {
     private void forwardEmail(ActionEvent event) {
         if(selectedEmail) {
             currentEmail.subject("FW: " + currentEmail.getSubject());
-            createEmail(currentEmail);
+            createEmail(currentEmail, null);
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
@@ -580,7 +624,27 @@ public class EmailAppController implements Initializable {
     private void replyToEmail(ActionEvent event) {
         if(selectedEmail) {
             currentEmail.subject("RE: " + currentEmail.getSubject());
-            createEmail(currentEmail);
+            createEmail(currentEmail, currentEmail.getFrom().getEmail());
+        }
+        else
+            displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
+        selectedEmail = false;
+    }
+    
+    /**
+     * Opens a new window to reply to all recipients 
+     * and the sender of the selected email.
+     * 
+     * @param event the event that triggered this action.
+     */
+    @FXML 
+    private void replyToAll(ActionEvent event) {
+        if(selectedEmail) {
+            currentEmail.subject("RE: " + currentEmail.getSubject());
+            MailAddress[] cc = currentEmail.getCc();
+            String address = cc == null ? "" : getEmails(cc);
+            createEmail(currentEmail, currentEmail.getFrom().getEmail() 
+                            + ";" + address);
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
@@ -594,7 +658,7 @@ public class EmailAppController implements Initializable {
      */
     @FXML 
     private void newEmail(ActionEvent event) {
-        createEmail(null);
+        createEmail(null, null);
     }
     
     /**
@@ -602,8 +666,9 @@ public class EmailAppController implements Initializable {
      * If given email is not null, it will be forwarded or replied to.
      * 
      * @param email the event that triggered this action.
+     * @param to the to field to fill in; null for new email and forward.
      */
-    private void createEmail(EmailCustom email) {
+    private void createEmail(EmailCustom email, String to) {
         try {
             Stage stage = new Stage();
             stage.setTitle(bundle.getString("newTitle"));
@@ -619,6 +684,8 @@ public class EmailAppController implements Initializable {
             controller.setFileChooser(fileChooser);
             if(email != null) 
                 controller.setEmail(email);
+            if(to != null)
+                controller.setText(to);
             stage.initOwner((Stage) emailTable.getScene().getWindow());
             stage.showAndWait();
         } catch (IOException ex) {

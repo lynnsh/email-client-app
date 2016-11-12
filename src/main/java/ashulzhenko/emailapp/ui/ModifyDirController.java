@@ -63,6 +63,8 @@ public class ModifyDirController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) { 
         this.bundle = rb;   
         dirError = new Label();
+        dirError.setVisible(true);
+        log.debug(dirError.getText());
     }  
     
     /**
@@ -124,15 +126,16 @@ public class ModifyDirController implements Initializable {
      * @return true if name was valid; false otherwise.
      */
     private boolean validateDir(String dir) {
-        if(dir == null || dir.trim().isEmpty()) {
-            dirError.setVisible(true);
+        log.debug("in validate");
+        if(dir == null || dir.trim().isEmpty()) {           
             dirError.setText(bundle.getString("noValueErr"));
+            dirError.setVisible(true);
             return false;
         }
         List<TreeItem<String>> list = parent.getChildren();
-        if(inList(list, dir)) {
-            dirError.setVisible(true);
+        if(inList(list, dir)) {           
             dirError.setText(bundle.getString("duplicateDirErr"));
+            dirError.setVisible(true);
             return false;
         }
         return true;    

@@ -2,9 +2,7 @@ package ashulzhenko.emailapp.ui;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.properties.PropertiesManager;
-import java.io.IOException;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +23,7 @@ public class MainApp extends Application {
     private static final String PROPERTIES_PATH = "src/main/resources/properties";
     
     public MainApp() {
-        bundle = ResourceBundle.getBundle("resources/LanguageBundle", Locale.CANADA_FRENCH);
+        bundle = ResourceBundle.getBundle("resources/LanguageBundle");//, Locale.CANADA_FRENCH);
     }
     
     @Override
@@ -65,12 +63,14 @@ public class MainApp extends Application {
             scene.getStylesheets().add("/styles/Styles.css");
             
             EmailAppController controller = loader.getController();
+            controller.setBundle(bundle);
             controller.setMainApp(this);
             controller.setUserInfo(user);
             controller.setProperties(pm, PROPERTIES_PATH);
             stage.show();
-        } catch (IOException ex) {
-            log.error("Error reading the file: ", ex.getMessage());
+        } catch (Exception ex) {
+            log.error("Error in Email App: ", ex.getMessage());
+            System.exit(1);
         }
     }
 
@@ -90,8 +90,9 @@ public class MainApp extends Application {
             controller.setIsChild(second);
             stage.show();
         } 
-        catch (IOException ex) {
-            log.error("Error loading layout: ", ex.getMessage());
+        catch (Exception ex) {
+            log.error("Error in Config Form: ", ex.getMessage());
+            System.exit(1);
         }
     }
 
