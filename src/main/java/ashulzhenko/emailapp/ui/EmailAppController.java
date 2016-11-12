@@ -408,6 +408,7 @@ public class EmailAppController {
         }
     }
     
+    
     /**
      * Displays the information about user selected email.
      */
