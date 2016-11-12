@@ -193,7 +193,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false">
+                        <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#about">
                            <graphic>
                               <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

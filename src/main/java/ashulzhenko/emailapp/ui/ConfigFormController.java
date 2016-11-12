@@ -11,7 +11,6 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -23,9 +22,10 @@ import org.slf4j.LoggerFactory;
 /**
  * The controller that is responsible for displaying the stage for
  * the configuration module. 
- * It allows the user to enter or modify
- * the configuration information, such as an email address, password,
- * email and database information.
+ * It allows the user to enter or modify the configuration information, 
+ * such as an email address, password, email and database information.
+ * Regardless of whether this stage was open in EmailApp or in MainApp,
+ * new EmailApp stage with the new information from the user.
  *
  * @author Alena Shulzhenko
  * @version 09/11/2016
@@ -116,12 +116,12 @@ public class ConfigFormController implements Initializable {
         if(allValid) {
             try {
                 pm.writeTextProperties(PROPERTIES_PATH, "data", user);
-                //if not the child, main app window is displayed
-                if(!isChild) {
-                    Stage stage = new Stage();
-                    mainApp.displayEmailApp(stage, user);
-                }
-                ((Node)(event.getSource())).getScene().getWindow().hide();
+                //create new email app stage
+                Stage stage = new Stage();
+                mainApp.displayEmailApp(stage, user);
+                //close config form stage
+                Stage current = (Stage) cancel.getScene().getWindow();
+                current.close();
             } 
             catch (IOException ex) {
                 log.error("Error saving properties file: ", ex.getMessage());
@@ -136,7 +136,13 @@ public class ConfigFormController implements Initializable {
      * @param event the event that triggered this action.
      */
     @FXML
-    private void onCancel(ActionEvent event) {
+    private void onCancel(ActionEvent event) {  
+        //if this form was opened in EmailApp, the EmailApp with
+        //unchanged information is shown; if not, app is closed.
+        if(isChild) {
+            Stage app = new Stage();
+            mainApp.displayEmailApp(app, user);
+        }
         Stage stage = (Stage) cancel.getScene().getWindow();
         stage.close();
     }  

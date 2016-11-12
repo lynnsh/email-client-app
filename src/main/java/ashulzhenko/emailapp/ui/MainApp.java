@@ -31,7 +31,7 @@ public class MainApp extends Application {
      * Instantiates the object.
      */
     public MainApp() {
-        bundle = ResourceBundle.getBundle("resources/LanguageBundle");//, Locale.CANADA_FRENCH);
+        bundle = ResourceBundle.getBundle("resources/LanguageBundle", Locale.CANADA_FRENCH);
     }
     
     /**
@@ -68,11 +68,18 @@ public class MainApp extends Application {
     }
 
     
-    //catch exceptions
+    /**
+     * Displays the Email Application stage with 
+     * all necessary GUI components loaded.
+     * 
+     * @param stage the stage for this module.
+     * @param user the user information.
+     */
     public void displayEmailApp(Stage stage, UserConfigBean user) {
         try {
             stage.setTitle(bundle.getString("emailTitle"));           
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EmailApp.fxml"), bundle);
+            FXMLLoader loader = new FXMLLoader(getClass()
+                                .getResource("/fxml/EmailApp.fxml"), bundle);
             BorderPane root = (BorderPane)loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -90,10 +97,19 @@ public class MainApp extends Application {
         }
     }
 
-    public void displayForm(Stage stage, UserConfigBean user, boolean second) {
+    /**
+     * Displays the Configuration Form stage with 
+     * all necessary GUI components loaded.
+     * 
+     * @param stage the stage for this module.
+     * @param user the user information.
+     * @param isChild indicates if this stage is the child of EmailApp stage.
+     */
+    public void displayForm(Stage stage, UserConfigBean user, boolean isChild) {
         try {
             stage.setTitle(bundle.getString("configTitle"));
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ConfigForm.fxml"), bundle);
+            FXMLLoader loader = new FXMLLoader(getClass()
+                                .getResource("/fxml/ConfigForm.fxml"), bundle);
             GridPane root = (GridPane)loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -103,7 +119,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
             controller.setUserInfo(user);
             controller.setProperties(pm, PROPERTIES_PATH);
-            controller.setIsChild(second);
+            controller.setIsChild(isChild);
             stage.show();
         } 
         catch (Exception ex) {
@@ -120,26 +136,19 @@ public class MainApp extends Application {
      * @return true if there are empty fields present or port number is invalid;
      *         false otherwise.
      */
-    private boolean isEmptyBean(UserConfigBean user) {
-        if(user.getEmailPassword().trim().isEmpty())
-            return true;
-        if(user.getFromEmail().trim().isEmpty())
-            return true;      
+    private boolean isEmptyBean(UserConfigBean user) {   
         int[] ports = new int[]{user.getImapPort(), user.getMysqlPort(), user.getSmtpPort()};
         for(int port: ports)
             if(port < 0 || port > 65536)
                 return true;
-        if(user.getImapUrl().trim().isEmpty())
-            return true;
-        if(user.getMysqlDbName().trim().isEmpty())
-            return true;
-        if(user.getMysqlPassword().trim().isEmpty())
-            return true;
-        if(user.getMysqlUrl().trim().isEmpty())
-            return true;
-        if(user.getMysqlUserName().trim().isEmpty())
-            return true;
-        return user.getSmtpUrl().trim().isEmpty();
+        return user.getSmtpUrl().trim().isEmpty() || 
+               user.getEmailPassword().trim().isEmpty() ||
+               user.getFromEmail().trim().isEmpty() ||
+               user.getImapUrl().trim().isEmpty() ||
+               user.getMysqlDbName().trim().isEmpty() ||
+               user.getMysqlPassword().trim().isEmpty() ||
+               user.getMysqlUrl().trim().isEmpty() ||
+               user.getMysqlUserName().trim().isEmpty();
     }
 
 

@@ -62,9 +62,6 @@ public class ModifyDirController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) { 
         this.bundle = rb;   
-        dirError = new Label();
-        dirError.setVisible(true);
-        log.debug(dirError.getText());
     }  
     
     /**
@@ -112,7 +109,8 @@ public class ModifyDirController implements Initializable {
                 log.error("Unable to modify directory table: ", ex.getMessage());                
             }
             finally {
-                ((Node)(event.getSource())).getScene().getWindow().hide();
+                Stage stage = (Stage) cancel.getScene().getWindow();
+                stage.close();
             }
         }
     }
@@ -126,7 +124,6 @@ public class ModifyDirController implements Initializable {
      * @return true if name was valid; false otherwise.
      */
     private boolean validateDir(String dir) {
-        log.debug("in validate");
         if(dir == null || dir.trim().isEmpty()) {           
             dirError.setText(bundle.getString("noValueErr"));
             dirError.setVisible(true);

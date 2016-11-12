@@ -40,7 +40,7 @@
       </TextField>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <children>
-            <Label fx:id="dirError" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" text="label" textFill="RED" visible="false">
+            <Label fx:id="dirError" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" textFill="RED">
                <font>
                   <Font size="16.0" />
                </font>

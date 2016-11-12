@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -246,10 +245,11 @@ public class CreateEmailController implements Initializable {
                 displayError(e.getMessage());
             }
             catch(SQLException ex) {
-                log.error("Unable to save new email: ", ex.getMessage());               
+                log.error("Unable to save new email: ", ex.getMessage());  
             }
             finally {
-                ((Node)(event.getSource())).getScene().getWindow().hide();    
+                Stage stage = (Stage) cancel.getScene().getWindow();
+                stage.close();    
             }
         }      
     }

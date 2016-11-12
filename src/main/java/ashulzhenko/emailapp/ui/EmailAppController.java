@@ -98,7 +98,7 @@ public class EmailAppController {
     
     /**
      * Instantiates the object.
-     */
+    */
     public EmailAppController() {}
     
     /**
@@ -128,7 +128,7 @@ public class EmailAppController {
         dateColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper
                 (getDate(cellData)));
         
-        htmlDisplay.setDisable(true);
+        //htmlDisplay.setDisable(true);
     }
     
     /**
@@ -596,7 +596,8 @@ public class EmailAppController {
             mainApp.displayForm(stage, user, true);
             //restore valid values if user cancels with invalid data
             user = pm.loadTextProperties(PROPERTIES_PATH, "data");
-            //setUserInfo(user);
+            Stage current = (Stage) emailTable.getScene().getWindow();
+            current.close();
         } catch (IOException ex) {
             log.error("Error retrieving properties file: ", ex.getMessage());
             Platform.exit();
