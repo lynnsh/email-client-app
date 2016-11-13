@@ -54,6 +54,8 @@ import org.slf4j.LoggerFactory;
  * It allows the user to change email folder, call dialogs to send emails,
  * modify folder tree structure, download attachments, check for new emails,
  * view messages content.
+ * Since there is not support for AttachedMessages feature, the text and
+ * attachments of embedded message are stored as a String.
  *
  * @author Alena Shulzhenko
  * @version 12/11/2016
@@ -81,17 +83,12 @@ public class EmailAppController {
     private ObservableList<EmailCustom> emails;
     private ObservableList<String> dirs;
     
-    private boolean selectedEmail;
     private EmailCustom currentEmail;
-    private String currentDir;
     private DragNDropHelper dropHelper;
     private EmailDisplayHelper displayHelper;
     
     private ResourceBundle bundle;
     private FileChooser fileChooser;
-    private PropertiesManager pm;
-    //the path to properties file
-    private static String PROPERTIES_PATH;
     private final org.slf4j.Logger log = LoggerFactory.getLogger(getClass().getName());
     
     /**
@@ -226,16 +223,6 @@ public class EmailAppController {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;    
     }
-    
-    /**
-     * Sets the PropertiesManager as well as the path to the properties file.
-     * @param pm PropertiesManager object.
-     * @param path the path to the properties file.
-     */
-    public void setProperties(PropertiesManager pm, String path) {
-        this.pm = pm;
-        PROPERTIES_PATH = path;
-    }
 
     /**
      * Sets the user information necessary for the app to function,
@@ -290,7 +277,7 @@ public class EmailAppController {
     private void getDirEmails(TreeItem<String> directory) {
         if (directory != null) {
             try {               
-                currentDir = directory.getValue();
+                String currentDir = directory.getValue();
                 List <EmailCustom> emailsFromDb = maildao.findAllInDirectory(currentDir);
                 emails = FXCollections.observableArrayList(emailsFromDb);
                 emailTable.setItems(emails);
@@ -332,7 +319,6 @@ public class EmailAppController {
      */
     private void emailSelected(EmailCustom newSelection) {
         if(newSelection != null) {
-            selectedEmail = true;
             currentEmail = newSelection;
             displayHelper = new EmailDisplayHelper(bundle, currentEmail);
             htmlDisplay.setHtmlText(displayHelper.getEmailText());
@@ -419,17 +405,10 @@ public class EmailAppController {
      */
     @FXML 
     private void configure(ActionEvent event) {
-        try {
-            Stage stage = new Stage();
-            mainApp.displayForm(stage, user, true);
-            //restore valid values if user cancels with invalid data
-            user = pm.loadTextProperties(PROPERTIES_PATH, "data");
-            Stage current = (Stage) emailTable.getScene().getWindow();
-            current.close();
-        } catch (IOException ex) {
-            log.error("Error retrieving properties file: ", ex.getMessage());
-            Platform.exit();
-        }
+        Stage stage = new Stage();
+        mainApp.displayForm(stage, user, true);
+        Stage current = (Stage) emailTable.getScene().getWindow();
+        current.close();
     }
     
     //EMAIL EVENT HANDLERS
@@ -443,13 +422,13 @@ public class EmailAppController {
     @FXML 
     private void deleteEmail(ActionEvent event) {
         try {
-            if(selectedEmail) {
+            if(currentEmail != null) {
                 maildao.deleteEmail(currentEmail.getId());
                 emails.remove(currentEmail);                   
             }
             else
                 displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-            selectedEmail = false;
+            currentEmail = null;
         }
         catch (SQLException ex) {
             log.error("Unable to delete email: ", ex.getMessage());
@@ -464,13 +443,13 @@ public class EmailAppController {
      */
     @FXML 
     private void forwardEmail(ActionEvent event) {
-        if(selectedEmail) {
+        if(currentEmail != null) {
             currentEmail.subject("FW: " + currentEmail.getSubject());
             createEmail(currentEmail, null);
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-        selectedEmail = false;
+        currentEmail = null;
     }
     
     /**
@@ -480,13 +459,13 @@ public class EmailAppController {
      */
     @FXML 
     private void replyToEmail(ActionEvent event) {
-        if(selectedEmail) {
+        if(currentEmail != null) {
             currentEmail.subject("RE: " + currentEmail.getSubject());
             createEmail(currentEmail, currentEmail.getFrom().getEmail());
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-        selectedEmail = false;
+        currentEmail = null;
     }
     
     /**
@@ -497,7 +476,7 @@ public class EmailAppController {
      */
     @FXML 
     private void replyToAll(ActionEvent event) {
-        if(selectedEmail) {
+        if(currentEmail != null) {
             currentEmail.subject("RE: " + currentEmail.getSubject());
             MailAddress[] cc = currentEmail.getCc();
             String address = cc == null ? "" : displayHelper.getEmails(cc);
@@ -506,7 +485,7 @@ public class EmailAppController {
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-        selectedEmail = false;
+        currentEmail = null;
     }
     
     /**
@@ -648,7 +627,7 @@ public class EmailAppController {
      */
     @FXML 
     private void onSaveAttach(ActionEvent event) {
-        if(selectedEmail) {
+        if(currentEmail != null) {
             List<EmailAttachment> list = currentEmail.getAttachments();
             if(list != null && list.size() > 0) {
                 for(EmailAttachment attach : list) {
@@ -662,7 +641,7 @@ public class EmailAppController {
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-        selectedEmail = false;
+        currentEmail = null;
     }
     
     /**

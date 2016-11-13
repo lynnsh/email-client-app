@@ -70,9 +70,9 @@
                                   <children>
                                      <TableView fx:id="emailTable" layoutX="27.0" onDragDetected="#onDragDetect" prefHeight="194.0" prefWidth="454.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columns>
-                                         <TableColumn fx:id="contactColumn" prefWidth="200.0" text="%from" />
-                                          <TableColumn fx:id="subjectColumn" prefWidth="100.0" text="%subject" />
-                                           <TableColumn fx:id="dateColumn" prefWidth="100.0" text="%date" />
+                                         <TableColumn fx:id="contactColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="250.0" text="%from" />
+                                          <TableColumn fx:id="subjectColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="250.0" text="%subject" />
+                                           <TableColumn fx:id="dateColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" text="%date" />
                                        </columns>
                                      </TableView>
                                   </children>

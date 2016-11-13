@@ -89,7 +89,6 @@ public class MainApp extends Application {
             controller.setBundle(bundle);
             controller.setMainApp(this);
             controller.setUserInfo(user);
-            controller.setProperties(pm, PROPERTIES_PATH);
             stage.show();
         } catch (Exception ex) {
             log.error("Error in Email App: ", ex.getMessage());
