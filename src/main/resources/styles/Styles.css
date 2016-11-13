@@ -1,3 +1,130 @@
+/* @author Alena Shulzhenko
+ * @version 13/11/2016 
+ */
+
+.root {     
+    -fx-background-image: url("/images/parent.jpeg"); 
+    -fx-font-family: Ubuntu; 
+    -fx-font-size: 15;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+#errorLbl {
+    -fx-text-fill: red;
+}
+
+.menu-bar, .tool-bar {
+    -fx-background-color: transparent; 
+    -fx-text-fill: white;
+}
+
+.tree-cell{
+    -fx-background-color: transparent; 
+    -fx-text-fill: white;
+}
+
+.tree-cell:focused {
+    -fx-background-color: whitesmoke; 
+    -fx-text-fill: black;
+}
+
+
+.table-view .column-header-background{
+    -fx-background-image: url("/images/parent.jpeg");
+    -fx-border-color: transparent transparent white transparent;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: white;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, linear-gradient(#131313 0%, black 100%);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; 
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #005797;    
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+.table-row-cell:selected .label{
+    -fx-selection-bar-text: black;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background, 
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+.table-view > .virtual-flow > .scroll-bar > .increment-button, 
+.table-view > .virtual-flow > .scroll-bar > .decrement-button {
+    -fx-opacity: 0;
+}
+
+.table-view .filler {
+    -fx-background-image: url("/images/parent.jpeg");
+}
+
+.menu-item .label, .menu-bar .label {
+    -fx-text-fill: white;
+}
+
+
+.menu-item:focused .label, .menu-bar:focused .label {
+    -fx-text-fill: black;
+}
+
+.context-menu, .tree-view, .table-view {  
+    -fx-background-image: url("/images/parent.jpeg");
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
+}
+
+.context-menu {
+    -fx-background-image: url("/images/child.jpeg");
+}
+
+.context-menu {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
+}
+
+
+.tree-view {
+    -fx-skin: "com.sun.javafx.scene.control.skin.TreeViewSkin";
+}
+
 .button {
     -fx-font-weight: bold;
 }
+
+.html-editor .button, .html-editor .toggle-button {
+    -fx-background-color: lightblue;
+}
+
+#title {
+    -fx-text-fill: #0086e6;  
+}
+
+

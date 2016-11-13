@@ -12,9 +12,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ashulzhenko.emailapp.ui.CreateEmailController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ashulzhenko.emailapp.ui.CreateEmailController">
    <center>
-      <HTMLEditor fx:id="html" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="200.0" prefWidth="506.0" BorderPane.alignment="CENTER" />
+      <HTMLEditor fx:id="html" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="200.0" prefWidth="506.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="15.0" right="15.0" />
+         </BorderPane.margin></HTMLEditor>
    </center>
    <bottom>
       <GridPane BorderPane.alignment="CENTER">
@@ -51,6 +54,9 @@
                </GridPane.margin>
             </HBox>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </BorderPane.margin>
       </GridPane>
    </bottom>
    <top>
@@ -61,6 +67,7 @@
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -68,77 +75,101 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="%to">
+            <Label text="%to" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="15.0" top="5.0" />
                </GridPane.margin>
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label text="%subject" GridPane.rowIndex="1">
+            <Label text="%subject" GridPane.rowIndex="2">
                <font>
                   <Font size="16.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="15.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label text="CC:" GridPane.rowIndex="2">
+            <Label text="CC" GridPane.rowIndex="3">
                <font>
                   <Font size="16.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="15.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Label text="BCC:" GridPane.rowIndex="3">
+            <Label text="BCC" GridPane.rowIndex="4">
                <font>
                   <Font size="16.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="15.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="to" GridPane.columnIndex="1">
+            <TextField fx:id="to" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets right="20.0" />
+                  <Insets left="5.0" right="15.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="subject" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="subject" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
-                  <Insets right="20.0" />
+                  <Insets left="5.0" right="15.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="cc" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <TextField fx:id="cc" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
-                  <Insets right="20.0" />
+                  <Insets left="5.0" right="15.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="bcc" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <TextField fx:id="bcc" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
-                  <Insets right="20.0" />
+                  <Insets left="5.0" right="15.0" top="5.0" />
                </GridPane.margin>
             </TextField>
-            <Label text="%attach" GridPane.rowIndex="4">
+            <Label text="%attach" GridPane.rowIndex="5">
                <font>
                   <Font size="16.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="15.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addAttachments" text="%attachBtn" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label text="%embed" GridPane.rowIndex="5">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addAttachments" text="%attachBtn" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="5.0" right="15.0" top="5.0" />
+               </GridPane.margin></Button>
+            <Label text="%embed" GridPane.rowIndex="6">
                <font>
                   <Font size="16.0" />
                </font>
                <GridPane.margin>
-                  <Insets left="20.0" />
+                  <Insets left="15.0" top="5.0" />
                </GridPane.margin>
             </Label>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addEmbed" text="%embedBtn" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addEmbed" text="%embedBtn" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets left="5.0" right="15.0" top="5.0" />
+               </GridPane.margin></Button>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2">
+               <children>
+                  <Label id="title" text="%newTitlelbl" textFill="#005797">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="5.0" />
+               </GridPane.margin>
+            </HBox>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="15.0" top="15.0" />
+         </BorderPane.margin>
       </GridPane>
    </top>
 </BorderPane>

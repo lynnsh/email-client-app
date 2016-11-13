@@ -57,7 +57,7 @@ public class DragNDropHelper {
         // show to the user that it is an actual gesture target 
         if (event.getGestureSource() != treeCell &&
                 event.getDragboard().hasString()) {
-            treeCell.setTextFill(Color.GREEN);
+            treeCell.setTextFill(Color.web("#005797"));
         }
         event.consume();
     }
@@ -70,9 +70,13 @@ public class DragNDropHelper {
      */
     public void dragExit(DragEvent event, TreeCell<String> treeCell) {
         // show to the user that it is an actual gesture target 
-        if (event.getGestureSource() != treeCell &&
-                event.getDragboard().hasString()) {
-            treeCell.setTextFill(Color.BLACK);
+        if (event.getGestureSource() != treeCell 
+                && event.getDragboard().hasString()) {
+            Dragboard db = event.getDragboard();
+            if(db != null && !db.getString().equals(treeCell.getText()))
+                treeCell.setTextFill(Color.WHITE);
+            else
+                treeCell.setTextFill(Color.BLACK);
         }
         event.consume();
     }
@@ -92,11 +96,13 @@ public class DragNDropHelper {
             try {
                 String oldDir = db.getString();
                 String newDir = treeCell.getText();
-                currentEmail.setDirectory(newDir);
-                maildao.updateEmailDirectory(currentEmail);
-                success = true;
-                log.info("Changed directory for" + currentEmail 
+                if(!oldDir.equals(newDir)) {
+                    currentEmail.setDirectory(newDir);
+                    maildao.updateEmailDirectory(currentEmail);
+                    log.info("Changed directory for" + currentEmail 
                         + " from " + oldDir + " to " + newDir); 
+                }
+                success = true;               
             } catch (SQLException ex) {
                 log.error(ex.getMessage(), ex);
             }

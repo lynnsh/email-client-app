@@ -34,6 +34,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -124,6 +125,8 @@ public class EmailAppController {
                 (getDate(cellData)));
         
         //htmlDisplay.setDisable(true);
+        htmlDisplay.setHtmlText("<body style='background-color: black; "
+                                + "color: white;'/>");
         
     }
     
@@ -184,10 +187,10 @@ public class EmailAppController {
                         super.updateItem(item, empty);
                         if(item != null) {
                             setText(item);
-                            //setGraphic(getTreeItem().getGraphic());
+                            setGraphic(getTreeItem().getGraphic());
                         } else {
                             setText("");
-                            //setGraphic(null);
+                            setGraphic(null);
                         }
                     }
                 };      
@@ -208,10 +211,12 @@ public class EmailAppController {
      */
     @FXML
     private void onDragDetect(MouseEvent event) {
-        Dragboard db = emailTable.startDragAndDrop(TransferMode.MOVE);
-        ClipboardContent content = new ClipboardContent();
-        content.putString(currentEmail.getDirectory());
-        db.setContent(content);
+        if(currentEmail != null) {
+            Dragboard db = emailTable.startDragAndDrop(TransferMode.MOVE);
+            ClipboardContent content = new ClipboardContent();
+            content.putString(currentEmail.getDirectory());
+            db.setContent(content);           
+        }
         event.consume();
     }
 
@@ -243,7 +248,7 @@ public class EmailAppController {
             populateTreeView();                   
             
             dirTree.getSelectionModel().selectedItemProperty().addListener(
-                    (observable, oldValue, newValue) -> getDirEmails(newValue));
+                    (observable, oldValue, newValue) -> getDirEmails(newValue, oldValue));
             
             emailTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> emailSelected(newValue));
@@ -263,8 +268,9 @@ public class EmailAppController {
             if(dirTree.getRoot().getChildren() != null)
                 dirTree.getRoot().getChildren().clear();
             for (String str : dirs) {
-                TreeItem<String> item = new TreeItem<>(str);
+                TreeItem<String> item = new TreeItem<>(str);                
                 dirTree.getRoot().getChildren().add(item);
+                item.setGraphic(new ImageView("/images/closedir.png"));
             }
         }
     }
@@ -273,16 +279,24 @@ public class EmailAppController {
      * Queries the database for emails corresponding to the selected directory.
      * 
      * @param directory the directory for which the emails are queried.
+     * @param oldDirectory the previously selected directory.
      */
-    private void getDirEmails(TreeItem<String> directory) {
+    private void getDirEmails(TreeItem<String> directory, TreeItem<String> oldDirectory) {
         if (directory != null) {
-            try {               
+            try {       
+                if(directory.getParent() != null) {
+                    directory.setGraphic(new ImageView("/images/opendir.png"));
+                    if(oldDirectory != null && oldDirectory.getParent() != null)
+                        oldDirectory.setGraphic(new ImageView("/images/closedir.png"));
+                }
+                dirTree.refresh();
                 String currentDir = directory.getValue();
                 List <EmailCustom> emailsFromDb = maildao.findAllInDirectory(currentDir);
                 emails = FXCollections.observableArrayList(emailsFromDb);
                 emailTable.setItems(emails);
                 setColumnName(emailsFromDb);
-                htmlDisplay.setHtmlText("");
+                htmlDisplay.setHtmlText("<body style='background-color: black; "
+                                        + "color: white;'/>");
             } catch (SQLException e) {
                 log.error("Error connecting to the database: ", e.getMessage());
                 Platform.exit();
@@ -377,7 +391,7 @@ public class EmailAppController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             scene.getStylesheets().add("/styles/Styles.css");
-            
+            scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Ubuntu");
             stage.initOwner((Stage) emailTable.getScene().getWindow());
             stage.showAndWait();
         } catch (IOException ex) {
@@ -515,7 +529,7 @@ public class EmailAppController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             scene.getStylesheets().add("/styles/Styles.css");
-            
+            scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Ubuntu");
             CreateEmailController controller = loader.getController();
             controller.setMailUtilities(mail, maildao);
             controller.setFileChooser(fileChooser);
@@ -607,7 +621,7 @@ public class EmailAppController {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             scene.getStylesheets().add("/styles/Styles.css");
-            
+            scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Ubuntu");
             ModifyDirController controller = loader.getController();
             controller.setDirectory(directory);
             controller.setFolderDAO(folderdao);

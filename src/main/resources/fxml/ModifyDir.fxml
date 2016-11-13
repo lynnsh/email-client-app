@@ -40,7 +40,7 @@
       </TextField>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
          <children>
-            <Label fx:id="dirError" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" textFill="RED">
+            <Label id="errorLbl" fx:id="dirError" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" textFill="RED">
                <font>
                   <Font size="16.0" />
                </font>
@@ -49,11 +49,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
          <children>
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#onSubmit" text="%submit">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onSubmit" text="%submit" />
          </children>
          <GridPane.margin>
             <Insets right="20.0" />
@@ -61,11 +57,7 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <children>
-            <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" onAction="#onCancel" text="%cancel">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
+            <Button fx:id="cancel" cancelButton="true" mnemonicParsing="false" onAction="#onCancel" text="%cancel" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" />
@@ -73,7 +65,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2">
          <children>
-            <Label text="%dirInputTitle">
+            <Label id="title" text="%dirInputTitle" textFill="#005797">
                <font>
                   <Font size="18.0" />
                </font>

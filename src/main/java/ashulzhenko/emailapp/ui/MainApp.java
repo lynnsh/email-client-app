@@ -2,7 +2,6 @@ package ashulzhenko.emailapp.ui;
 
 import ashulzhenko.emailapp.bean.UserConfigBean;
 import ashulzhenko.emailapp.properties.PropertiesManager;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +30,7 @@ public class MainApp extends Application {
      * Instantiates the object.
      */
     public MainApp() {
-        bundle = ResourceBundle.getBundle("resources/LanguageBundle", Locale.CANADA_FRENCH);
+        bundle = ResourceBundle.getBundle("resources/LanguageBundle");
     }
     
     /**
@@ -84,7 +83,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             scene.getStylesheets().add("/styles/Styles.css");
-            
+            scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Ubuntu");
             EmailAppController controller = loader.getController();
             controller.setBundle(bundle);
             controller.setMainApp(this);
@@ -113,7 +112,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             scene.getStylesheets().add("/styles/Styles.css");
-            
+            scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Ubuntu");
             ConfigFormController controller = loader.getController();
             controller.setMainApp(this);
             controller.setUserInfo(user);

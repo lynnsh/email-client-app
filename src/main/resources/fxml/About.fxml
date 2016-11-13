@@ -21,7 +21,7 @@
    <children>
       <HBox alignment="CENTER" GridPane.columnSpan="2">
          <children>
-            <Label text="%infoLabel">
+            <Label id="title" text="%infoLabel" textFill="#005797">
                <font>
                   <Font size="22.0" />
                </font>
@@ -42,7 +42,7 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
          <children>
-            <Label text="%creator">
+            <Label id="title" text="%creator" textFill="#005797">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

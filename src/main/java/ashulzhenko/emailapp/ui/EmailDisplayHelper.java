@@ -41,7 +41,8 @@ public class EmailDisplayHelper {
      */
     public String getEmailText() {
         StringBuilder email = new StringBuilder ("<b>");
-        email.append(bundle.getString("subject")).append(":</b> ")
+        email.append("<body style='background-color: black; color: white;'/>")
+             .append(bundle.getString("subject")).append(":</b> ")
              .append(currentEmail.getSubject()).append("<br/><b>")
              .append(bundle.getString("from")).append(":</b> ")
              .append(currentEmail.getFrom().getEmail()).append("<br/><b>")

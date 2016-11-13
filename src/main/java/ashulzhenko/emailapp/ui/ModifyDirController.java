@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.slf4j.LoggerFactory;
 
@@ -89,17 +90,19 @@ public class ModifyDirController implements Initializable {
         if(valid) {
             dirError.setVisible(false);
             newDir = newDir.trim();
+            TreeItem<String> item = new TreeItem<>(newDir);
+            item.setGraphic(new ImageView("/images/closedir.png"));
             try {
                 //rename directory
                 if(currentDir != null) {
                     List<TreeItem<String>> list = parent.getChildren();
-                    list.set(list.indexOf(currentDir), new TreeItem<>(newDir));
+                    list.set(list.indexOf(currentDir), item);
                     dirs.set(dirs.indexOf(currentDir.getValue()), newDir);
                     folderdao.updateDirectory(currentDir.getValue(), newDir);
                 }
                 //create new directory
                 else {
-                    parent.getChildren().add(new TreeItem<>(newDir));
+                    parent.getChildren().add(item);
                     dirs.add(newDir);
                     folderdao.createDirectory(newDir);
                 }
