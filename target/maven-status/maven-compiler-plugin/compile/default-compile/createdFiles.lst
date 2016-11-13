@@ -5,11 +5,13 @@ ashulzhenko/emailapp/data/MailStorageModule.class
 ashulzhenko/emailapp/ui/EmailAppController.class
 ashulzhenko/emailapp/ui/CreateEmailController.class
 ashulzhenko/emailapp/ui/EmailAppController$1.class
+ashulzhenko/emailapp/ui/EmailDisplayHelper.class
 ashulzhenko/emailapp/interfaces/Mailer.class
 ashulzhenko/emailapp/bean/UserConfigBean.class
 ashulzhenko/emailapp/ui/MainApp.class
 ashulzhenko/emailapp/mail/MailModule.class
 ashulzhenko/emailapp/ui/EmailAppController$1$1.class
+ashulzhenko/emailapp/ui/DragNDropHelper.class
 ashulzhenko/emailapp/data/DatabaseModule.class
 ashulzhenko/emailapp/properties/PropertiesManager.class
 ashulzhenko/emailapp/compare/EmailMessageSorter.class

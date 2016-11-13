@@ -17,7 +17,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -36,19 +35,16 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import jodd.mail.EmailAttachment;
-import jodd.mail.EmailMessage;
 import jodd.mail.MailAddress;
 import org.slf4j.LoggerFactory;
 
@@ -88,6 +84,8 @@ public class EmailAppController {
     private boolean selectedEmail;
     private EmailCustom currentEmail;
     private String currentDir;
+    private DragNDropHelper dropHelper;
+    private EmailDisplayHelper displayHelper;
     
     private ResourceBundle bundle;
     private FileChooser fileChooser;
@@ -104,8 +102,8 @@ public class EmailAppController {
     /**
      * Sets the ResourceBundle used for localization.
      * 
-     * @param rb The resources used to localize the root object, 
-     *            or null if the root object was not localized.
+     * @param rb the resources used to localize the root object, 
+     *           or null if the root object was not localized.
      */
     public void setBundle(ResourceBundle rb) {
         this.bundle = rb;      
@@ -129,6 +127,7 @@ public class EmailAppController {
                 (getDate(cellData)));
         
         //htmlDisplay.setDisable(true);
+        
     }
     
     /**
@@ -164,9 +163,11 @@ public class EmailAppController {
         LocalDateTime date;
         LocalDateTime now = LocalDateTime.now();
         if(email.getFrom().getEmail().equals(user.getFromEmail()))
-            date = LocalDateTime.ofInstant(email.getSentDate().toInstant(), ZoneId.systemDefault());
+            date = LocalDateTime.ofInstant(email.getSentDate().toInstant(), 
+                    ZoneId.systemDefault());
         else
-            date = LocalDateTime.ofInstant(email.getReceivedDate().toInstant(), ZoneId.systemDefault());
+            date = LocalDateTime.ofInstant(email.getReceivedDate().toInstant(), 
+                    ZoneId.systemDefault());
         
        if(now.toLocalDate().equals(date.toLocalDate()))
            return date.format(DateTimeFormatter.ofPattern("hh:mm a"));
@@ -192,89 +193,16 @@ public class EmailAppController {
                             //setGraphic(null);
                         }
                     }
-                };               
-                treeCell.setOnDragOver(event -> dragOver(event, treeCell));
-                treeCell.setOnDragEntered(event -> dragEnter(event, treeCell));
-                treeCell.setOnDragExited(event -> dragExit(event, treeCell));
-                treeCell.setOnDragDropped(event -> dragDrop(event, treeCell));
+                };      
+                dropHelper = new DragNDropHelper(maildao);
+                treeCell.setOnDragOver(event -> dropHelper.dragOver(event, treeCell));
+                treeCell.setOnDragEntered(event -> dropHelper.dragEnter(event, treeCell));
+                treeCell.setOnDragExited(event -> dropHelper.dragExit(event, treeCell));
+                treeCell.setOnDragDropped(event -> dropHelper.dragDrop(event, treeCell, currentEmail));
                 return treeCell;
             }
         });
-    }
-    
-    //DRAG N' DROP EVENT HANDLERS
-    
-    /**
-     * Executed when data is dragged over the target.
-     * 
-     * @param event the event that triggered this method.
-     * @param treeCell the tree cell where the event happened.
-     */
-    private void dragOver(DragEvent event, TreeCell<String> treeCell) {
-        //accept it only if it is  not dragged from the same node 
-        //and if it has a string data 
-        if (event.getGestureSource() != treeCell &&
-                event.getDragboard().hasString()) {
-            event.acceptTransferModes(TransferMode.MOVE);
-        }
-        event.consume();
-    }
-    
-    /**
-     * Executed when the drag-and-drop gesture entered the target.
-     * 
-     * @param event the event that triggered this method.
-     * @param treeCell the tree cell where the event happened.
-     */
-    private void dragEnter(DragEvent event, TreeCell<String> treeCell) {
-        // show to the user that it is an actual gesture target 
-        if (event.getGestureSource() != treeCell &&
-                event.getDragboard().hasString()) {
-            treeCell.setTextFill(Color.GREEN);
-        }
-        event.consume();
-    }
-    
-    /**
-     * Executed when the drag-and-drop gesture exits the target.
-     * 
-     * @param event the event that triggered this method.
-     * @param treeCell the tree cell where the event happened.
-     */
-    private void dragExit(DragEvent event, TreeCell<String> treeCell) {
-        // show to the user that it is an actual gesture target 
-        if (event.getGestureSource() != treeCell &&
-                event.getDragboard().hasString()) {
-            treeCell.setTextFill(Color.BLACK);
-        }
-        event.consume();
-    }
-    
-    /**
-     * Executed when the source is dropped onto the target.
-     * 
-     * @param event the event that triggered this method.
-     * @param treeCell the tree cell where the event happened.
-     */
-    private void dragDrop(DragEvent event, TreeCell<String> treeCell) {
-        Dragboard db = event.getDragboard();
-        boolean success = false;
-        if (db.hasString()) {
-            try {
-                String oldDir = db.getString();
-                String newDir = treeCell.getText();
-                currentEmail.setDirectory(newDir);
-                maildao.updateEmailDirectory(currentEmail);
-                success = true;
-                log.info("Changed directory for" + currentEmail 
-                        + " from " + oldDir + " to " + newDir); 
-            } catch (SQLException ex) {
-                log.error(ex.getMessage(), ex);
-            }
-        }
-        event.setDropCompleted(success);
-        event.consume();
-    }
+    }     
     
     /**
      * Executed when there is a drag event detected.
@@ -367,6 +295,7 @@ public class EmailAppController {
                 emails = FXCollections.observableArrayList(emailsFromDb);
                 emailTable.setItems(emails);
                 setColumnName(emailsFromDb);
+                htmlDisplay.setHtmlText("");
             } catch (SQLException e) {
                 log.error("Error connecting to the database: ", e.getMessage());
                 Platform.exit();
@@ -405,111 +334,10 @@ public class EmailAppController {
         if(newSelection != null) {
             selectedEmail = true;
             currentEmail = newSelection;
-            displayEmail();
+            displayHelper = new EmailDisplayHelper(bundle, currentEmail);
+            htmlDisplay.setHtmlText(displayHelper.getEmailText());
         }
-    }
-    
-    /**
-     * Displays the information about user selected email.
-     */
-    private void displayEmail() {
-        StringBuilder email = new StringBuilder ("<b>");
-        email.append(bundle.getString("subject")).append(":</b> ")
-             .append(currentEmail.getSubject()).append("<br/><b>")
-             .append(bundle.getString("from")).append(":</b> ")
-             .append(currentEmail.getFrom().getEmail()).append("<br/><b>")
-             .append(bundle.getString("to")).append(":</b> ")
-             .append(getEmails(currentEmail.getTo())).append("<br/>")
-             .append(currentEmail.getCc().length != 0? "<b>CC:</b> " + 
-                     getEmails(currentEmail.getCc()) + "<br/>" : "")
-             .append(currentEmail.getBcc().length != 0? "<b>BCC:</b> " + 
-                     getEmails(currentEmail.getBcc()) + "<br/>" : "")
-             .append("<b>").append(bundle.getString("text")).append(":</b> ")
-             .append(getMessages()).append("<br/><b>").append(bundle.getString("date"))
-             .append(":</b> ").append(getDate());
-                  
-        email.trimToSize();
-        htmlDisplay.setHtmlText(email.toString());      
-    }
-    
-     /**
-     * Returns the full date of the currently selected email as a String.
-     * 
-     * @return the formatted date of the provided email.
-     */
-    private String getDate() {
-        LocalDateTime date;
-        //email was sent to the user
-        if(currentEmail.getReceivedDate() == null)
-            date = LocalDateTime.ofInstant(currentEmail.getSentDate().toInstant(), 
-                    ZoneId.systemDefault());
-        //email was received by the user
-        else
-            date = LocalDateTime.ofInstant(currentEmail.getReceivedDate().toInstant(), 
-                    ZoneId.systemDefault());
-        
-           return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-    }
-    
-    /**
-     * Returns the emails from the array formatted in the String,
-     * separated with the semicolon.
-     * 
-     * @param array the array containing emails to put in the string.
-     * 
-     * @return the emails from the array formatted in a String.
-     */
-    private String getEmails(MailAddress[] array) {
-        StringBuilder str = new StringBuilder("");
-        for(MailAddress ma : array)
-            str.append(ma.getEmail()).append("; ");
-        
-        if(array.length > 1)
-            return str.substring(0, str.length()-2);
-        str.trimToSize();
-        return str.toString();
-    }
-    
-    /**
-     * Returns all messages belonging to the currently selected email.
-     * 
-     * @return all messages belonging to the selected email.
-     */
-    private String getMessages() {
-        StringBuilder message = new StringBuilder("");
-        List<EmailMessage> list = currentEmail.getAllMessages();
-        for(EmailMessage em : list)
-            message.append(em.getContent()).append("<br/>");
-        return replaceImage(message);
-    }
-    
-    /**
-     * Makes the embedded image viewable in the HTMLEditor.
-     * 
-     * @param str the original message with the embedded image(s).
-     * 
-     * @return the modified message that can show the embedded image(s). 
-     */
-    private String replaceImage(StringBuilder str) {
-        str.trimToSize();
-        String message = str.toString();
-        List<EmailAttachment> attach = currentEmail.getAttachments();
-        if(attach != null && attach.size() > 0) {
-            for(EmailAttachment ea : attach) {
-                String file = ea.getName();
-                log.debug(file);
-                if(message.contains("cid:"+file)) {
-                    message = message.replace("<img src=\"cid:"+file+"\">",
-                        "<img src=\"data:image/"
-                        +file.substring(file.lastIndexOf(".")+1)
-                        +";base64,"+Base64.getMimeEncoder().encodeToString(ea.toByteArray())
-                        +"\"/>");
-                }
-            }
-                
-        }
-        return message;
-    }
+    } 
     
     /**
      * Looks for the new messages on the server.
@@ -672,7 +500,7 @@ public class EmailAppController {
         if(selectedEmail) {
             currentEmail.subject("RE: " + currentEmail.getSubject());
             MailAddress[] cc = currentEmail.getCc();
-            String address = cc == null ? "" : getEmails(cc);
+            String address = cc == null ? "" : displayHelper.getEmails(cc);
             createEmail(currentEmail, currentEmail.getFrom().getEmail() 
                             + ";" + address);
         }
