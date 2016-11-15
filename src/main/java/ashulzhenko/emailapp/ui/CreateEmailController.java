@@ -241,9 +241,6 @@ public class CreateEmailController implements Initializable {
                         atZone(ZoneId.systemDefault()).toInstant()));
                 maildao.saveEmail(email);
             }
-            catch(IllegalArgumentException e) {
-                displayError(e.getMessage());
-            }
             catch(SQLException ex) {
                 log.error("Unable to save new email: ", ex.getMessage());  
             }
@@ -301,7 +298,8 @@ public class CreateEmailController implements Initializable {
         String[] emails = text.getText().trim().split(";");
         for(String e : emails) {
             if (!(new EmailAddress(e)).isValid()) {
-                displayError(bundle.getString("invalidEmailErr") + " " + e);
+                displayError(bundle.getString("invalidEmailErr") + " " + e 
+                        + ". " + bundle.getString("multiEmailErr"));
                 return null;
             }
         }      
