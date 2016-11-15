@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * new EmailApp stage with the new information from the user.
  *
  * @author Alena Shulzhenko
- * @version 09/11/2016
+ * @version 15/11/2016
  * @since 1.8
  */
 public class ConfigFormController implements Initializable {

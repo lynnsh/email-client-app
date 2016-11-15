@@ -54,11 +54,11 @@ import org.slf4j.LoggerFactory;
  * It allows the user to change email folder, call dialogs to send emails,
  * modify folder tree structure, download attachments, check for new emails,
  * view messages content.
- * Since there is not support for AttachedMessages feature, the text and
+ * Since there is no support for AttachedMessages feature, the text and
  * attachments of embedded message are stored as a String.
  *
  * @author Alena Shulzhenko
- * @version 12/11/2016
+ * @version 15/11/2016
  * @since 1.8
  */
 public class EmailAppController {
@@ -193,7 +193,7 @@ public class EmailAppController {
                         }
                     }
                 };      
-                dropHelper = new DragNDropHelper(maildao);
+                dropHelper = new DragNDropHelper(maildao, dirTree.getRoot());
                 treeCell.setOnDragOver(event -> dropHelper.dragOver(event, treeCell));
                 treeCell.setOnDragEntered(event -> dropHelper.dragEnter(event, treeCell));
                 treeCell.setOnDragExited(event -> dropHelper.dragExit(event, treeCell));
@@ -375,7 +375,7 @@ public class EmailAppController {
     }
     
     /**
-     * Shows the information about the app.
+     * Shows the information about this application.
      * 
      * @param event the event that triggered this action.
      */
@@ -593,7 +593,7 @@ public class EmailAppController {
     @FXML 
     private void renameDir(ActionEvent event) {
         TreeItem<String> item = dirTree.getSelectionModel().getSelectedItem();
-        if(item != null && !item.getValue().equals(bundle.getString("dirs"))) {    
+        if(item != null && !item.getValue().equals(dirTree.getRoot().getValue())) {    
             TreeItem<String> parent = item.getParent();
             getDirectoryFromUser(item, parent);
         }

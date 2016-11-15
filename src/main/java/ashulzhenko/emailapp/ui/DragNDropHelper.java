@@ -4,6 +4,7 @@ import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.interfaces.MailStorageDAO;
 import java.sql.SQLException;
 import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -14,21 +15,24 @@ import org.slf4j.LoggerFactory;
  * The helper class that responsible to handle drag n drop events.
  * 
  * @author Alena Shulzhenko
- * @version 12/11/2016
+ * @version 15/11/2016
  * @since 1.8
  */
 public class DragNDropHelper {
     
     private MailStorageDAO maildao;
+    private TreeItem<String> parent;
     private final org.slf4j.Logger log = LoggerFactory.getLogger(getClass().getName());
     
     /**
      * Initializes the object.
      * 
-     * @param maildao 
+     * @param maildao emails DAO object to work with the database.
+     * @param parent the parent object for the TreeView.
      */
-    public DragNDropHelper(MailStorageDAO maildao) {
+    public DragNDropHelper(MailStorageDAO maildao, TreeItem<String> parent) {
         this.maildao = maildao;
+        this.parent = parent;
     }
     
     /**
@@ -55,8 +59,9 @@ public class DragNDropHelper {
      */
     public void dragEnter(DragEvent event, TreeCell<String> treeCell) {
         // show to the user that it is an actual gesture target 
-        if (event.getGestureSource() != treeCell &&
-                event.getDragboard().hasString()) {
+        if (event.getGestureSource() != treeCell 
+                && event.getDragboard().hasString()
+                && !treeCell.getText().equals(parent.getValue())) {
             treeCell.setTextFill(Color.web("#005797"));
         }
         event.consume();
@@ -71,7 +76,8 @@ public class DragNDropHelper {
     public void dragExit(DragEvent event, TreeCell<String> treeCell) {
         // show to the user that it is an actual gesture target 
         if (event.getGestureSource() != treeCell 
-                && event.getDragboard().hasString()) {
+                && event.getDragboard().hasString()
+                && !treeCell.getText().equals(parent.getValue())) {
             Dragboard db = event.getDragboard();
             if(db != null && !db.getString().equals(treeCell.getText()))
                 treeCell.setTextFill(Color.WHITE);
@@ -96,7 +102,8 @@ public class DragNDropHelper {
             try {
                 String oldDir = db.getString();
                 String newDir = treeCell.getText();
-                if(!oldDir.equals(newDir)) {
+                if(!oldDir.equals(newDir) 
+                        && !newDir.equals(parent.getValue())) {
                     currentEmail.setDirectory(newDir);
                     maildao.updateEmailDirectory(currentEmail);
                     log.info("Changed directory for" + currentEmail 

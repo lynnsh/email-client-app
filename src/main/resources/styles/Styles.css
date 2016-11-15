@@ -1,9 +1,9 @@
 /* @author Alena Shulzhenko
- * @version 13/11/2016 
+ * @version 15/11/2016 
  */
 
 .root {     
-    -fx-background-image: url("/images/parent.jpeg"); 
+    -fx-background-image: url("/images/child.jpeg"); 
     -fx-font-family: Ubuntu; 
     -fx-font-size: 15;
 }

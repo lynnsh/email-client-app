@@ -132,7 +132,7 @@ public class ModifyDirController implements Initializable {
             return false;
         }
         List<TreeItem<String>> list = parent.getChildren();
-        if(inList(list, dir)) {           
+        if(inList(list, dir) || dir.equals(parent.getValue())) {           
             dirError.setText(bundle.getString("duplicateDirErr"));
             dirError.setVisible(true);
             return false;
@@ -174,7 +174,7 @@ public class ModifyDirController implements Initializable {
      * Sets directory data access object in order to
      * work with the database.
      * 
-     * @param folderdao DAO object to work with the database.
+     * @param folderdao directory DAO object to work with the database.
      */
     public void setFolderDAO(FolderStorageDAO folderdao) {
         this.folderdao = folderdao;
