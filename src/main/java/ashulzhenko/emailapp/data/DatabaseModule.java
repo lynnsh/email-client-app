@@ -69,7 +69,7 @@ public abstract class DatabaseModule {
      * 
      * @throws SQLException If there is a problem when opening a connection.
      */
-	protected Connection getConnection() throws SQLException {
+    protected Connection getConnection() throws SQLException {
         String url = userInfo.getMysqlUrl();
         int port = userInfo.getMysqlPort();
         String dbName = userInfo.getMysqlDbName();
@@ -79,12 +79,12 @@ public abstract class DatabaseModule {
                 user == null || user.isEmpty() || password == null)
             throw new IllegalArgumentException ("Invalid values provided. Cannot connect to the database.");
         
-		Connection connection = DriverManager.getConnection
+	Connection connection = DriverManager.getConnection
             ("jdbc:mysql://"+url + ":"+port+"/"+dbName, user, password);
         
-		log.info("Connected to the database.");  
+	log.info("Connected to the database.");  
         return connection;
-	}
+    }
     
     /**
      * Closes the connection to the database.

@@ -7,7 +7,6 @@ import ashulzhenko.emailapp.data.MailStorageModule;
 import ashulzhenko.emailapp.interfaces.FolderStorageDAO;
 import ashulzhenko.emailapp.interfaces.MailStorageDAO;
 import ashulzhenko.emailapp.mail.MailModule;
-import ashulzhenko.emailapp.properties.PropertiesManager;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -419,10 +418,8 @@ public class EmailAppController {
      */
     @FXML 
     private void configure(ActionEvent event) {
-        Stage stage = new Stage();
-        mainApp.displayForm(stage, user, true);
         Stage current = (Stage) emailTable.getScene().getWindow();
-        current.close();
+        mainApp.displayForm(current, user, true);
     }
     
     //EMAIL EVENT HANDLERS

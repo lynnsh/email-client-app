@@ -116,12 +116,9 @@ public class ConfigFormController implements Initializable {
         if(allValid) {
             try {
                 pm.writeTextProperties(PROPERTIES_PATH, "data", user);
-                //create new email app stage
-                Stage stage = new Stage();
-                mainApp.displayEmailApp(stage, user);
-                //close config form stage
+                //get the current stage
                 Stage current = (Stage) cancel.getScene().getWindow();
-                current.close();
+                mainApp.displayEmailApp(current, user);
             } 
             catch (IOException ex) {
                 log.error("Error saving properties file: ", ex.getMessage());
@@ -139,12 +136,11 @@ public class ConfigFormController implements Initializable {
     private void onCancel(ActionEvent event) {  
         //if this form was opened in EmailApp, the EmailApp with
         //unchanged information is shown; if not, app is closed.
-        if(isChild) {
-            Stage app = new Stage();
-            mainApp.displayEmailApp(app, user);
-        }
         Stage stage = (Stage) cancel.getScene().getWindow();
-        stage.close();
+        if(isChild)
+            mainApp.displayEmailApp(stage, user);
+        else
+            stage.close();
     }  
 
     /**
