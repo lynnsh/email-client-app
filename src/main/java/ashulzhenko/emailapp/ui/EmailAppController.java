@@ -197,7 +197,8 @@ public class EmailAppController {
                 treeCell.setOnDragOver(event -> dropHelper.dragOver(event, treeCell));
                 treeCell.setOnDragEntered(event -> dropHelper.dragEnter(event, treeCell));
                 treeCell.setOnDragExited(event -> dropHelper.dragExit(event, treeCell));
-                treeCell.setOnDragDropped(event -> dropHelper.dragDrop(event, treeCell, currentEmail));
+                treeCell.setOnDragDropped(event -> dropHelper.dragDrop(event, treeCell, 
+                                                  currentEmail, emails, emailTable));
                 return treeCell;
             }
         });
@@ -240,12 +241,10 @@ public class EmailAppController {
             mail = new MailModule(user);
             maildao = new MailStorageModule(user);
             folderdao = new FolderStorageModule(user);
-            checkNewEmails();
-            dirs = FXCollections.observableArrayList(folderdao.findAll());   
+            refreshApp();
+                  
+            
             dirTree.getRoot().setExpanded(true);
-            
-            populateTreeView();                   
-            
             dirTree.getSelectionModel().selectedItemProperty().addListener(
                     (observable, oldValue, newValue) -> getDirEmails(newValue, oldValue));
             
@@ -339,27 +338,32 @@ public class EmailAppController {
     } 
     
     /**
-     * Looks for the new messages on the server.
+     * Gets new messages from the server and updates the tree structure.
      * 
      * @param event the event that triggered this action.
      */
     @FXML
     private void checkNew(ActionEvent event) { 
-        checkNewEmails();     
+        refreshApp();     
     }
     
     /**
-     * Looks for the new messages on the server.
-     * If they are found, adds them to the email table.
-     * New emails are saved to the database.
+     * Looks for the new messages on the server and updates the tree structure.
+     * If new emails are found, adds them to the email table
+     * and saves them to the database.
      */
-    private void checkNewEmails(){
+    private void refreshApp(){
         try {
+            //get new messages
             List<EmailCustom> list = mail.receiveEmail();
+            //save new messages in the database
             for(EmailCustom e : list)
                 maildao.saveEmail(e);
+            //update directories
+            dirs = FXCollections.observableArrayList(folderdao.findAll());             
+            populateTreeView();
         } catch (SQLException ex) {
-            log.error("Unable to save new emails: ", ex.getMessage());
+            log.error("Error when working with the database.", ex.getMessage());
             Platform.exit();
         }
     }  
@@ -435,7 +439,8 @@ public class EmailAppController {
         try {
             if(currentEmail != null) {
                 maildao.deleteEmail(currentEmail.getId());
-                emails.remove(currentEmail);                   
+                emails.remove(currentEmail);    
+                emailTable.refresh();
             }
             else
                 displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
@@ -487,6 +492,7 @@ public class EmailAppController {
      */
     @FXML 
     private void replyToAll(ActionEvent event) {
+        
         if(currentEmail != null) {
             currentEmail.subject("RE: " + currentEmail.getSubject());
             MailAddress[] cc = currentEmail.getCc();
@@ -536,6 +542,8 @@ public class EmailAppController {
                 controller.setText(to);
             stage.initOwner((Stage) emailTable.getScene().getWindow());
             stage.showAndWait();
+            emailTable.refresh();
+            dirTree.refresh();
         } catch (IOException ex) {
             log.error("Error reading the file: ", ex.getMessage());
             Platform.exit();

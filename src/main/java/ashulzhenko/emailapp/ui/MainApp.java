@@ -90,7 +90,7 @@ public class MainApp extends Application {
             controller.setUserInfo(user);
             stage.show();
         } catch (Exception ex) {
-            log.error("Error in Email App: ", ex.getMessage());
+            log.error("Error in Email App", ex.getMessage());
             System.exit(1);
         }
     }
@@ -121,7 +121,7 @@ public class MainApp extends Application {
             stage.show();
         } 
         catch (Exception ex) {
-            log.error("Error in Config Form: ", ex.getMessage());
+            log.error("Error in Config Form", ex.getMessage());
             System.exit(1);
         }
     }

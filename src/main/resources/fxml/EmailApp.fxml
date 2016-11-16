@@ -23,7 +23,7 @@
          <menus>
            <Menu mnemonicParsing="false" text="%app">
              <items>
-                  <MenuItem mnemonicParsing="false" onAction="#checkNew" text="%newMsg" />
+                  <MenuItem mnemonicParsing="false" onAction="#checkNew" text="%refresh" />
                   <MenuItem mnemonicParsing="false" onAction="#configure" text="%config" />
                <MenuItem mnemonicParsing="false" onAction="#onClose" text="%close" />
              </items>

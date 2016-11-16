@@ -3,6 +3,8 @@ package ashulzhenko.emailapp.ui;
 import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.interfaces.MailStorageDAO;
 import java.sql.SQLException;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.DragEvent;
@@ -89,13 +91,18 @@ public class DragNDropHelper {
     
     /**
      * Executed when the source is dropped onto the target.
+     * Changes the directory for the selected email.
      * 
      * @param event the event that triggered this method.
      * @param treeCell the tree cell where the event happened.
      * @param currentEmail the email that is dragged to new location.
+     * @param emails the list that contains all emails associated 
+     *               with the selected directory.
+     * @param emailTable the TableView object that displays the emails.
      */
     public void dragDrop(DragEvent event, TreeCell<String> treeCell, 
-                         EmailCustom currentEmail) {
+                        EmailCustom currentEmail, ObservableList<EmailCustom> emails,
+                        TableView<EmailCustom> emailTable) {
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasString()) {
@@ -108,6 +115,8 @@ public class DragNDropHelper {
                     maildao.updateEmailDirectory(currentEmail);
                     log.info("Changed directory for" + currentEmail 
                         + " from " + oldDir + " to " + newDir); 
+                    emails.remove(currentEmail);
+                    emailTable.refresh();
                 }
                 success = true;               
             } catch (SQLException ex) {

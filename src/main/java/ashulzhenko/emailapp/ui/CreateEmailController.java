@@ -11,8 +11,10 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * the window is closed to display the main app, and the error is logged.
  *
  * @author Alena Shulzhenko
- * @version 12/11/2016
+ * @version 15/11/2016
  * @since 1.8
  */
 public class CreateEmailController implements Initializable {
@@ -231,18 +233,19 @@ public class CreateEmailController implements Initializable {
         EmailCustom email = new EmailCustom();
         boolean allValid = validate(email);      
         if(allValid) {  
-            try {               
+            try {         
                 email = mail.sendEmail(toArray, ccArray, bccArray, 
                         subject.getText(), html.getHtmlText(), 
                         attach.toArray(new String[attach.size()]), 
-                        embedAttach.toArray(new String[embedAttach.size()]));
+                        embedAttach.toArray(new String[embedAttach.size()]));  
                 //set sent date
                 email.setSentDate(Date.from(LocalDateTime.now().
                         atZone(ZoneId.systemDefault()).toInstant()));
-                maildao.saveEmail(email);
+                log.info("The email was sent: " + email);
+                maildao.saveEmail(email);       
             }
             catch(SQLException ex) {
-                log.error("Unable to save new email: ", ex.getMessage());  
+                log.error("Unable to save new email: ", ex);  
             }
             finally {
                 Stage stage = (Stage) cancel.getScene().getWindow();
@@ -289,6 +292,7 @@ public class CreateEmailController implements Initializable {
     /**
      * Verifies if user-provided emails are in valid format.
      * If there are several emails they should be separated with the semicolon.
+     * Duplicate email addresses are not allowed.
      * 
      * @param text the user inputted emails to check.
      * 
@@ -296,13 +300,22 @@ public class CreateEmailController implements Initializable {
      */
     private String[] checkEmails(TextField text) {
         String[] emails = text.getText().trim().split(";");
-        for(String e : emails) {
-            if (!(new EmailAddress(e)).isValid()) {
-                displayError(bundle.getString("invalidEmailErr") + " " + e 
+        Set<String> set = new HashSet<>();
+        
+        for(int i = 0; i < emails.length; i++) {
+            String address = emails[i].trim();
+            set.add(address);                     
+            if (!(new EmailAddress(address)).isValid()) {
+                displayError(bundle.getString("invalidEmailErr") + " " + address 
                         + ". " + bundle.getString("multiEmailErr"));
                 return null;
             }
         }      
+        if(set.size() < emails.length) {
+            displayError(bundle.getString("duplicateEmailErr"));
+            return null;
+        }
+        
         return emails;
     }
     
