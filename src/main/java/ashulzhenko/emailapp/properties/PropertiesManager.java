@@ -15,7 +15,7 @@ import java.util.Properties;
  * Saves and loads information from/to file and UserConfigBean using Properties.
  *
  * @author Alena Shulzhenko
- * @version 30/09/2016
+ * @version 18/11/2016
  * @since 1.8
  */
 public class PropertiesManager {
@@ -39,16 +39,16 @@ public class PropertiesManager {
         if (Files.exists(txtFile)) {             
             try (InputStream propFileStream = newInputStream(txtFile);) {                 
                 prop.load(propFileStream);
-            }            
+            }
             userConfig.setEmailPassword(prop.getProperty("emailPassword"));             
-            userConfig.setFromEmail(prop.getProperty("fromEmail"));             
-            userConfig.setImapPort(Integer.parseInt(prop.getProperty("imapPort")));
+            userConfig.setFromEmail(prop.getProperty("fromEmail"));            
+            userConfig.setImapPort(setPort(prop.getProperty("imapPort")));
             userConfig.setImapUrl(prop.getProperty("imapUrl")); 
-            userConfig.setSmtpPort(Integer.parseInt(prop.getProperty("smtpPort")));
+            userConfig.setSmtpPort(setPort(prop.getProperty("smtpPort")));
             userConfig.setSmtpUrl(prop.getProperty("smtpUrl")); 
             
             userConfig.setMysqlPassword(prop.getProperty("mysqlPassword"));             
-            userConfig.setMysqlPort(Integer.parseInt(prop.getProperty("mysqlPort")));   
+            userConfig.setMysqlPort(setPort(prop.getProperty("mysqlPort")));   
             userConfig.setMysqlUrl(prop.getProperty("mysqlUrl"));             
             userConfig.setMysqlUserName(prop.getProperty("mysqlUser"));
             userConfig.setMysqlDbName(prop.getProperty("mysqlDbName"));     
@@ -88,5 +88,16 @@ public class PropertiesManager {
         try (OutputStream propFileStream = newOutputStream(txtFile)) {             
             prop.store(propFileStream, "User Configuration Properties");         
         }     
+    }
+    
+    /**
+     * Converts the port value from the file to integer.
+     * 
+     * @param value the loaded port value from the file.
+     * 
+     * @return the port value as an integer.
+     */
+    private int setPort(String value) {
+        return value.trim().equals("")? 0 : Integer.parseInt(value);
     }
 }

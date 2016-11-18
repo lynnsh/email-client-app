@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * attachments of embedded message are stored as a String.
  *
  * @author Alena Shulzhenko
- * @version 17/11/2016
+ * @version 18/11/2016
  * @since 1.8
  */
 public class EmailAppController {
@@ -85,7 +85,6 @@ public class EmailAppController {
     private ObservableList<EmailCustom> emails;
     private ObservableList<String> dirs;
     
-    private EmailCustom currentEmail;
     private DragNDropHelper dropHelper;
     private EmailDisplayHelper displayHelper;
     
@@ -124,8 +123,7 @@ public class EmailAppController {
                 (cellData.getValue().getSubject()));
         dateColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper
                 (getDate(cellData)));
-        
-        //htmlDisplay.setDisable(true);
+
         htmlDisplay.setHtmlText("<body style='background-color: black; "
                                 + "color: white;'/>");
         
@@ -163,15 +161,17 @@ public class EmailAppController {
         EmailCustom email = cellData.getValue();
         LocalDateTime date;
         LocalDateTime now = LocalDateTime.now();
-        if(email.getFrom().getEmail().equals(user.getFromEmail()))
-            date = LocalDateTime.ofInstant(email.getSentDate().toInstant(), 
-                    ZoneId.systemDefault());
+        if(email.getFrom().getEmail().equals(user.getFromEmail())) {
+            Date sentDate = email.getSentDate();
+            if(sentDate == null)
+                return bundle.getString("nodata");
+            date = LocalDateTime.ofInstant(sentDate.toInstant(), ZoneId.systemDefault());
+        }
         else {
             Date rcvDate = email.getReceivedDate();
             if(rcvDate == null)
                 return bundle.getString("nodata");
-            date = LocalDateTime.ofInstant(rcvDate.toInstant(), 
-                    ZoneId.systemDefault());
+            date = LocalDateTime.ofInstant(rcvDate.toInstant(), ZoneId.systemDefault());
         }
         
        if(now.toLocalDate().equals(date.toLocalDate()))
@@ -200,11 +200,12 @@ public class EmailAppController {
                     }
                 };      
                 dropHelper = new DragNDropHelper(maildao, dirTree.getRoot());
+                
                 treeCell.setOnDragOver(event -> dropHelper.dragOver(event, treeCell));
                 treeCell.setOnDragEntered(event -> dropHelper.dragEnter(event, treeCell));
                 treeCell.setOnDragExited(event -> dropHelper.dragExit(event, treeCell));
                 treeCell.setOnDragDropped(event -> dropHelper.dragDrop(event, treeCell, 
-                                                  currentEmail, emails, emailTable));
+                                                   emails, emailTable));
                 return treeCell;
             }
         });
@@ -217,10 +218,11 @@ public class EmailAppController {
      */
     @FXML
     private void onDragDetect(MouseEvent event) {
-        if(currentEmail != null) {
+        EmailCustom item = emailTable.getSelectionModel().getSelectedItem();
+        if(item != null) {
             Dragboard db = emailTable.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
-            content.putString(currentEmail.getDirectory());
+            content.putString(item.getDirectory());
             db.setContent(content);           
         }
         event.consume();
@@ -247,8 +249,7 @@ public class EmailAppController {
             mail = new MailModule(user);
             maildao = new MailStorageModule(user);
             folderdao = new FolderStorageModule(user);
-            refreshApp();
-                  
+            refreshApp();                  
             
             dirTree.getRoot().setExpanded(true);
             dirTree.getSelectionModel().selectedItemProperty().addListener(
@@ -299,9 +300,8 @@ public class EmailAppController {
                 emails = FXCollections.observableArrayList(emailsFromDb);
                 emailTable.setItems(emails);
                 setColumnName(emailsFromDb);
-                currentEmail = null;
                 htmlDisplay.setHtmlText("<body style='background-color: black; "
-                                        + "color: white;'/>");
+                                + "color: white;'/>" + htmlDisplay.getHtmlText());
             } catch (SQLException e) {
                 log.error("Error connecting to the database: ", e.getMessage());
                 Platform.exit();
@@ -336,10 +336,9 @@ public class EmailAppController {
      * 
      * @param newSelection the user selected email.
      */
-    private void emailSelected(EmailCustom newSelection) {
+    private void emailSelected(EmailCustom newSelection) {        
         if(newSelection != null) {
-            currentEmail = newSelection;
-            displayHelper = new EmailDisplayHelper(bundle, currentEmail);
+            displayHelper = new EmailDisplayHelper(bundle, newSelection);
             htmlDisplay.setHtmlText(displayHelper.getEmailText());
         }
     } 
@@ -445,15 +444,13 @@ public class EmailAppController {
     @FXML 
     private void deleteEmail(ActionEvent event) {
         try {
-            if(currentEmail != null) {
-                int index = getNextEmailIndex();
-                maildao.deleteEmail(currentEmail.getId());
-                emails.remove(currentEmail);    
+            EmailCustom item = emailTable.getSelectionModel().getSelectedItem();
+            if(item != null) {
+                maildao.deleteEmail(item.getId());
+                emails.remove(item);    
                 emailTable.refresh();
-                if(index == -1)
-                    currentEmail = null;
-                else
-                    currentEmail = emails.get(index);
+                htmlDisplay.setHtmlText("<body style='background-color: black; "
+                                        + "color: white;'/>");
             }
             else
                 displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
@@ -466,33 +463,16 @@ public class EmailAppController {
     }
     
     /**
-     * Returns the index of the next selected email if the current
-     * one is deleted.
-     * 
-     * @return the index of the next selected email.
-     */
-    private int getNextEmailIndex() {
-        int currentIndex = emails.indexOf(currentEmail);
-        int length = emails.size();
-        //no emails will be left after this one is deleted
-        if(length == 1)
-            return -1;
-        //the current email is the first one in the list
-        if(currentIndex == 0)
-            return currentIndex;
-        return currentIndex-1;       
-    }
-    
-    /**
      * Opens a new window to forward the selected email.
      * 
      * @param event the event that triggered this action.
      */
     @FXML 
     private void forwardEmail(ActionEvent event) {
-        if(currentEmail != null) {
-            currentEmail.subject("FW: " + currentEmail.getSubject());
-            createEmail(currentEmail, null);
+        EmailCustom item = emailTable.getSelectionModel().getSelectedItem();
+        if(item != null) {
+            item.subject("FW: " + item.getSubject());
+            createEmail(item, null);
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
@@ -505,9 +485,10 @@ public class EmailAppController {
      */
     @FXML 
     private void replyToEmail(ActionEvent event) {
-        if(currentEmail != null) {
-            currentEmail.subject("RE: " + currentEmail.getSubject());
-            createEmail(currentEmail, currentEmail.getFrom().getEmail());
+        EmailCustom item = emailTable.getSelectionModel().getSelectedItem();
+        if(item != null) {
+            item.subject("RE: " + item.getSubject());
+            createEmail(item, item.getFrom().getEmail());
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
@@ -521,13 +502,12 @@ public class EmailAppController {
      */
     @FXML 
     private void replyToAll(ActionEvent event) {
-        
-        if(currentEmail != null) {
-            currentEmail.subject("RE: " + currentEmail.getSubject());
-            MailAddress[] cc = currentEmail.getCc();
+        EmailCustom item = emailTable.getSelectionModel().getSelectedItem();
+        if(item != null) {
+            item.subject("RE: " + item.getSubject());
+            MailAddress[] cc = item.getCc();
             String address = cc == null ? "" : displayHelper.getEmails(cc);
-            createEmail(currentEmail, currentEmail.getFrom().getEmail() 
-                            + ";" + address);
+            createEmail(item, item.getFrom().getEmail() + ";" + address);
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
@@ -594,7 +574,7 @@ public class EmailAppController {
             TreeItem<String> item = dirTree.getSelectionModel().getSelectedItem();
             if(item != null) {
                 TreeItem<String> parent = item.getParent();
-                if (parent == null )
+                if (parent == null)
                     displayAlert(bundle.getString("parentErr"), Alert.AlertType.ERROR);
                 else {
                     parent.getChildren().remove(item);
@@ -679,8 +659,9 @@ public class EmailAppController {
      */
     @FXML 
     private void onSaveAttach(ActionEvent event) {
-        if(currentEmail != null) {
-            List<EmailAttachment> list = currentEmail.getAttachments();
+        EmailCustom item = emailTable.getSelectionModel().getSelectedItem();
+        if(item != null) {
+            List<EmailAttachment> list = item.getAttachments();
             if(list != null && list.size() > 0) {
                 for(EmailAttachment attach : list) {
                     File savedFile = getPath(attach);                 
@@ -693,7 +674,6 @@ public class EmailAppController {
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-        currentEmail = null;
     }
     
     /**
@@ -728,6 +708,4 @@ public class EmailAppController {
         }
     }
 
-    
-    
 }

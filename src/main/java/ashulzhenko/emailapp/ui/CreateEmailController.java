@@ -8,7 +8,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -39,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * the window is closed to display the main app, and the error is logged.
  *
  * @author Alena Shulzhenko
- * @version 17/11/2016
+ * @version 18/11/2016
  * @since 1.8
  */
 public class CreateEmailController implements Initializable {
@@ -262,13 +261,13 @@ public class CreateEmailController implements Initializable {
         Set<String> set = new HashSet<>();
         
         for(int i = 0; i < emails.length; i++) {
-            String address = emails[i].trim();
-            set.add(address);                     
-            if (!(new EmailAddress(address)).isValid()) {
+            String address = emails[i].trim();                                
+            if (address.contains(" ") || !(new EmailAddress(address)).isValid()) {
                 displayError(bundle.getString("invalidEmailErr") + " " + address 
                         + ". " + bundle.getString("multiEmailErr"));
                 return null;
             }
+            set.add(address);
         }      
         if(set.size() < emails.length) {
             displayError(bundle.getString("duplicateEmailErr"));

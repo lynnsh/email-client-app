@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * Common logic for MailStorageModule and DirectoryStorageModule.
  * 
  * @author Alena Shulzhenko.
- * @version 27/09/2016
+ * @version 18/11/2016
  * @since 1.8
  */
 public abstract class DatabaseModule {
@@ -105,7 +105,7 @@ public abstract class DatabaseModule {
     private void checkTables() throws SQLException {
         Connection connection = getConnection();
         
-        String query = "select * from directories";    
+        String query = "select * from email_address";    
         try(Statement stmt = connection.createStatement();) {
             stmt.executeQuery(query);
         }
@@ -124,7 +124,7 @@ public abstract class DatabaseModule {
      * @param connection Database Connection object.
      */
     private void createTables(Connection connection) {
-        final String seedDataScript = loadAsString("src/main/resources/createTables.sql");
+        final String seedDataScript = loadAsString("src/main/resources/resources/createTables.sql");
         try {
             for (String statement : splitStatements(new StringReader(seedDataScript), ";")) {
                 connection.prepareStatement(statement).execute();

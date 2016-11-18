@@ -1,3 +1,10 @@
+-- dropping
+drop table if exists email_address;
+drop table if exists attachments;
+drop table if exists emails;
+drop table if exists addresses;
+drop table if exists directories;
+
 -- creating new tables
 create table directories (
 	id integer primary key AUTO_INCREMENT,

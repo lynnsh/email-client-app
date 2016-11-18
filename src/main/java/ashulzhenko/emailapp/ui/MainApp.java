@@ -18,7 +18,7 @@ import javafx.scene.image.Image;
  * The class responsible for starting the Email Application.
  *
  * @author Alena Shulzhenko
- * @version 12/11/2016
+ * @version 18/11/2016
  * @since 1.8
  */
 public class MainApp extends Application {   
@@ -139,7 +139,7 @@ public class MainApp extends Application {
     private boolean isEmptyBean(UserConfigBean user) {   
         int[] ports = new int[]{user.getImapPort(), user.getMysqlPort(), user.getSmtpPort()};
         for(int port: ports)
-            if(port < 0 || port > 65536)
+            if(port <= 0 || port > 65536)
                 return true;
         return user.getSmtpUrl().trim().isEmpty() || 
                user.getEmailPassword().trim().isEmpty() ||

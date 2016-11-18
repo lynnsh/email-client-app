@@ -3,6 +3,7 @@ package ashulzhenko.emailapp.ui;
 import ashulzhenko.emailapp.bean.EmailCustom;
 import ashulzhenko.emailapp.interfaces.MailStorageDAO;
 import java.sql.SQLException;
+import java.util.Arrays;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeCell;
@@ -17,7 +18,7 @@ import org.slf4j.LoggerFactory;
  * The helper class that responsible to handle drag n drop events.
  * 
  * @author Alena Shulzhenko
- * @version 15/11/2016
+ * @version 18/11/2016
  * @since 1.8
  */
 public class DragNDropHelper {
@@ -101,16 +102,16 @@ public class DragNDropHelper {
      * @param emailTable the TableView object that displays the emails.
      */
     public void dragDrop(DragEvent event, TreeCell<String> treeCell, 
-                        EmailCustom currentEmail, ObservableList<EmailCustom> emails,
+                        ObservableList<EmailCustom> emails,
                         TableView<EmailCustom> emailTable) {
+        EmailCustom currentEmail = emailTable.getSelectionModel().getSelectedItem();
         Dragboard db = event.getDragboard();
         boolean success = false;
         if (db.hasString()) {
             try {
                 String oldDir = db.getString();
                 String newDir = treeCell.getText();
-                if(!oldDir.equals(newDir) 
-                        && !newDir.equals(parent.getValue())) {
+                if(!oldDir.equals(newDir) && !newDir.equals(parent.getValue())) {
                     currentEmail.setDirectory(newDir);
                     maildao.updateEmailDirectory(currentEmail);
                     log.info("Changed directory for" + currentEmail 
