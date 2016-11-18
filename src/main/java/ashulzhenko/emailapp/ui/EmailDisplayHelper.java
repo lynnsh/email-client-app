@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import jodd.mail.EmailAttachment;
@@ -16,7 +17,7 @@ import jodd.mail.MailAddress;
  * information about the email that needs to be displayed.
  * 
  * @author Alena Shulzhenko
- * @version 12/11/2016
+ * @version 17/11/2016
  * @since 1.8
  */
 public class EmailDisplayHelper {
@@ -65,18 +66,22 @@ public class EmailDisplayHelper {
      * 
      * @return the formatted date of the provided email.
      */
-    private String getDate() {
+    public String getDate() {
         LocalDateTime date;
         //email was sent to the user
-        if(currentEmail.getReceivedDate() == null)
+        if(currentEmail.getSentDate() != null)
             date = LocalDateTime.ofInstant(currentEmail.getSentDate().toInstant(), 
                     ZoneId.systemDefault());
         //email was received by the user
-        else
-            date = LocalDateTime.ofInstant(currentEmail.getReceivedDate().toInstant(), 
+        else {
+            Date rcvDate = currentEmail.getReceivedDate();
+            if(rcvDate == null)
+                return bundle.getString("nodata");
+            date = LocalDateTime.ofInstant(rcvDate.toInstant(), 
                     ZoneId.systemDefault());
+        }
         
-           return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
     }
     
     /**

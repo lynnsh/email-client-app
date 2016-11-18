@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -42,6 +43,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import jodd.mail.EmailAttachment;
@@ -58,7 +60,7 @@ import org.slf4j.LoggerFactory;
  * attachments of embedded message are stored as a String.
  *
  * @author Alena Shulzhenko
- * @version 15/11/2016
+ * @version 17/11/2016
  * @since 1.8
  */
 public class EmailAppController {
@@ -164,9 +166,13 @@ public class EmailAppController {
         if(email.getFrom().getEmail().equals(user.getFromEmail()))
             date = LocalDateTime.ofInstant(email.getSentDate().toInstant(), 
                     ZoneId.systemDefault());
-        else
-            date = LocalDateTime.ofInstant(email.getReceivedDate().toInstant(), 
+        else {
+            Date rcvDate = email.getReceivedDate();
+            if(rcvDate == null)
+                return bundle.getString("nodata");
+            date = LocalDateTime.ofInstant(rcvDate.toInstant(), 
                     ZoneId.systemDefault());
+        }
         
        if(now.toLocalDate().equals(date.toLocalDate()))
            return date.format(DateTimeFormatter.ofPattern("hh:mm a"));
@@ -293,6 +299,7 @@ public class EmailAppController {
                 emails = FXCollections.observableArrayList(emailsFromDb);
                 emailTable.setItems(emails);
                 setColumnName(emailsFromDb);
+                currentEmail = null;
                 htmlDisplay.setHtmlText("<body style='background-color: black; "
                                         + "color: white;'/>");
             } catch (SQLException e) {
@@ -396,6 +403,7 @@ public class EmailAppController {
             scene.getStylesheets().add("/styles/Styles.css");
             scene.getStylesheets().add("http://fonts.googleapis.com/css?family=Ubuntu");
             stage.initOwner((Stage) emailTable.getScene().getWindow());
+            stage.setResizable(false);
             stage.showAndWait();
         } catch (IOException ex) {
             log.error("Error reading the file: ", ex.getMessage());
@@ -438,18 +446,41 @@ public class EmailAppController {
     private void deleteEmail(ActionEvent event) {
         try {
             if(currentEmail != null) {
+                int index = getNextEmailIndex();
                 maildao.deleteEmail(currentEmail.getId());
                 emails.remove(currentEmail);    
                 emailTable.refresh();
+                if(index == -1)
+                    currentEmail = null;
+                else
+                    currentEmail = emails.get(index);
             }
             else
                 displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-            currentEmail = null;
+            
         }
         catch (SQLException ex) {
             log.error("Unable to delete email: ", ex.getMessage());
             Platform.exit();
         }
+    }
+    
+    /**
+     * Returns the index of the next selected email if the current
+     * one is deleted.
+     * 
+     * @return the index of the next selected email.
+     */
+    private int getNextEmailIndex() {
+        int currentIndex = emails.indexOf(currentEmail);
+        int length = emails.size();
+        //no emails will be left after this one is deleted
+        if(length == 1)
+            return -1;
+        //the current email is the first one in the list
+        if(currentIndex == 0)
+            return currentIndex;
+        return currentIndex-1;       
     }
     
     /**
@@ -465,7 +496,6 @@ public class EmailAppController {
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-        currentEmail = null;
     }
     
     /**
@@ -481,7 +511,6 @@ public class EmailAppController {
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-        currentEmail = null;
     }
     
     /**
@@ -502,7 +531,6 @@ public class EmailAppController {
         }
         else
             displayAlert(bundle.getString("notSelectedEmailErr"), Alert.AlertType.ERROR);
-        currentEmail = null;
     }
     
     /**
@@ -540,6 +568,7 @@ public class EmailAppController {
                 controller.setEmail(email);
             if(to != null)
                 controller.setText(to);
+            //curent stage is the owner of this window
             stage.initOwner((Stage) emailTable.getScene().getWindow());
             stage.showAndWait();
             emailTable.refresh();
@@ -632,7 +661,11 @@ public class EmailAppController {
             controller.setFolderDAO(folderdao);
             controller.setDirList(dirs);
             controller.setTreeParent(parent);
+            //curent stage is the owner of this window
             stage.initOwner((Stage) emailTable.getScene().getWindow());
+            stage.setResizable(false);
+            //not allow using email app when this child window is up
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
          } catch (IOException ex) {
             log.error("Error reading the file: ", ex.getMessage());

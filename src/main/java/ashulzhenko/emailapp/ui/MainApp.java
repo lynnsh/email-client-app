@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javafx.scene.layout.BorderPane;
 import static javafx.application.Application.launch;
+import javafx.scene.image.Image;
 
 /**
  * The class responsible for starting the Email Application.
@@ -44,6 +45,7 @@ public class MainApp extends Application {
         try {           
             pm = new PropertiesManager();
             UserConfigBean user = pm.loadTextProperties(PROPERTIES_PATH, "data");
+            stage.getIcons().add(new Image(MainApp.class.getResourceAsStream("/images/email.png")));
             //if there is at least one value missing, 
             //the config form should be displayed
             if(isEmptyBean(user))             

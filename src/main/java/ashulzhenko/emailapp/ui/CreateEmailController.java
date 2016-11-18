@@ -39,16 +39,14 @@ import org.slf4j.LoggerFactory;
  * the window is closed to display the main app, and the error is logged.
  *
  * @author Alena Shulzhenko
- * @version 15/11/2016
+ * @version 17/11/2016
  * @since 1.8
  */
 public class CreateEmailController implements Initializable {
     @FXML
-    private HTMLEditor html;
-    
+    private HTMLEditor html;   
     @FXML
-    private Button cancel;
-    
+    private Button cancel;   
     @FXML
     private TextField to, subject, cc, bcc;
     
@@ -148,6 +146,7 @@ public class CreateEmailController implements Initializable {
      * @return the email information.
      */
     private String getEmailText(EmailCustom email) { 
+        EmailDisplayHelper helper = new EmailDisplayHelper(bundle, email);
         StringBuilder text = new StringBuilder("<br/><br/>-------------------"
                 + "----------------------------------<br/><b>");
         text.append(bundle.getString("subject")).append(":</b> ")
@@ -155,54 +154,14 @@ public class CreateEmailController implements Initializable {
             .append(bundle.getString("from")).append(":</b> ")
             .append(email.getFrom().getEmail()).append("<br/><b>")
             .append(bundle.getString("to")).append(":</b> ")
-            .append(getTo(email)).append("<br/><b>")
+            .append(helper.getEmails(email.getTo())).append("<br/><b>")
             .append(bundle.getString("text")).append(":</b> ")
             .append(getMessages(email)).append(":</b> <b>")
             .append(bundle.getString("date")).append(":</b> ")
-            .append(getDate(email)).append("<br/>-------------------------")
+            .append(helper.getDate()).append("<br/>-------------------------")
             .append("----------------------------<br/>");
         text.trimToSize();
         return text.toString();
-    }
-    
-    /**
-     * Returns the full date of the provided email as a String.
-     * 
-     * @param email the email which date is to be returned.
-     * 
-     * @return the formatted date of the provided email.
-     */
-    private String getDate(EmailCustom email) {
-        LocalDateTime date;
-        //email was sent to the user
-        if(email.getReceivedDate() == null)
-            date = LocalDateTime.ofInstant(email.getSentDate().toInstant(), 
-                    ZoneId.systemDefault());
-        //email was received by the user
-        else
-            date = LocalDateTime.ofInstant(email.getReceivedDate().toInstant(), 
-                    ZoneId.systemDefault());
-        
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-    }
-    
-    /**
-     * Returns TO addresses in String format for the provided email.
-     * 
-     * @param email the email which TO addresses are required.
-     * 
-     * @return TO addresses in String format for the provided email.
-     */
-    private String getTo(EmailCustom email) {
-        StringBuilder emails = new StringBuilder("");
-        MailAddress[] array = email.getTo();
-        for(MailAddress ma : array)
-            emails.append(ma.getEmail()).append("; ");
-        
-        if(array.length > 1)
-            return emails.substring(0, emails.length()-2);
-        emails.trimToSize();
-        return emails.toString();
     }
     
     /**
@@ -233,16 +192,16 @@ public class CreateEmailController implements Initializable {
         EmailCustom email = new EmailCustom();
         boolean allValid = validate(email);      
         if(allValid) {  
-            try {         
+            try {       
                 email = mail.sendEmail(toArray, ccArray, bccArray, 
                         subject.getText(), html.getHtmlText(), 
                         attach.toArray(new String[attach.size()]), 
-                        embedAttach.toArray(new String[embedAttach.size()]));  
+                        embedAttach.toArray(new String[embedAttach.size()])); 
                 //set sent date
                 email.setSentDate(Date.from(LocalDateTime.now().
                         atZone(ZoneId.systemDefault()).toInstant()));
                 log.info("The email was sent: " + email);
-                maildao.saveEmail(email);       
+                maildao.saveEmail(email); 
             }
             catch(SQLException ex) {
                 log.error("Unable to save new email: ", ex);  
