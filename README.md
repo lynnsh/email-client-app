@@ -8,5 +8,3 @@ Description:
 2. Uses SMTP and IMAP protocols and Java Jodd API to send and receive emails
 3. Supports attachments and their storing, as well as forwarding, bcc and cc options
 4. Features drag n drop functionality to move the email to another folder
-
-<sub>Academic Project - Dawson College (Computer Science Technology) - Fall 2016</sub>
